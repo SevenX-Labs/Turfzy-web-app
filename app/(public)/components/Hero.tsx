@@ -155,44 +155,6 @@ export default function Hero() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[500px] bg-lime-400/20 blur-[100px] -z-10 rounded-full" />
         </motion.div>
 
-        {/* Trusted By Logos */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="w-full flex flex-col items-center pt-8 border-t border-gray-200/60"
-        >
-          <p className="text-sm font-medium text-gray-400 mb-10 tracking-wide uppercase">Trusted by 10,000+ players & turf owners</p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
-
-            <div className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors duration-300">
-              <MapPin size={24} strokeWidth={1.5} />
-              <span className="font-bold text-xl md:text-2xl tracking-tight">CityTurf</span>
-            </div>
-
-            <div className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors duration-300">
-              <Calendar size={24} strokeWidth={1.5} />
-              <span className="font-bold text-xl md:text-2xl tracking-tight">PlayTime</span>
-            </div>
-
-            <div className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors duration-300">
-              <Shield size={24} strokeWidth={1.5} />
-              <span className="font-bold text-xl md:text-2xl tracking-tight">SecureSport</span>
-            </div>
-
-            <div className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors duration-300">
-              <Star size={24} strokeWidth={1.5} />
-              <span className="font-bold text-xl md:text-2xl tracking-tight">ProArena</span>
-            </div>
-
-            <div className="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors duration-300">
-              <Globe size={24} strokeWidth={1.5} />
-              <span className="font-bold text-xl md:text-2xl tracking-tight">TurfNet</span>
-            </div>
-
-          </div>
-        </motion.div>
-
       </div>
     </section>
   );
