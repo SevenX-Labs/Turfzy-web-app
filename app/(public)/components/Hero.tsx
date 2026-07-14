@@ -4,10 +4,30 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play, Star, MapPin, CheckCircle2, Search, Calendar, Shield, Zap, Globe } from "lucide-react";
+import LightRays from "./LightRays";
 
 export default function Hero() {
   return (
     <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden bg-[#FAFAFA] flex flex-col items-center">
+
+      {/* Light Rays Background */}
+      <div className="absolute inset-0 -z-10 pointer-events-none" style={{ width: '100%', height: '100%' }}>
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#ffffff"
+          raysSpeed={1}
+          lightSpread={0.5}
+          rayLength={3}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0}
+          distortion={0}
+          className="custom-rays opacity-50"
+          pulsating={false}
+          fadeDistance={1}
+          saturation={1}
+        />
+      </div>
 
       {/* Soft background gradient */}
       <div className="absolute top-0 inset-x-0 h-[800px] pointer-events-none overflow-hidden z-0 flex justify-center">
