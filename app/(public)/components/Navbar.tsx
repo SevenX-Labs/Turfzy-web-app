@@ -4,13 +4,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Menu, ChevronDown, Play, Sparkles } from "lucide-react";
+import { X, Menu, Play, Sparkles } from "lucide-react";
 import { NAV_LINKS } from "../constants";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileUserType, setMobileUserType] = useState('customer');
   const pathname = usePathname();
 
@@ -26,36 +25,6 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [isMobileOpen]);
-
-  const AuthPopoverCard = ({ type }: { type: 'login' | 'signup' }) => {
-    const isLogin = type === 'login';
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10 }}
-        transition={{ duration: 0.2 }}
-        className="w-48 bg-white border border-gray-100 rounded-2xl p-2 shadow-xl absolute top-full mt-2 left-1/2 -translate-x-1/2 z-50"
-      >
-        <div className="flex flex-col gap-1">
-          <Link
-            href={isLogin ? "/login/customer" : "/signup/customer"}
-            onClick={() => setActiveDropdown(null)}
-            className="px-4 py-2 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-800 transition-colors"
-          >
-            For Players
-          </Link>
-          <Link
-            href={isLogin ? "/login/owner" : "/signup/owner"}
-            onClick={() => setActiveDropdown(null)}
-            className="px-4 py-2 rounded-xl hover:bg-gray-50 text-sm font-semibold text-gray-800 transition-colors"
-          >
-            For Turf Owners
-          </Link>
-        </div>
-      </motion.div>
-    );
-  };
 
   return (
     <>
@@ -86,33 +55,10 @@ export default function Navbar() {
 
           {/* Right: Auth */}
           <div className="hidden md:flex items-center gap-4">
-            {/* Login Dropdown */}
-            <div className="relative group" onMouseEnter={() => setActiveDropdown('login')} onMouseLeave={() => setActiveDropdown(null)}>
-              <button className="flex items-center gap-1 px-4 py-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
-                Log in <ChevronDown size={14} className={`transition-transform duration-200 ${activeDropdown === 'login' ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence>
-                {activeDropdown === 'login' && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                    <AuthPopoverCard type="login" />
-                  </div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Signup Dropdown (Black Pill Button) */}
-            <div className="relative group" onMouseEnter={() => setActiveDropdown('signup')} onMouseLeave={() => setActiveDropdown(null)}>
-              <button className="btn-black flex items-center gap-2 px-6 py-3 h-auto text-sm">
-                Sign up <Play size={12} className="fill-white ml-1" />
-              </button>
-              <AnimatePresence>
-                {activeDropdown === 'signup' && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                    <AuthPopoverCard type="signup" />
-                  </div>
-                )}
-              </AnimatePresence>
-            </div>
+            {/* Sign In Button */}
+            <Link href="/login/customer" className="btn-black flex items-center gap-2 px-6 py-3 h-auto text-sm">
+              Sign In <Play size={12} className="fill-white ml-1" />
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -162,11 +108,8 @@ export default function Navbar() {
                 <button onClick={() => setMobileUserType('owner')} className={`py-3 rounded-xl text-sm font-bold ${mobileUserType === 'owner' ? 'bg-gray-100 text-gray-900' : 'text-gray-500'}`}>Owner</button>
               </div>
               <div className="flex flex-col gap-3">
-                <Link href={`/login/${mobileUserType}`} onClick={() => setIsMobileOpen(false)} className="w-full py-4 text-center rounded-full border border-gray-200 font-semibold text-gray-900">
-                  Log In
-                </Link>
-                <Link href={`/signup/${mobileUserType}`} onClick={() => setIsMobileOpen(false)} className="btn-black w-full justify-center py-4">
-                  Sign Up
+                <Link href={`/login/${mobileUserType}`} onClick={() => setIsMobileOpen(false)} className="btn-black w-full flex justify-center items-center py-4 text-sm font-semibold">
+                  Sign In
                 </Link>
               </div>
             </div>
