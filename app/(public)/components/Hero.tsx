@@ -21,15 +21,15 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-gray-100"
+          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#59A608] shadow-[0_2px_10px_rgba(0,0,0,0.04)]"
           style={{ marginBottom: '40px' }}
         >
-          {/* Custom Star with Black Stroke */}
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#FACC15" stroke="#111827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          {/* Custom Star with White Stroke */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#FACC15" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
 
-          <span className="text-sm font-bold text-slate-800 tracking-wider uppercase mt-0.5">Best Turf Booking App in 2024</span>
+          <span className="text-sm font-bold text-white tracking-wider uppercase mt-0.5">Best Turf Booking App in 2024</span>
 
           <div className="flex gap-0.5 items-center">
             {[1, 2, 3, 4, 5].map(i => (

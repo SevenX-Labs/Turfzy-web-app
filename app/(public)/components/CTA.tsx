@@ -23,18 +23,15 @@ export default function CTA() {
           <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-lime-500/20 blur-[120px] rounded-full -translate-y-1/2 -z-0" />
 
           <div className="relative z-10 max-w-xl text-center lg:text-left">
-            <h2 className="text-4xl lg:text-6xl font-black text-white font-clash mb-6 leading-tight">
+            <h2 className="text-4xl lg:text-6xl font-black text-white font-clash leading-tight" style={{ marginBottom: '32px' }}>
               Ready to elevate <br /> your game?
             </h2>
-            <p className="text-lg text-gray-400 mb-10 max-w-md mx-auto lg:mx-0">
+            <p className="text-lg text-gray-400 max-w-md mx-auto lg:mx-0" style={{ marginBottom: '48px' }}>
               Join thousands of players and turf owners making sports easier and more accessible.
             </p>
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-              <Link href="/find-turf" className="w-full sm:w-auto bg-lime-500 hover:bg-lime-600 text-gray-900 font-bold text-lg px-8 py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
-                Book a Turf <ArrowRight size={20} />
-              </Link>
-              <Link href="#owners" className="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors flex items-center justify-center border border-gray-700">
-                Register as Owner
+            <div className="flex items-center justify-center lg:justify-start">
+              <Link href="/find-turf" className="w-full sm:w-auto bg-[#59A608] hover:bg-[#4d9006] text-white font-bold text-lg px-10 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(89,166,8,0.4)] flex items-center justify-center gap-3">
+                Get Started <ArrowRight size={20} />
               </Link>
             </div>
           </div>
