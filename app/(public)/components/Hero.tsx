@@ -103,20 +103,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#59A608] shadow-[0_2px_10px_rgba(0,0,0,0.04)] mb-10"
+          className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#59A608] shadow-[0_4px_14px_rgba(89,166,8,0.3)]"
+          style={{ marginBottom: '56px' }}
         >
-          {/* Custom Star with White Stroke */}
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#FACC15" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg>
-
-          <span className="text-sm font-bold text-white tracking-wider uppercase mt-0.5">Best Turf Booking App in 2024</span>
-
-          <div className="flex gap-0.5 items-center">
-            {[1, 2, 3, 4, 5].map(i => (
-              <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" strokeWidth={0} />
-            ))}
+          <div className="bg-white/20 p-1 rounded-full flex items-center justify-center">
+            <Zap size={14} className="text-white fill-white" />
           </div>
+          <span className="text-sm font-bold text-white tracking-wider uppercase mt-0.5 pr-2">The Future of Turf Booking</span>
         </motion.div>
 
         {/* Headline */}
@@ -124,7 +117,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-5xl md:text-6xl lg:text-[72px] font-extrabold text-gray-900 tracking-tight leading-[1.05] font-clash mb-10"
+          className="text-5xl md:text-6xl lg:text-[72px] font-extrabold text-gray-900 tracking-tight leading-[1.05] font-clash"
+          style={{ marginBottom: '32px' }}
         >
           Transform your game <br className="hidden md:block" />
           with Turfzy.
@@ -135,7 +129,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-xl text-gray-600 font-medium max-w-2xl mb-14"
+          className="text-lg md:text-xl text-gray-600 font-medium max-w-2xl"
+          style={{ marginBottom: '56px' }}
         >
           Discover verified turfs, see live slot availability, and book your game in seconds. Your ultimate sports companion.
         </motion.p>
@@ -145,7 +140,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-32"
+          className="mb-24"
+          style={{ marginBottom: '96px' }}
         >
           <Link href="/find-turf" className="btn-black flex items-center gap-2 px-8 py-4 h-auto text-base">
             Get Started Now <Play size={14} className="fill-white ml-1" />

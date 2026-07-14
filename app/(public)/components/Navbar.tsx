@@ -45,9 +45,13 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-semibold transition-colors ${isActive ? "text-gray-900" : "text-gray-500 hover:text-gray-900"}`}
+                  className={`relative group py-1 text-sm font-semibold transition-colors duration-300 ${isActive ? "text-gray-900" : "text-gray-500 hover:text-gray-900"}`}
                 >
                   {link.label}
+                  {/* Animated Underline */}
+                  <span 
+                    className={`absolute left-0 -bottom-1 w-full h-[2px] bg-lime-500 rounded-full transition-transform duration-300 origin-left ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`} 
+                  />
                 </Link>
               );
             })}
