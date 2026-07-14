@@ -1,10 +1,25 @@
 import React from "react";
 
+import Hero            from "./components/Hero";
+import Features        from "./components/Features";
+import Testimonials    from "./components/Testimonials";
+import Pricing         from "./components/Pricing";
+import FAQ             from "./components/FAQ";
+import CTA             from "./components/CTA";
+
+/**
+ * Turfzy Landing Page
+ * Redesigned for SaaS clean aesthetic.
+ */
 export default function LandingPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Welcome to Turfzy</h1>
-      <p className="mt-4 text-xl">Landing Page Placeholder</p>
-    </div>
+    <>
+      <Hero />
+      <Features />
+      <Testimonials />
+      <Pricing />
+      <FAQ />
+      <CTA />
+    </>
   );
 }

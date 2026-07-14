@@ -1,26 +1,433 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+/* ==========================================================================
+   TURFZY DESIGN SYSTEM
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Colors ── */
+  --color-primary: #A3FF12;
+  --color-primary-hover: #92E610;
+  --color-bg: #F7F8F5;
+  --color-bg-dark: #111111;
+  --color-black: #111111;
+  --color-gray-900: #222222;
+  --color-gray-800: #333333;
+  --color-gray-600: #666666;
+  --color-gray-500: #888888;
+  --color-gray-400: #AAAAAA;
+  --color-border: #ECECEC;
+  --color-border-dark: rgba(255, 255, 255, 0.12);
+
+  /* ── Spacing (8-point system) ── */
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-120: 120px;
+  --spacing-160: 160px;
+
+  /* ── Layout ── */
+  --layout-max-width: 1440px;
+  --layout-content-width: 1280px;
+  --layout-px-desktop: 64px;
+  --layout-px-tablet: 40px;
+  --layout-px-mobile: 20px;
+  --nav-height: 80px;
+
+  /* ── Border Radius ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px; /* Standard for buttons */
+  --radius-xl: 24px; /* Standard for cards */
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 8px 32px rgba(163, 255, 18, 0.25);
+  --shadow-glow-hover: 0 12px 40px rgba(163, 255, 18, 0.45);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ==========================================================================
+   RESETS & FOUNDATION
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html, body {
+  background-color: var(--color-bg) !important; /* Override Tailwind Preflight */
+  color: var(--color-black);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+::selection { background-color: var(--color-primary); color: var(--color-black); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: var(--radius-full); }
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+
+.font-clash {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+}
+
+h1, .h1 {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+h2, .h2 {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+h3, .h3 {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+p, .p-body {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #A3FF12 0%, #7ECE00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Typography Responsiveness */
+@media (max-width: 1024px) {
+  h1, .h1 { font-size: 56px; }
+  h2, .h2 { font-size: 48px; }
+  h3, .h3 { font-size: 32px; }
+  p, .p-body { font-size: 16px; }
+}
+
+@media (max-width: 768px) {
+  h1, .h1 { font-size: 40px; }
+  h2, .h2 { font-size: 36px; }
+  h3, .h3 { font-size: 28px; }
+}
+
+/* ==========================================================================
+   LAYOUT SYSTEM
+   ========================================================================== */
+
+/* The main wrapper that centers everything with a max width of 1440px */
+.layout-wrapper {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+/* The inner container that holds the content (1280px max) */
+.layout-container {
+  width: 100%;
+  max-width: var(--layout-content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--layout-px-desktop);
+  padding-right: var(--layout-px-desktop);
+}
+
+@media (max-width: 1024px) {
+  .layout-container {
+    padding-left: var(--layout-px-tablet);
+    padding-right: var(--layout-px-tablet);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 768px) {
+  .layout-container {
+    padding-left: var(--layout-px-mobile);
+    padding-right: var(--layout-px-mobile);
+  }
+}
+
+/* Consistent section padding using 8-pt spacing */
+.section-padding {
+  padding-top: var(--spacing-120);
+  padding-bottom: var(--spacing-120);
+}
+
+@media (max-width: 1024px) {
+  .section-padding {
+    padding-top: var(--spacing-96);
+    padding-bottom: var(--spacing-96);
+  }
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: var(--spacing-64);
+    padding-bottom: var(--spacing-64);
+  }
+}
+
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+
+/* ── Badges ── */
+.badge-subtle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: rgba(163, 255, 18, 0.1);
+  border: 1px solid rgba(163, 255, 18, 0.25);
+  border-radius: var(--radius-full);
+  padding: 6px var(--spacing-16);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  height: 52px;
+  padding: 0 var(--spacing-32);
+  background-color: var(--color-primary);
+  color: var(--color-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-glow-hover);
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn-black {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  height: 52px;
+  padding: 0 var(--spacing-32);
+  background-color: var(--color-black);
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-black:hover {
+  transform: translateY(-2px);
+  background-color: #333333;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  height: 52px;
+  padding: 0 var(--spacing-32);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(17, 17, 17, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-gray-800);
+  outline-offset: 2px;
+}
+
+.btn-secondary-dark {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-border-dark);
+  color: #FFFFFF;
+}
+
+.btn-secondary-dark:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 480px) {
+  .btn-primary, .btn-secondary, .btn-secondary-dark {
+    width: 100%;
+  }
+}
+
+/* ── Cards ── */
+.glass-card {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-32);
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(163, 255, 18, 0.4);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-4px);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ==========================================================================
+   ANIMATIONS & EFFECTS
+   ========================================================================== */
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes float-diagonal {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  50%       { transform: translate(4px, -12px) rotate(1.5deg); }
+}
+
+@keyframes float-shadow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.9); }
+}
+
+.animate-float {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-gentle 5s ease-in-out infinite 1s;
+}
+
+.animate-float-diagonal {
+  animation: float-diagonal 6s ease-in-out infinite;
+}
+
+/* Marquee */
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-track-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 40s linear infinite;
+}
+
+.marquee-track-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 40s linear infinite;
+}
+
+.marquee-track-left:hover, .marquee-track-right:hover {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+/* Hides elements based on breakpoints natively */
+.hide-desktop { display: none; }
+@media (max-width: 1024px) {
+  .hide-desktop { display: flex; }
+  .hide-tablet { display: none; }
+}
+@media (max-width: 768px) {
+  .hide-mobile { display: none; }
 }
