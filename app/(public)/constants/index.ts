@@ -13,162 +13,61 @@ export const NAV_LINKS = [
   { label: "Contact",  href: "#contact" },
 ] as const;
 
-// ── Trusted Stats ────────────────────────────────────────────────
-export const STATS = [
-  { value: 100,  suffix: "+",  label: "Partner Turfs",    prefix: "" },
-  { value: 50,   suffix: "K+", label: "Bookings Made",   prefix: "" },
-  { value: 15,   suffix: "+",  label: "Cities Covered",  prefix: "" },
-  { value: 4.9,  suffix: "★",  label: "Average Rating",  prefix: "" },
-] as const;
 
 // ── How It Works ─────────────────────────────────────────────────
-export const HOW_IT_WORKS = [
-  {
-    step: "01",
-    title: "Search Nearby Turfs",
-    description:
-      "Enter your location or allow GPS access. Instantly see all verified turfs near you with real-time slot availability.",
-    icon: "Search",
-  },
-  {
-    step: "02",
-    title: "Pick Your Slot",
-    description:
-      "Browse available time slots in a clean calendar view. See pricing, amenities, and reviews before you commit.",
-    icon: "Calendar",
-  },
-  {
-    step: "03",
-    title: "Play & Enjoy",
-    description:
-      "Pay securely via UPI, card, or wallet. Get instant confirmation and show your QR code at the turf. That's it.",
-    icon: "Zap",
-  },
+export const HOW_IT_WORKS = {
+  players: [
+    { step: "01", title: "Find a Turf", description: "Search for nearby verified turfs.", icon: "MapPin" },
+    { step: "02", title: "Choose Date & Time", description: "Pick your preferred slot instantly.", icon: "Calendar" },
+    { step: "03", title: "Book Instantly", description: "Confirm your booking with zero wait.", icon: "CheckCircle2" },
+    { step: "04", title: "Play & Enjoy", description: "Show up and enjoy your game.", icon: "Trophy" },
+  ],
+  owners: [
+    { step: "01", title: "List Your Turf", description: "Add your turf details and photos.", icon: "Store" },
+    { step: "02", title: "Receive Bookings", description: "Get notified as players book slots.", icon: "Bell" },
+    { step: "03", title: "Verify QR Check-In", description: "Scan QR codes for seamless entry.", icon: "QrCode" },
+    { step: "04", title: "Receive Payments", description: "Get payouts directly to your account.", icon: "Wallet" },
+  ]
+} as const;
+
+// ── App Features (Customers) ──────────────────────────────────────
+export const APP_FEATURES = [
+  { icon: "Search", title: "Search Nearby Turfs", description: "Discover venues around you." },
+  { icon: "Activity", title: "Live Availability", description: "See open slots instantly." },
+  { icon: "Filter", title: "Filters", description: "Sort by sport, price, and distance." },
+  { icon: "Heart", title: "Favorites", description: "Save your go-to turfs for quick access." },
+  { icon: "History", title: "Booking History", description: "Track all your past and upcoming games." },
+  { icon: "Lock", title: "Secure Payments", description: "Safe and seamless checkout." },
+  { icon: "QrCode", title: "QR Check-In", description: "Digital access to the pitch." },
+  { icon: "BellRing", title: "Notifications", description: "Alerts for bookings and updates." },
+  { icon: "Receipt", title: "Refund Tracking", description: "Monitor your refunds easily." },
 ] as const;
 
-// ── Features ─────────────────────────────────────────────────────
-export const FEATURES = [
-  {
-    id: "nearby-search",
-    tag: "Discovery",
-    title: "Find Turfs Near You",
-    description:
-      "Smart GPS-powered search surfaces verified turfs in your area. Filter by sport, price, rating, or time—and get there in minutes.",
-    highlights: ["GPS-powered discovery", "Advanced filters", "Interactive map view"],
-    icon: "MapPin",
-    imageAlign: "right" as const,
-  },
-  {
-    id: "live-availability",
-    tag: "Real-Time",
-    title: "Live Slot Availability",
-    description:
-      "Never wonder if a turf is available. See every slot in real time with a live indicator—no phone calls, no guesswork.",
-    highlights: ["Live slot updates", "Calendar view", "Instant lock-in on booking"],
-    icon: "Clock",
-    imageAlign: "left" as const,
-  },
-  {
-    id: "upi-payments",
-    tag: "Payments",
-    title: "Instant UPI Payments",
-    description:
-      "Pay in seconds with UPI, Razorpay, or any major wallet. Zero booking fees for customers. Refunds processed automatically.",
-    highlights: ["UPI / Card / Wallet", "Zero booking fee", "Auto-refund on cancellation"],
-    icon: "CreditCard",
-    imageAlign: "right" as const,
-  },
-  {
-    id: "owner-analytics",
-    tag: "Owners",
-    title: "Powerful Owner Analytics",
-    description:
-      "Understand your business at a glance. Revenue charts, booking heatmaps, customer retention—everything in one premium dashboard.",
-    highlights: ["Revenue charts", "Booking heatmaps", "Customer insights"],
-    icon: "BarChart2",
-    imageAlign: "left" as const,
-  },
+// ── Owner Features ───────────────────────────────────────────────
+export const OWNER_FEATURES = [
+  { icon: "LayoutGrid", title: "Manage Slots", description: "Easily update and organize availability." },
+  { icon: "CalendarDays", title: "Calendar", description: "A comprehensive view of all bookings." },
+  { icon: "LayoutDashboard", title: "Booking Dashboard", description: "All your reservations in one place." },
+  { icon: "Scan", title: "QR Scanner", description: "Quickly verify player check-ins." },
+  { icon: "TrendingUp", title: "Revenue Tracking", description: "Monitor your earnings and growth." },
+  { icon: "Wrench", title: "Maintenance Blocks", description: "Block slots for upkeep and repairs." },
+  { icon: "Users", title: "Customer Management", description: "Keep track of your loyal players." },
+  { icon: "BarChart3", title: "Analytics", description: "Deep insights into your business performance." },
 ] as const;
+
 
 // ── Why Choose Turfzy ────────────────────────────────────────────
 export const WHY_CHOOSE = [
-  {
-    icon: "Zap",
-    title: "Fast Booking",
-    description: "Go from search to confirmed booking in under 60 seconds. No friction, no waiting.",
-  },
-  {
-    icon: "ShieldCheck",
-    title: "Verified Turfs",
-    description: "Every turf on Turfzy is manually verified. Quality and safety are non-negotiable.",
-  },
-  {
-    icon: "Lock",
-    title: "Secure Payments",
-    description: "Bank-grade encryption on every transaction. Your money and data are always safe.",
-  },
-  {
-    icon: "Activity",
-    title: "Live Availability",
-    description: "Real-time slot updates so you always book what you see—zero double bookings.",
-  },
-  {
-    icon: "Tag",
-    title: "Low Platform Fee",
-    description: "Owners keep more of what they earn. One flat monthly fee, no per-booking cuts.",
-  },
-  {
-    icon: "Sparkles",
-    title: "Modern Technology",
-    description: "Built for 2026—instant confirmations, push notifications, and a buttery-smooth UX.",
-  },
+  { icon: "Zap", title: "Instant Booking", description: "No waiting or calling. Book your slot immediately." },
+  { icon: "Clock", title: "Real-Time Slot Availability", description: "Always see exactly what's open." },
+  { icon: "ShieldCheck", title: "Secure Payments", description: "Bank-grade encryption on all transactions." },
+  { icon: "ScanLine", title: "QR Check-In", description: "Scan and play. Contactless and fast." },
+  { icon: "XCircle", title: "Easy Cancellations", description: "Change of plans? Cancel with a tap." },
+  { icon: "RefreshCw", title: "Fast Refunds", description: "Get your money back quickly when you cancel." },
+  { icon: "Star", title: "Verified Reviews", description: "Read real feedback from fellow players." },
+  { icon: "CreditCard", title: "Multiple Payment Options", description: "UPI, Cards, and Wallets accepted." },
 ] as const;
 
-// ── Testimonials ─────────────────────────────────────────────────
-export const TESTIMONIALS = [
-  {
-    name: "Arjun Mehta",
-    role: "Football enthusiast, Mumbai",
-    rating: 5,
-    text: "Turfzy completely changed how our squad books games. We went from 10 WhatsApp messages to one tap. Absolute game-changer.",
-    avatar: "AM",
-  },
-  {
-    name: "Priya Sharma",
-    role: "Cricket team captain, Pune",
-    rating: 5,
-    text: "The live slot availability is insane. No more calling turfs and being put on hold. I booked our weekend match in literally 30 seconds.",
-    avatar: "PS",
-  },
-  {
-    name: "Ravi Patel",
-    role: "Turf owner, Ahmedabad",
-    rating: 5,
-    text: "As an owner, the analytics dashboard is what sold me. I can see peak hours, revenue trends, and manage bookings all from one place.",
-    avatar: "RP",
-  },
-  {
-    name: "Sneha Nair",
-    role: "Sports organizer, Bangalore",
-    rating: 5,
-    text: "Organized a 5-turf tournament using Turfzy. The team handled 50+ bookings effortlessly. The customer support is also phenomenal.",
-    avatar: "SN",
-  },
-  {
-    name: "Karan Joshi",
-    role: "Badminton player, Hyderabad",
-    rating: 5,
-    text: "The UPI payment flow is seamlessly fast. Confirmation comes in seconds and the QR code check-in makes entry a breeze.",
-    avatar: "KJ",
-  },
-  {
-    name: "Meera Iyer",
-    role: "Yoga & sports center owner, Chennai",
-    rating: 5,
-    text: "Switched from manual WhatsApp bookings to Turfzy. My bookings went up 3× in the first month. The platform fee is extremely fair.",
-    avatar: "MI",
-  },
-] as const;
 
 // ── Pricing ──────────────────────────────────────────────────────
 export const PRICING = [

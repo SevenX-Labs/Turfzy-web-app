@@ -70,7 +70,7 @@ export default function Hero() {
   return (
     <section 
       onMouseMove={handleMouseMove}
-      className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden bg-[#FAFAFA] flex flex-col items-center group"
+      className="relative pt-32 pb-4 md:pt-40 md:pb-6 overflow-hidden bg-[#FAFAFA] flex flex-col items-center group"
     >
       {/* ══════════════════════════════════════════════════════════════════
           BACKGROUND LAYERS (Alive & Perfectly Balanced)
@@ -114,8 +114,8 @@ export default function Hero() {
         className="absolute inset-[-100px] pointer-events-none opacity-40 z-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(89,166,8,0.15) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(89,166,8,0.15) 1px, transparent 1px)
+            linear-gradient(to right, rgba(89,166,8,0.3) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(89,166,8,0.3) 1px, transparent 1px)
           `,
           backgroundSize: "40px 40px",
           maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%)",
@@ -204,17 +204,13 @@ export default function Hero() {
             className="absolute -right-8 md:-right-12 bottom-20 md:bottom-32 z-20 hidden sm:block"
           >
             <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-white flex items-center gap-4">
-              <div className="flex -space-x-3">
-                <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="Avatar" />
-                <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="Avatar" />
-                <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-900 flex items-center justify-center shadow-sm">
-                  <Users size={14} className="text-white" />
-                </div>
+              <div className="w-12 h-12 bg-lime-100 rounded-full flex items-center justify-center shadow-inner">
+                <Zap size={20} className="text-lime-600" />
               </div>
               <div className="text-left">
-                <p className="text-sm font-bold text-gray-900">1,200+ Players</p>
+                <p className="text-sm font-bold text-gray-900">Instant Booking</p>
                 <p className="text-[10px] font-bold text-lime-700 bg-lime-100 px-2 py-0.5 rounded uppercase tracking-wider inline-block mt-0.5">
-                  Active Now
+                  Live Slots
                 </p>
               </div>
             </div>

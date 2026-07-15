@@ -22,15 +22,15 @@ export default function AnimatedGrid() {
       style={{
         backgroundImage: [
           // 1. Major Grid lines (100px spacing, slightly more visible)
-          "linear-gradient(to right, rgba(89,166,8,0.12) 1px, transparent 1px)",
-          "linear-gradient(to bottom, rgba(89,166,8,0.12) 1px, transparent 1px)",
+          "linear-gradient(to right, rgba(89,166,8,0.25) 1px, transparent 1px)",
+          "linear-gradient(to bottom, rgba(89,166,8,0.25) 1px, transparent 1px)",
           
           // 2. Minor Grid subdivisions (20px spacing, very faint)
-          "linear-gradient(to right, rgba(89,166,8,0.04) 1px, transparent 1px)",
-          "linear-gradient(to bottom, rgba(89,166,8,0.04) 1px, transparent 1px)",
+          "linear-gradient(to right, rgba(89,166,8,0.15) 1px, transparent 1px)",
+          "linear-gradient(to bottom, rgba(89,166,8,0.15) 1px, transparent 1px)",
           
           // 3. Dot Matrix at intersections (20px spacing, slightly glowing)
-          "radial-gradient(circle, rgba(89,166,8,0.25) 1px, transparent 1px)"
+          "radial-gradient(circle, rgba(89,166,8,0.4) 1px, transparent 1px)"
         ].join(", "),
         
         backgroundSize: [
