@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { Zap, ShieldCheck, Lock, Activity, Tag, Sparkles } from "lucide-react";
 import { WHY_CHOOSE } from "../constants";
 
-const ICONS: Record<string, React.ElementType> = { Zap, ShieldCheck, Lock, Activity, Tag, Sparkles };
+const ICONS: Record<string, any> = { Zap, ShieldCheck, Lock, Activity, Tag, Sparkles };
 
 const containerVariants = {
   hidden: {},
@@ -14,7 +14,7 @@ const containerVariants = {
 
 const cardVariants = {
   hidden:  { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
 export default function WhyChoose() {

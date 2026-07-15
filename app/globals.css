@@ -374,6 +374,11 @@ p, .p-body {
   50%       { transform: translate(4px, -12px) rotate(1.5deg); }
 }
 
+@keyframes linear-bg-slide {
+  from { background-position: 0 0; }
+  to { background-position: 100px 100px; }
+}
+
 @keyframes float-shadow {
   0%, 100% { opacity: 0.5; transform: scale(1); }
   50%       { opacity: 0.3; transform: scale(0.9); }
@@ -430,4 +435,44 @@ p, .p-body {
 }
 @media (max-width: 768px) {
   .hide-mobile { display: none; }
+}
+
+/* ==========================================================================
+   HERO — CTA BUTTON GLOW
+   Breathing box-shadow animation that runs on box-shadow only (no paint).
+   Hover state expands glow and cancels the infinite loop.
+   ========================================================================== */
+
+@keyframes hero-glow-breathe {
+  0%, 100% {
+    box-shadow:
+      0 0  0   0   rgba(89, 166, 8, 0),
+      0 4px 16px   rgba(0,   0,  0, 0.10);
+  }
+  50% {
+    box-shadow:
+      0 0  22px  6px rgba(89, 166, 8, 0.18),
+      0 6px 22px     rgba(0,   0,  0, 0.14);
+  }
+}
+
+.hero-cta-glow {
+  animation: hero-glow-breathe 3.2s ease-in-out infinite;
+  transition: box-shadow 0.3s ease, background-color 0.2s ease;
+}
+
+.hero-cta-glow:hover {
+  /* Cancel breathing, expand glow on hover */
+  animation: none;
+  box-shadow:
+    0 0  32px 10px rgba(89, 166, 8, 0.28),
+    0 8px 28px      rgba(0,   0,  0, 0.18);
+}
+
+/* Respect prefers-reduced-motion — disable glow loop */
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-glow {
+    animation: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+  }
 }

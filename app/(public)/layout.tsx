@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CustomCursor from "./components/CustomCursor";
 
 /**
  * Public layout — wraps all public-facing pages with Navbar + Footer.
@@ -9,6 +10,7 @@ import Footer from "./components/Footer";
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <CustomCursor />
       <Navbar />
       <main className="flex flex-col flex-1">{children}</main>
       <Footer />

@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/no-unknown-property, react-hooks/purity */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
@@ -20,7 +20,7 @@ const AntigravityInner = ({
   particleShape = 'capsule',
   fieldStrength = 10
 }) => {
-  const meshRef = useRef(null);
+  const meshRef = useRef<THREE.InstancedMesh>(null);
   const { viewport } = useThree();
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
@@ -101,7 +101,8 @@ const AntigravityInner = ({
     const globalRotation = state.clock.getElapsedTime() * rotationSpeed;
 
     particles.forEach((particle, i) => {
-      let { t, speed, mx, my, mz, cz, randomRadiusOffset } = particle;
+      let { t } = particle;
+      const { speed, mx, my, mz, cz, randomRadiusOffset } = particle;
 
       t = particle.t += speed / 2;
 
@@ -113,7 +114,7 @@ const AntigravityInner = ({
       const dy = my - projectedTargetY;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      let targetPos = { x: mx, y: my, z: mz * depthFactor };
+      const targetPos = { x: mx, y: my, z: mz * depthFactor };
 
       if (dist < magnetRadius) {
         const angle = Math.atan2(dy, dx) + globalRotation;
@@ -168,7 +169,7 @@ const AntigravityInner = ({
   );
 };
 
-const Antigravity = props => {
+const Antigravity = (props: any) => {
   return (
     <Canvas camera={{ position: [0, 0, 50], fov: 35 }}>
       <AntigravityInner {...props} />

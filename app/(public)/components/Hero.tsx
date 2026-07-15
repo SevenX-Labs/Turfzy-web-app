@@ -1,22 +1,46 @@
 "use client";
 
+/**
+ * Hero Section — Turfzy
+ * ─────────────────────────────────────────────────────────────────
+ * Premium, Linear/Vercel-grade hero.
+ * Features an "alive" drifting blueprint grid, fluid organic mesh 
+ * gradients (perfectly balanced density), and 3D parallax tracking.
+ */
+
 import React, { MouseEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Play, Star, MapPin, CheckCircle2, Search, Zap, Clock, Users } from "lucide-react";
-import LightRays from "./LightRays";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { Play, Zap, Clock, Users } from "lucide-react";
+
+/* ── Interaction / animation helpers ── */
+import CTAButton                              from "./hero/CTAButton";
+import HeroAnimations, { heroChildVariants } from "./hero/HeroAnimations";
 
 export default function Hero() {
+  /* ── Mouse Tracking for Parallax & 3D Tilt ── */
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [windowDimensions, setWindowDimensions] = useState({ width: 1200, height: 800 });
+
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: 1200,
+    height: 800,
+  });
 
   useEffect(() => {
-    setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
-    
-    const handleResize = () => setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const update = () =>
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
@@ -25,21 +49,21 @@ export default function Hero() {
     mouseY.set(clientY - top);
   }
 
-  // 3D Tilt calculation (Magnetic effect)
-  const rotateX = useTransform(mouseY, [0, windowDimensions.height], [12, -12]);
-  const rotateY = useTransform(mouseX, [0, windowDimensions.width], [-12, 12]);
-  
+  // 3D Tilt for Phone
+  const rotateX = useTransform(mouseY, [0, windowDimensions.height], [10, -10]);
+  const rotateY = useTransform(mouseX, [0, windowDimensions.width], [-10, 10]);
   const springRotateX = useSpring(rotateX, { stiffness: 150, damping: 20 });
   const springRotateY = useSpring(rotateY, { stiffness: 150, damping: 20 });
 
-  // Floating elements parallax (Opposite movement to mouse)
-  const x1 = useTransform(mouseX, [0, windowDimensions.width], [40, -40]);
-  const y1 = useTransform(mouseY, [0, windowDimensions.height], [40, -40]);
+  // Parallax for Card 1 (Top Left)
+  const x1 = useTransform(mouseX, [0, windowDimensions.width], [30, -30]);
+  const y1 = useTransform(mouseY, [0, windowDimensions.height], [30, -30]);
   const springX1 = useSpring(x1, { stiffness: 100, damping: 30 });
   const springY1 = useSpring(y1, { stiffness: 100, damping: 30 });
 
-  const x2 = useTransform(mouseX, [0, windowDimensions.width], [-50, 50]);
-  const y2 = useTransform(mouseY, [0, windowDimensions.height], [-50, 50]);
+  // Parallax for Card 2 (Bottom Right)
+  const x2 = useTransform(mouseX, [0, windowDimensions.width], [-40, 40]);
+  const y2 = useTransform(mouseY, [0, windowDimensions.height], [-40, 40]);
   const springX2 = useSpring(x2, { stiffness: 100, damping: 30 });
   const springY2 = useSpring(y2, { stiffness: 100, damping: 30 });
 
@@ -48,176 +72,180 @@ export default function Hero() {
       onMouseMove={handleMouseMove}
       className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden bg-[#FAFAFA] flex flex-col items-center group"
     >
-
-      {/* Light Rays Background */}
-      <div className="absolute inset-0 -z-10 pointer-events-none" style={{ width: '100%', height: '100%' }}>
-        <LightRays
-          raysOrigin="top-center"
-          raysColor="#ffffff"
-          raysSpeed={1}
-          lightSpread={0.5}
-          rayLength={3}
-          followMouse={true}
-          mouseInfluence={0.1}
-          noiseAmount={0}
-          distortion={0}
-          className="custom-rays opacity-50"
-          pulsating={false}
-          fadeDistance={1}
-          saturation={1}
+      {/* ══════════════════════════════════════════════════════════════════
+          BACKGROUND LAYERS (Alive & Perfectly Balanced)
+      ══════════════════════════════════════════════════════════════════ */}
+      
+      {/* 1. Fluid Ambient Mesh Gradients */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden blur-[100px] saturate-[1.1] opacity-80 z-0">
+        <motion.div
+          animate={{ 
+            x: ["0%", "10%", "-5%", "0%"], 
+            y: ["0%", "-10%", "10%", "0%"], 
+            scale: [1, 1.15, 0.9, 1],
+            rotate: [0, 90, 180, 360]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-10%] left-[-5%] w-[55vw] h-[45vw] bg-lime-400/30 rounded-[100%_80%_100%_90%]"
+        />
+        <motion.div
+          animate={{ 
+            x: ["0%", "-15%", "5%", "0%"], 
+            y: ["0%", "10%", "-15%", "0%"], 
+            scale: [1, 0.9, 1.1, 1],
+            rotate: [360, 180, 90, 0]
+          }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-[-10%] right-[-5%] w-[60vw] h-[55vw] bg-emerald-400/20 rounded-[80%_100%_90%_100%]"
+        />
+        <motion.div
+          animate={{ 
+            x: ["0%", "10%", "-10%", "0%"], 
+            y: ["0%", "10%", "-5%", "0%"], 
+            scale: [0.95, 1.1, 0.9, 0.95] 
+          }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] left-[30%] w-[45vw] h-[45vw] bg-yellow-300/20 rounded-full"
         />
       </div>
 
-      {/* Interactive Spotlight Hover Effect */}
-      <motion.div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100 z-0"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              800px circle at ${mouseX}px ${mouseY}px,
-              rgba(89, 166, 8, 0.12),
-              transparent 80%
-            )
-          `,
-        }}
-      />
-      
-      {/* Interactive Grid Pattern Reveal */}
-      <motion.div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-30 z-0"
+      {/* 2. Alive Blueprint Grid (Slow Infinite Diagonal Scroll) */}
+      <motion.div 
+        className="absolute inset-[-100px] pointer-events-none opacity-40 z-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, #59A608 1px, transparent 1px),
-            linear-gradient(to bottom, #59A608 1px, transparent 1px)
+            linear-gradient(to right, rgba(89,166,8,0.15) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(89,166,8,0.15) 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px',
-          maskImage: useMotionTemplate`radial-gradient(350px circle at ${mouseX}px ${mouseY}px, black, transparent)`,
-          WebkitMaskImage: useMotionTemplate`radial-gradient(350px circle at ${mouseX}px ${mouseY}px, black, transparent)`,
+          backgroundSize: "40px 40px",
+          maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%)",
         }}
+        // Seamless loop translating exactly one grid cell unit (40px)
+        animate={{ x: [0, -40], y: [0, -40] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       />
 
-      <div className="max-w-[1000px] mx-auto px-6 w-full relative z-10 flex flex-col items-center text-center">
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO CONTENT
+      ══════════════════════════════════════════════════════════════════ */}
+      <HeroAnimations className="max-w-[1000px] mx-auto px-6 w-full relative flex flex-col items-center text-center" style={{ zIndex: 20 }}>
 
-        {/* Top Badge */}
+        {/* ── Badge ── */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#59A608] shadow-[0_4px_14px_rgba(89,166,8,0.3)]"
-          style={{ marginBottom: '56px' }}
+          variants={heroChildVariants}
+          className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#59A608] shadow-[0_8px_20px_rgba(89,166,8,0.25)] hover:shadow-[0_12px_25px_rgba(89,166,8,0.35)] transition-shadow duration-300 bg-clip-padding backdrop-filter backdrop-blur-md border border-lime-400/50"
+          style={{ marginBottom: "56px" }}
         >
           <div className="bg-white/20 p-1 rounded-full flex items-center justify-center">
             <Zap size={14} className="text-white fill-white" />
           </div>
-          <span className="text-sm font-bold text-white tracking-wider uppercase mt-0.5 pr-2">The Future of Turf Booking</span>
+          <span className="text-sm font-bold text-white tracking-wider uppercase mt-0.5 pr-2">
+            The Future of Turf Booking
+          </span>
         </motion.div>
 
-        {/* Headline */}
+        {/* ── Headline ── */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-5xl md:text-6xl lg:text-[72px] font-extrabold text-gray-900 tracking-tight leading-[1.05] font-clash"
-          style={{ marginBottom: '32px' }}
+          variants={heroChildVariants}
+          className="text-5xl md:text-6xl lg:text-[76px] font-extrabold text-gray-900 tracking-tight leading-[1.05] font-clash"
+          style={{ marginBottom: "32px" }}
         >
-          Transform your game <br className="hidden md:block" />
+          Transform your game{" "}
+          <br className="hidden md:block" />
           with Turfzy.
         </motion.h1>
 
-        {/* Subtitle */}
+        {/* ── Subtitle ── */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-xl text-gray-600 font-medium max-w-2xl"
-          style={{ marginBottom: '56px' }}
+          variants={heroChildVariants}
+          className="text-lg md:text-xl text-gray-700 font-medium max-w-2xl bg-white/40 backdrop-blur-sm py-2 px-4 rounded-2xl"
+          style={{ marginBottom: "56px" }}
         >
-          Discover verified turfs, see live slot availability, and book your game in seconds. Your ultimate sports companion.
+          Discover verified turfs, see live slot availability, and book your
+          game in seconds. Your ultimate sports companion.
         </motion.p>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-24"
-          style={{ marginBottom: '96px' }}
-        >
-          <Link href="/find-turf" className="btn-black flex items-center gap-2 px-8 py-4 h-auto text-base">
-            Get Started Now <Play size={14} className="fill-white ml-1" />
-          </Link>
+        {/* ── CTA ── */}
+        <motion.div variants={heroChildVariants} style={{ marginBottom: "96px" }}>
+          <CTAButton href="/find-turf">
+            Get Started Now{" "}
+            <Play size={14} className="fill-white ml-1" />
+          </CTAButton>
         </motion.div>
 
-        {/* 3D Mockup Container */}
+        {/* ── 3D Phone Mockup Container ── */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          variants={heroChildVariants}
           className="relative w-full max-w-[900px] mb-32 flex justify-center"
-          style={{ perspective: 1200 }} // Key for 3D depth
+          style={{ perspective: 1200 }}
         >
-          
-          {/* Floating Element 1 - Top Left Parallax */}
+          {/* Floating stat card 1 — top-left (Parallax) */}
           <motion.div 
-            className="absolute -left-12 top-20 z-20 hidden lg:block"
             style={{ x: springX1, y: springY1 }}
+            className="absolute -left-8 md:-left-12 top-10 md:top-20 z-20 hidden sm:block"
           >
-            <div className="bg-white p-4 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center gap-4">
-              <div className="w-12 h-12 bg-lime-100 rounded-full flex items-center justify-center">
+            <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-white flex items-center gap-4">
+              <div className="w-12 h-12 bg-lime-100 rounded-full flex items-center justify-center shadow-inner">
                 <Clock size={20} className="text-lime-600" />
               </div>
               <div className="text-left">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Fastest Booking</p>
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                  Fastest Booking
+                </p>
                 <p className="text-lg font-black text-gray-900">Under 60 Secs</p>
               </div>
             </div>
           </motion.div>
 
-          {/* Floating Element 2 - Bottom Right Parallax */}
+          {/* Floating stat card 2 — bottom-right (Parallax) */}
           <motion.div 
-            className="absolute -right-12 bottom-32 z-20 hidden lg:block"
             style={{ x: springX2, y: springY2 }}
+            className="absolute -right-8 md:-right-12 bottom-20 md:bottom-32 z-20 hidden sm:block"
           >
-            <div className="bg-white p-4 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center gap-4">
+            <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-white flex items-center gap-4">
               <div className="flex -space-x-3">
-                <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="user" />
-                <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="user" />
+                <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="Avatar" />
+                <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="Avatar" />
                 <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-900 flex items-center justify-center shadow-sm">
                   <Users size={14} className="text-white" />
                 </div>
               </div>
               <div className="text-left">
-                <p className="text-xs font-bold text-gray-900">1,200+ Players</p>
-                <p className="text-xs font-medium text-lime-600 bg-lime-50 px-2 py-0.5 rounded inline-block">Active Now</p>
+                <p className="text-sm font-bold text-gray-900">1,200+ Players</p>
+                <p className="text-[10px] font-bold text-lime-700 bg-lime-100 px-2 py-0.5 rounded uppercase tracking-wider inline-block mt-0.5">
+                  Active Now
+                </p>
               </div>
             </div>
           </motion.div>
 
-          {/* The Phone Mockup (Tilts in 3D) */}
+          {/* Phone mockup (3D Tilt) */}
           <motion.div 
             className="relative w-full max-w-[280px] z-10 flex flex-col"
-            style={{ 
-              rotateX: springRotateX, 
+            style={{
+              rotateX: springRotateX,
               rotateY: springRotateY,
-              transformStyle: "preserve-3d"
+              transformStyle: "preserve-3d",
             }}
           >
-            {/* Realistic Phone Bezel */}
-            <div className="rounded-[44px] border-[8px] border-[#1a1a1a] bg-[#1a1a1a] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.3)] overflow-hidden">
-              {/* App Screen Image */}
-              <img 
-                src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg" 
-                alt="Turfzy App Screen" 
-                className="w-full h-auto object-contain rounded-[36px] block" 
+            <div className="rounded-[44px] border-[8px] border-[#1a1a1a] bg-[#1a1a1a] shadow-[0_40px_100px_-20px_rgba(89,166,8,0.3)] overflow-hidden relative">
+              {/* Screen Glare Effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent w-full h-full transform -skew-x-12 pointer-events-none z-20" />
+              
+              <img
+                src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
+                alt="Turfzy App Screen"
+                className="w-full h-auto object-contain rounded-[36px] block relative z-10"
               />
             </div>
           </motion.div>
 
-          {/* Subtle glow behind the phone */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[500px] bg-lime-400/20 blur-[100px] -z-10 rounded-full" />
+          {/* Soft Glow disc directly behind phone to separate it from background */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[500px] bg-white/70 blur-[60px] -z-10 rounded-full" />
         </motion.div>
 
-      </div>
+      </HeroAnimations>
     </section>
   );
 }
