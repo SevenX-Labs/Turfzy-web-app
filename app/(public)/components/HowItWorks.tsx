@@ -184,9 +184,6 @@ export default function HowItWorks() {
                     className="w-full h-full object-cover absolute inset-0 z-10 bg-white"
                   />
                 </AnimatePresence>
-
-                {/* iPhone Dynamic Island */}
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[30%] h-6 bg-[#151515] rounded-full z-20" />
               </div>
 
               {/* Minimal base shadow */}
