@@ -24,11 +24,12 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 120, damping: 20 },
+    scale: 1,
+    transition: { type: "spring", stiffness: 100, damping: 20 },
   },
 };
 
@@ -36,18 +37,30 @@ export default function WhyChoose() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
+  // Perfectly balanced 4-column layout logic (for 8 items)
+  const getColSpan = (index: number) => {
+    switch (index) {
+      case 0: return "md:col-span-2 lg:col-span-2"; // Row 1 (Left)
+      case 1: return "md:col-span-1 lg:col-span-1"; // Row 1
+      case 2: return "md:col-span-1 lg:col-span-1"; // Row 1 (Right)
+      case 3: return "md:col-span-1 lg:col-span-1"; // Row 2 (Left)
+      case 4: return "md:col-span-2 lg:col-span-2"; // Row 2 (Middle)
+      case 5: return "md:col-span-1 lg:col-span-1"; // Row 2 (Right)
+      case 6: return "md:col-span-1 lg:col-span-2"; // Row 3 (Left half)
+      case 7: return "md:col-span-1 lg:col-span-2"; // Row 3 (Right half)
+      default: return "md:col-span-1 lg:col-span-1";
+    }
+  };
+
   return (
     <section 
       className="relative bg-[#FAFAF6] py-24 md:py-32 overflow-hidden border-b border-gray-200/50" 
       id="why-turfzy"
     >
-      {/* ── Premium Ambient Background ── */}
-      {/* Subtle Dot Matrix */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
-      
-      {/* Soft Glows */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-[#7ED321]/10 to-transparent blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-t from-blue-400/5 to-transparent blur-[100px] rounded-full pointer-events-none translate-y-1/3 -translate-x-1/3" />
+      {/* ── Ambient Background Elements ── */}
+      <div className="absolute inset-0 bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:24px_24px] opacity-60 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-[#7ED321]/15 to-transparent rounded-full blur-[120px] pointer-events-none translate-x-1/4 -translate-y-1/4" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-500/10 to-transparent rounded-full blur-[100px] pointer-events-none -translate-x-1/4 translate-y-1/4" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
         
@@ -56,17 +69,16 @@ export default function WhyChoose() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-16 md:mb-24 flex flex-col items-center"
+          className="text-center mb-16 md:mb-20 flex flex-col items-center"
         >
-          {/* Sleek Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] mb-6 transition-transform hover:scale-105">
             <Sparkles size={14} className="text-[#7ED321]" />
-            <span className="text-xs font-bold text-[#151515] tracking-widest uppercase">
+            <span className="text-[11px] font-bold text-[#151515] tracking-widest uppercase">
               The Turfzy Edge
             </span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#151515] tracking-tighter leading-[1.1] mb-6 max-w-3xl text-balance">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#151515] tracking-tight leading-[1.1] mb-6 max-w-3xl text-balance">
             Built Different. <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7ED321] to-[#5a9c14]">
               Built for You.
@@ -78,49 +90,70 @@ export default function WhyChoose() {
           </p>
         </motion.div>
 
-        {/* ── Bento-Style Grid Layout ── */}
+        {/* ── Flawless Bento Grid ── */}
+        {/* grid-flow-row-dense ensures items pack tightly and leave no gaps */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-flow-row-dense gap-5 md:gap-6"
         >
           {WHY_CHOOSE.map((item, index) => {
             const Icon = ICONS[item.icon] ?? Zap;
+            
+            // Theming logic for specific cards to break up the "too white" look
+            const isGreenHero = index === 0;
+            const isDarkHero = index === 4;
+            const isWhite = !isGreenHero && !isDarkHero;
             
             return (
               <motion.div
                 key={item.title}
                 variants={cardVariants}
-                className="group relative bg-white/70 backdrop-blur-xl rounded-[28px] p-8 border border-gray-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] hover:border-[#7ED321]/30 transition-all duration-500 overflow-hidden flex flex-col"
+                className={`group relative rounded-[28px] p-7 md:p-8 overflow-hidden flex flex-col justify-between transition-all duration-500 ${getColSpan(index)} ${
+                  isGreenHero ? "bg-gradient-to-br from-[#7ED321] to-[#5a9c14] shadow-[0_12px_32px_rgba(126,211,33,0.25)] border-none text-white" :
+                  isDarkHero ? "bg-[#151515] shadow-xl border-none text-white" :
+                  "bg-white border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] hover:border-[#7ED321]/30"
+                }`}
               >
-                {/* Subtle Hover Gradient Corner */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#7ED321]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tr-[28px]" />
+                {/* Large Background Watermark Icon (Fills empty space elegantly) */}
+                <Icon 
+                  className={`absolute -bottom-6 -right-6 w-36 h-36 transition-all duration-700 pointer-events-none ${
+                    isGreenHero ? "opacity-20 text-white rotate-12 group-hover:scale-110" :
+                    isDarkHero ? "opacity-5 text-white -rotate-12 group-hover:scale-110" :
+                    "opacity-[0.03] text-black group-hover:opacity-[0.06] group-hover:scale-110 group-hover:-rotate-6"
+                  }`} 
+                  strokeWidth={1} 
+                />
 
-                {/* Modern Icon Container */}
-                <div className="relative w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-6 group-hover:bg-white group-hover:shadow-sm transition-all duration-300 z-10">
-                  <Icon 
-                    size={22} 
-                    className="text-[#5C5C5C] group-hover:text-[#7ED321] transition-colors duration-300" 
-                    strokeWidth={2} 
-                  />
-                  {/* Micro-interaction ring */}
-                  <div className="absolute inset-0 rounded-2xl border border-[#7ED321]/0 group-hover:border-[#7ED321]/20 scale-95 group-hover:scale-110 transition-all duration-500 opacity-0 group-hover:opacity-100" />
+                {/* Content Top: Icon Container */}
+                <div className="relative z-10 flex items-start mb-8 md:mb-12">
+                  <div className={`w-12 h-12 rounded-[14px] flex items-center justify-center transition-all duration-500 ${
+                    isGreenHero ? "bg-white/20 text-white backdrop-blur-sm" :
+                    isDarkHero ? "bg-white/10 text-white backdrop-blur-sm" :
+                    "bg-gray-50 border border-gray-100 text-[#5C5C5C] group-hover:bg-[#7ED321]/10 group-hover:text-[#63a71b] group-hover:border-[#7ED321]/20"
+                  }`}>
+                    <Icon size={22} strokeWidth={2.5} />
+                  </div>
                 </div>
                 
-                {/* Content */}
+                {/* Content Bottom: Text */}
                 <div className="relative z-10">
-                  <h3 className="text-xl font-bold text-[#151515] tracking-tight mb-3">
+                  <h3 className={`font-bold tracking-tight mb-2 transition-colors duration-300 ${
+                    isGreenHero || isDarkHero ? "text-white text-xl md:text-2xl" : 
+                    "text-[#151515] text-lg md:text-xl group-hover:text-[#7ED321]"
+                  }`}>
                     {item.title}
                   </h3>
                   
-                  <p className="text-[#5C5C5C] text-sm leading-relaxed font-medium">
+                  <p className={`text-sm leading-relaxed font-medium max-w-[90%] ${
+                    isGreenHero ? "text-white/90" :
+                    isDarkHero ? "text-gray-400" :
+                    "text-[#5C5C5C]"
+                  }`}>
                     {item.description}
                   </p>
                 </div>
-
-                {/* Subtle Bottom Glow Line on Hover */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-transparent via-[#7ED321] to-transparent group-hover:w-2/3 transition-all duration-700 opacity-0 group-hover:opacity-100" />
               </motion.div>
             );
           })}
