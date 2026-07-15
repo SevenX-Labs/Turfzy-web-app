@@ -30,8 +30,8 @@ import { motion, useReducedMotion } from "framer-motion";
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface CTAButtonProps {
-  href:       string;
-  children:   React.ReactNode;
+  href: string;
+  children: React.ReactNode;
   className?: string;
 }
 
@@ -45,7 +45,7 @@ export default function CTAButton({ href, children, className = "" }: CTAButtonP
       className="inline-block"
       style={{ borderRadius: "9999px" }}
       whileHover={prefersReduced ? {} : { scale: 1.05 }}
-      whileTap={prefersReduced  ? {} : { scale: 0.97 }}
+      whileTap={prefersReduced ? {} : { scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
       <Link

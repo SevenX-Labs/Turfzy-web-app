@@ -35,17 +35,17 @@ const YoutubeSVG = () => (
 );
 
 const SOCIAL = [
-  { label: "Twitter",   href: "https://twitter.com/turfzy",        Icon: TwitterSVG   },
-  { label: "Instagram", href: "https://instagram.com/turfzy",        Icon: InstagramSVG },
-  { label: "LinkedIn",  href: "https://linkedin.com/company/turfzy", Icon: LinkedInSVG  },
-  { label: "YouTube",   href: "https://youtube.com/@turfzy",         Icon: YoutubeSVG   },
+  { label: "Twitter", href: "https://twitter.com/turfzy", Icon: TwitterSVG },
+  { label: "Instagram", href: "https://instagram.com/turfzy", Icon: InstagramSVG },
+  { label: "LinkedIn", href: "https://linkedin.com/company/turfzy", Icon: LinkedInSVG },
+  { label: "YouTube", href: "https://youtube.com/@turfzy", Icon: YoutubeSVG },
 ] as const;
 
 const COLUMNS = [
-  { heading: "Product", links: FOOTER_LINKS.product  },
-  { heading: "Company", links: FOOTER_LINKS.company  },
-  { heading: "Legal",   links: FOOTER_LINKS.legal    },
-  { heading: "Support", links: FOOTER_LINKS.support  },
+  { heading: "Product", links: FOOTER_LINKS.product },
+  { heading: "Company", links: FOOTER_LINKS.company },
+  { heading: "Legal", links: FOOTER_LINKS.legal },
+  { heading: "Support", links: FOOTER_LINKS.support },
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -69,7 +69,7 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-[#0a0f07] to-[#0d1509] border-t border-white/5">
-      
+
       {/* ── Ambient Deep Glow ── */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-lime-500/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -85,7 +85,7 @@ export default function Footer() {
       >
         {/* ── Main grid: brand col + 4 link cols ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 pb-16 border-b border-white/10">
-          
+
           {/* Brand column */}
           <motion.div variants={itemVariants} className="lg:col-span-2 flex flex-col gap-6">
             <Link
@@ -141,7 +141,7 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8"
         >
@@ -151,9 +151,9 @@ export default function Footer() {
 
           <div className="flex items-center gap-6">
             {[
-              { label: "Privacy",  href: "/privacy" },
-              { label: "Terms",    href: "/terms"   },
-              { label: "Cookies",  href: "/cookies" },
+              { label: "Privacy", href: "/privacy" },
+              { label: "Terms", href: "/terms" },
+              { label: "Cookies", href: "/cookies" },
             ].map(({ label, href }) => (
               <Link
                 key={label}

@@ -53,7 +53,7 @@ export default function Features() {
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-500/10 via-transparent to-transparent rounded-full blur-[100px] pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
-        
+
         {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,9 +101,8 @@ export default function Features() {
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`relative flex items-center gap-2 px-8 py-3 rounded-[12px] text-base font-semibold transition-all duration-300 z-10 ${
-                    isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
-                  }`}
+                  className={`relative flex items-center gap-2 px-8 py-3 rounded-[12px] text-base font-semibold transition-all duration-300 z-10 ${isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
+                    }`}
                 >
                   <tab.icon size={18} />
                   {tab.label}
@@ -140,33 +139,31 @@ export default function Features() {
                   key={feature.title}
                   variants={itemVariants}
                   // We apply color blocking here: Wide cards get a soft green tint, regular cards get a crisp white/gray gradient
-                  className={`group relative overflow-hidden rounded-[32px] p-8 md:p-10 flex flex-col justify-between transition-all duration-500 border ${colSpan} ${
-                    isWide 
-                      ? "bg-gradient-to-br from-[#f4fce8] to-[#ebf9eb] border-[#7ED321]/20 shadow-[0_8px_24px_rgba(126,211,33,0.05)] hover:shadow-[0_20px_40px_rgba(126,211,33,0.12)] hover:-translate-y-1 hover:border-[#7ED321]/40" 
+                  className={`group relative overflow-hidden rounded-[32px] p-8 md:p-10 flex flex-col justify-between transition-all duration-500 border ${colSpan} ${isWide
+                      ? "bg-gradient-to-br from-[#f4fce8] to-[#ebf9eb] border-[#7ED321]/20 shadow-[0_8px_24px_rgba(126,211,33,0.05)] hover:shadow-[0_20px_40px_rgba(126,211,33,0.12)] hover:-translate-y-1 hover:border-[#7ED321]/40"
                       : "bg-gradient-to-br from-white to-gray-50/80 border-gray-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-[#7ED321]/30"
-                  }`}
+                    }`}
                 >
                   {/* 1. Subtle Interior Texture (Dot Grid that appears on hover) */}
                   <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />
 
                   {/* Top Section: Icon & Decorative Elements */}
                   <div className="relative z-10 flex justify-between items-start mb-10">
-                    
+
                     {/* Highly Polished Icon Container */}
-                    <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center transition-all duration-500 shadow-sm border ${
-                      isWide 
-                        ? "bg-white border-[#7ED321]/20 text-[#63a71b] group-hover:scale-110 group-hover:bg-[#7ED321] group-hover:text-white" 
+                    <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center transition-all duration-500 shadow-sm border ${isWide
+                        ? "bg-white border-[#7ED321]/20 text-[#63a71b] group-hover:scale-110 group-hover:bg-[#7ED321] group-hover:text-white"
                         : "bg-gradient-to-b from-white to-gray-50 border-gray-100 text-[#5C5C5C] group-hover:scale-110 group-hover:text-[#63a71b] group-hover:border-[#7ED321]/30"
-                    }`}>
+                      }`}>
                       <Icon size={24} strokeWidth={2} />
                     </div>
 
                     {/* Background Watermark Icon for wide cards */}
                     {isWide && (
-                      <Icon 
-                        size={140} 
-                        className="absolute -top-10 -right-6 text-[#7ED321]/5 opacity-0 group-hover:opacity-100 transition-all duration-700 rotate-12 group-hover:rotate-0 pointer-events-none" 
-                        strokeWidth={1} 
+                      <Icon
+                        size={140}
+                        className="absolute -top-10 -right-6 text-[#7ED321]/5 opacity-0 group-hover:opacity-100 transition-all duration-700 rotate-12 group-hover:rotate-0 pointer-events-none"
+                        strokeWidth={1}
                       />
                     )}
                   </div>

@@ -1,17 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { 
-  MapPin, Calendar, CheckCircle2, Trophy, 
+import {
+  MapPin, Calendar, CheckCircle2, Trophy,
   Store, Bell, QrCode, Wallet, ArrowRight, Layers
 } from "lucide-react";
 import { HOW_IT_WORKS } from "../constants";
 
-const ICONS: Record<string, any> = { 
-  MapPin, Calendar, CheckCircle2, Trophy, 
-  Store, Bell, QrCode, Wallet 
+const ICONS: Record<string, any> = {
+  MapPin, Calendar, CheckCircle2, Trophy,
+  Store, Bell, QrCode, Wallet
 };
 
 // Placeholder paths - keep your existing ones
@@ -55,17 +54,17 @@ export default function HowItWorks() {
   }, [activeTab]);
 
   return (
-    <section 
-      id="how-it-works" 
+    <section
+      id="how-it-works"
       className="relative bg-[#FAFAF6] py-24 md:py-32 border-b border-gray-200/50 overflow-hidden"
     >
       {/* ── Premium Alive Background ── */}
       {/* 1. Fluid Mesh Gradients */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none blur-[90px] opacity-70">
         <motion.div
-          animate={{ 
-            x: ["0%", "15%", "-5%", "0%"], 
-            y: ["0%", "-10%", "15%", "0%"], 
+          animate={{
+            x: ["0%", "15%", "-5%", "0%"],
+            y: ["0%", "-10%", "15%", "0%"],
             scale: [1, 1.2, 0.9, 1],
             rotate: [0, 180, 360, 360]
           }}
@@ -73,9 +72,9 @@ export default function HowItWorks() {
           className="absolute top-0 left-0 w-[60vw] h-[60vw] bg-[#7ED321]/20 rounded-full"
         />
         <motion.div
-          animate={{ 
-            x: ["0%", "-15%", "5%", "0%"], 
-            y: ["0%", "10%", "-15%", "0%"], 
+          animate={{
+            x: ["0%", "-15%", "5%", "0%"],
+            y: ["0%", "10%", "-15%", "0%"],
             scale: [1, 0.9, 1.1, 1],
             rotate: [360, 180, 90, 0]
           }}
@@ -85,7 +84,7 @@ export default function HowItWorks() {
       </div>
 
       {/* 2. Alive Blueprint Grid (Full width) */}
-      <motion.div 
+      <motion.div
         className="absolute inset-[-50px] pointer-events-none opacity-50 z-0"
         style={{
           backgroundImage: `
@@ -101,7 +100,7 @@ export default function HowItWorks() {
       />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10" ref={containerRef}>
-        
+
         {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -116,7 +115,7 @@ export default function HowItWorks() {
               The Process
             </span>
           </div>
-          
+
           <h2 className="text-5xl md:text-6xl lg:text-[5rem] font-extrabold text-[#7ED321] tracking-tight leading-[1.1]">
             How it works
           </h2>
@@ -127,7 +126,7 @@ export default function HowItWorks() {
         </motion.div>
 
         {/* ── Tab Switcher ── */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -140,9 +139,8 @@ export default function HowItWorks() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`relative px-10 py-3 rounded-[12px] text-base font-semibold transition-colors duration-300 z-10 capitalize ${
-                    isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
-                  }`}
+                  className={`relative px-10 py-3 rounded-[12px] text-base font-semibold transition-colors duration-300 z-10 capitalize ${isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
+                    }`}
                 >
                   For {tab}
                   {isActive && (
@@ -159,38 +157,31 @@ export default function HowItWorks() {
         </motion.div>
 
         {/* ── Main Content Grid ── */}
-        <div 
+        <div
           className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          
+
           {/* Left Side: Phone Mockup */}
           <div className="lg:col-span-5 lg:col-start-2 order-1 flex justify-center perspective-[1000px]">
             <div className="relative w-full max-w-[260px] md:max-w-[280px]">
-              
+
               {/* Premium Phone Frame */}
               <div className="rounded-[44px] md:rounded-[48px] border-[10px] md:border-[12px] border-[#151515] bg-[#151515] shadow-2xl overflow-hidden relative aspect-[9/19.5]">
-                
+
                 {/* Dynamic Screen Image */}
                 <AnimatePresence mode="wait">
-                  <motion.div
+                  <motion.img
                     key={`${activeTab}-${activeStep}`}
+                    src={APP_SCREENSHOTS[activeTab][activeStep]}
+                    alt={`${activeTab} ui step ${activeStep + 1}`}
                     initial={{ opacity: 0, scale: 1.02 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="w-full h-full absolute inset-0 z-10 bg-white"
-                  >
-                    <Image
-                      src={APP_SCREENSHOTS[activeTab][activeStep]}
-                      alt={`${activeTab} ui step ${activeStep + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      priority
-                      className="object-cover"
-                    />
-                  </motion.div>
+                    className="w-full h-full object-cover absolute inset-0 z-10 bg-white"
+                  />
                 </AnimatePresence>
               </div>
 
@@ -209,11 +200,10 @@ export default function HowItWorks() {
                 <button
                   key={index}
                   onClick={() => setActiveStep(index)}
-                  className={`group relative w-full text-left p-6 rounded-2xl transition-all duration-300 border-none overflow-hidden ${
-                    isActive 
-                      ? "bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)]" 
+                  className={`group relative w-full text-left p-6 rounded-2xl transition-all duration-300 border-none overflow-hidden ${isActive
+                      ? "bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
                       : "bg-transparent hover:bg-black/[0.02]"
-                  }`}
+                    }`}
                 >
                   {/* SaaS-Style Vertical Progress Indicator */}
                   {isActive && (
@@ -222,31 +212,29 @@ export default function HowItWorks() {
                       className="absolute left-0 top-0 bottom-0 w-1 bg-[#7ED321]"
                       initial={{ height: "0%" }}
                       animate={{ height: isHovering ? "100%" : "100%" }}
-                      transition={{ 
-                        duration: isHovering ? 0 : 5, 
-                        ease: "linear" 
+                      transition={{
+                        duration: isHovering ? 0 : 5,
+                        ease: "linear"
                       }}
                     />
                   )}
 
                   <div className="flex items-start gap-5">
                     {/* Icon Container */}
-                    <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${
-                      isActive 
-                        ? "bg-[#7ED321]/10 text-[#68b01a]" 
+                    <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${isActive
+                        ? "bg-[#7ED321]/10 text-[#68b01a]"
                         : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"
-                    }`}>
+                      }`}>
                       <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
                     </div>
 
                     {/* Text Content */}
                     <div className="flex-1 pt-0.5">
-                      <h3 className={`text-lg font-bold tracking-tight mb-1.5 transition-colors duration-300 ${
-                        isActive ? "text-[#151515]" : "text-[#5C5C5C] group-hover:text-[#151515]"
-                      }`}>
+                      <h3 className={`text-lg font-bold tracking-tight mb-1.5 transition-colors duration-300 ${isActive ? "text-[#151515]" : "text-[#5C5C5C] group-hover:text-[#151515]"
+                        }`}>
                         {step.title}
                       </h3>
-                      
+
                       <AnimatePresence initial={false}>
                         {isActive && (
                           <motion.div

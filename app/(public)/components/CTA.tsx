@@ -12,7 +12,7 @@ export default function CTA() {
   return (
     <section className="py-24 md:py-32 bg-white border-t border-gray-100" id="cta">
       <div className="max-w-[1200px] mx-auto px-6 relative" ref={ref}>
-        
+
         {/* Background Subtle Pattern */}
         <div className="absolute inset-0 z-0 flex items-center justify-center opacity-50 pointer-events-none">
           <div className="w-full h-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]" />
@@ -26,29 +26,29 @@ export default function CTA() {
         >
           {/* Green accent line top */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-lime-400 via-emerald-500 to-lime-400" />
-          
+
           <div className="px-6 py-20 md:py-28 lg:py-32 flex flex-col items-center justify-center text-center relative z-10">
-            
+
             {/* Text Content */}
             <div className="max-w-3xl flex flex-col items-center justify-center gap-8">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white font-clash tracking-tight leading-[1.1]">
                 Ready to elevate your game?
               </h2>
-              
+
               <p className="text-lg md:text-xl text-gray-400 font-medium max-w-xl leading-relaxed">
                 Join the platform designed to make booking turfs and managing venues entirely effortless.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
-                <Link 
-                  href="/find-turf" 
+                <Link
+                  href="/find-turf"
                   className="w-full sm:w-auto bg-lime-500 hover:bg-lime-400 text-black font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_0_20px_rgba(132,204,22,0.2)]"
                 >
                   Get Started
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link 
-                  href="#owners" 
+                <Link
+                  href="#owners"
                   className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center"
                 >
                   I'm a Turf Owner
