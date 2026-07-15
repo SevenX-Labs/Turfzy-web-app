@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { 
   MapPin, Calendar, CheckCircle2, Trophy, 
@@ -173,16 +174,23 @@ export default function HowItWorks() {
                 
                 {/* Dynamic Screen Image */}
                 <AnimatePresence mode="wait">
-                  <motion.img
+                  <motion.div
                     key={`${activeTab}-${activeStep}`}
-                    src={APP_SCREENSHOTS[activeTab][activeStep]}
-                    alt={`${activeTab} ui step ${activeStep + 1}`}
                     initial={{ opacity: 0, scale: 1.02 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="w-full h-full object-cover absolute inset-0 z-10 bg-white"
-                  />
+                    className="w-full h-full absolute inset-0 z-10 bg-white"
+                  >
+                    <Image
+                      src={APP_SCREENSHOTS[activeTab][activeStep]}
+                      alt={`${activeTab} ui step ${activeStep + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      priority
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </AnimatePresence>
               </div>
 

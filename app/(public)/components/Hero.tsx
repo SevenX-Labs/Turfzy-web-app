@@ -10,6 +10,7 @@
 
 import React, { MouseEvent, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   motion,
   useMotionValue,
@@ -229,9 +230,12 @@ export default function Hero() {
               {/* Screen Glare Effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent w-full h-full transform -skew-x-12 pointer-events-none z-20" />
               
-              <img
+              <Image
                 src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
                 alt="Turfzy App Screen"
+                width={400}
+                height={800}
+                priority
                 className="w-full h-auto object-contain rounded-[36px] block relative z-10"
               />
             </div>
