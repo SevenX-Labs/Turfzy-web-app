@@ -55,7 +55,7 @@ export default function Hero() {
   return (
     <section
       onMouseMove={handleMouseMove}
-      className="relative min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-1rem)] pt-24 pb-6 md:pt-28 md:pb-8 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] group selection:bg-[#7ED321] selection:text-black"
+      className="relative min-h-[calc(100vh-5rem)] lg:min-h-screen pt-22 pb-12 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] group selection:bg-[#7ED321] selection:text-black"
     >
       {/* ══════════════════════════════════════════════════════════════════
           BACKGROUND LAYERS (Pitch Blueprint, Mesh Gradients & Spotlight)
@@ -212,7 +212,7 @@ export default function Hero() {
           {/* ── RIGHT COLUMN: Prominent Turfzy Product Mockup ── */}
           <motion.div
             variants={heroChildVariants}
-            className="lg:col-span-5 flex justify-center lg:justify-end relative w-full pt-1 lg:pt-0"
+            className="lg:col-span-5 flex justify-center lg:justify-end relative w-full pt-1 lg:pt-2"
           >
             <TurfzyAppMockup />
           </motion.div>
