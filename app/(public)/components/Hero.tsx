@@ -3,18 +3,7 @@
 /**
  * Hero Section — Turfzy
  * ─────────────────────────────────────────────────────────────────
- * Clean, modern, high-conversion hero section fitted above the fold
- * in a single viewport.
- *
- * 1. Badge: Sports Venue & Turf Booking
- * 2. Headline (H1): Find Your Turf. Book Your Game.
- * 3. Supporting Line: Play Without the Hassle.
- * 4. Description: Discover nearby sports venues, check available time slots,
- *    and reserve your game in seconds.
- * 5. Primary CTA: Find a Turf →
- * 6. Secondary CTA: List Your Turf
- * 7. Trust Row: Live Availability · Secure Payments · Verified Venues
- * 8. Product Mockup: Realistic Turfzy booking app screen prominently above the fold.
+ * Clean, high-conversion hero section calibrated to fit within a single screen.
  */
 
 import React, { MouseEvent, useEffect, useState } from "react";
@@ -66,7 +55,7 @@ export default function Hero() {
   return (
     <section
       onMouseMove={handleMouseMove}
-      className="relative min-h-[calc(100vh-80px)] pt-20 pb-8 lg:pt-22 lg:pb-8 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] group selection:bg-[#7ED321] selection:text-black"
+      className="relative min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-1rem)] pt-24 pb-6 md:pt-28 md:pb-8 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] group selection:bg-[#7ED321] selection:text-black"
     >
       {/* ══════════════════════════════════════════════════════════════════
           BACKGROUND LAYERS (Pitch Blueprint, Mesh Gradients & Spotlight)
@@ -124,11 +113,11 @@ export default function Hero() {
       {/* ══════════════════════════════════════════════════════════════════
           HERO MAIN TWO-COLUMN CONTAINER
       ══════════════════════════════════════════════════════════════════ */}
-      <div className="max-w-[1200px] mx-auto px-6 w-full relative z-10 my-auto">
-        <HeroAnimations className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center">
+      <div className="max-w-[1140px] mx-auto px-6 w-full relative z-10 my-auto">
+        <HeroAnimations className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
 
           {/* ── LEFT COLUMN: Text Content & CTAs ── */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left gap-3.5 sm:gap-4">
+          <div className="lg:col-span-7 flex flex-col items-start text-left gap-2.5 sm:gap-3 lg:gap-3.5">
 
             {/* 1. Category / Network Badge */}
             <motion.div
@@ -150,7 +139,7 @@ export default function Hero() {
             {/* 2. Main Headline (Single H1) */}
             <motion.h1
               variants={heroChildVariants}
-              className="text-4xl sm:text-5xl lg:text-[48px] xl:text-[56px] font-extrabold text-[#111111] tracking-tight leading-[1.06] font-clash"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[50px] font-extrabold text-[#111111] tracking-tight leading-[1.08] font-clash"
             >
               Find Your Turf. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#111111] via-[#3a6809] to-[#7ED321]">
@@ -161,15 +150,15 @@ export default function Hero() {
             {/* 3. Supporting Emotional Line */}
             <motion.p
               variants={heroChildVariants}
-              className="text-lg sm:text-xl font-bold text-[#559414] tracking-tight"
+              className="text-base sm:text-lg lg:text-xl font-bold text-[#559414] tracking-tight"
             >
               Play Without the Hassle.
             </motion.p>
 
-            {/* 4. Short Description (Directly on background without card) */}
+            {/* 4. Short Description */}
             <motion.p
               variants={heroChildVariants}
-              className="text-sm sm:text-base text-[#4a4a4a] font-normal leading-relaxed max-w-lg"
+              className="text-xs sm:text-sm md:text-[15px] text-[#4a4a4a] font-normal leading-relaxed max-w-lg"
             >
               Discover nearby sports venues, check available time slots, and reserve your game in seconds.
             </motion.p>
@@ -182,7 +171,7 @@ export default function Hero() {
               {/* Primary CTA */}
               <Link
                 href="/find-turf"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-[#7ED321] text-[#111111] font-extrabold text-sm sm:text-base shadow-[0_6px_20px_rgba(126,211,33,0.35)] hover:shadow-[0_10px_28px_rgba(126,211,33,0.48)] hover:bg-[#74c81b] active:scale-[0.98] transition-all duration-200 border border-lime-300/60"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-[#7ED321] text-[#111111] font-extrabold text-sm sm:text-base shadow-[0_6px_20px_rgba(126,211,33,0.35)] hover:shadow-[0_10px_28px_rgba(126,211,33,0.48)] hover:bg-[#74c81b] active:scale-[0.98] transition-all duration-200 border border-lime-300/60"
               >
                 <span>Find a Turf</span>
                 <ArrowRight size={16} className="stroke-[2.5]" />
@@ -191,7 +180,7 @@ export default function Hero() {
               {/* Secondary CTA */}
               <Link
                 href="/turf-partner"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white/95 hover:bg-white text-[#151515] font-bold text-sm sm:text-base border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-black/20 active:scale-[0.98] transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 rounded-full bg-white/95 hover:bg-white text-[#151515] font-bold text-sm sm:text-base border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-black/20 active:scale-[0.98] transition-all duration-200"
               >
                 List Your Turf
               </Link>
@@ -200,7 +189,7 @@ export default function Hero() {
             {/* 6. Trust Indicators Row */}
             <motion.div
               variants={heroChildVariants}
-              className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-semibold text-[#555555] pt-1"
+              className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-semibold text-[#555555] pt-0.5"
             >
               <span className="inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#5da610]" />
@@ -223,7 +212,7 @@ export default function Hero() {
           {/* ── RIGHT COLUMN: Prominent Turfzy Product Mockup ── */}
           <motion.div
             variants={heroChildVariants}
-            className="lg:col-span-5 flex justify-center lg:justify-end relative w-full pt-2 lg:pt-0"
+            className="lg:col-span-5 flex justify-center lg:justify-end relative w-full pt-1 lg:pt-0"
           >
             <TurfzyAppMockup />
           </motion.div>
