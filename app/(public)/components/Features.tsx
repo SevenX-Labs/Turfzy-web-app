@@ -4,33 +4,28 @@ import React, { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
 import {
   Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
-  LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3,
-  Smartphone, Monitor, Sparkles
+  LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3, Star,
+  Store, Wallet, Smartphone, Monitor, Sparkles, Layers
 } from "lucide-react";
-import { APP_FEATURES, OWNER_FEATURES } from "../constants";
+import { FEATURE_CLUSTERS_PLAYER, FEATURE_CLUSTERS_OWNER } from "../constants";
 
-const PLAYER_ICONS: Record<string, any> = { Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt };
-const OWNER_ICONS: Record<string, any> = { LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3 };
+const ICONS: Record<string, any> = {
+  Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
+  LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3, Star,
+  Store, Wallet
+};
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
   visible: {
     opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring", stiffness: 100, damping: 20 },
+    transition: { type: "spring", stiffness: 120, damping: 20 },
   },
-};
-
-// Creates a seamless bento pattern automatically
-const getBentoSpan = (index: number) => {
-  const pattern = index % 5;
-  // Make the 1st and 4th items wide to break the grid monotony
-  if (pattern === 0 || pattern === 3) return "md:col-span-2 lg:col-span-2";
-  return "md:col-span-1 lg:col-span-1";
 };
 
 export default function Features() {
@@ -39,8 +34,7 @@ export default function Features() {
   const [activeTab, setActiveTab] = useState<"players" | "owners">("players");
 
   const isPlayers = activeTab === "players";
-  const features = isPlayers ? APP_FEATURES : OWNER_FEATURES;
-  const icons = isPlayers ? PLAYER_ICONS : OWNER_ICONS;
+  const clusters = isPlayers ? FEATURE_CLUSTERS_PLAYER : FEATURE_CLUSTERS_OWNER;
 
   return (
     <section
@@ -79,8 +73,8 @@ export default function Features() {
 
           <p className="text-lg md:text-xl text-[#5C5C5C] max-w-2xl mx-auto font-medium leading-relaxed text-balance">
             {isPlayers
-              ? "Discover venues, split payments with friends, and hit the pitch faster than ever before with our intuitive platform."
-              : "Automate your bookings, track revenue in real-time, and completely eliminate empty slots and double-bookings."}
+              ? "Explore the full suite of player tools engineered to make finding venues, coordinating with your squad, and stepping onto the pitch completely frictionless."
+              : "A comprehensive operating system built to automate court bookings, streamline peak-hour check-ins, and give you deep visibility into venue revenue."}
           </p>
         </motion.div>
 
@@ -119,7 +113,7 @@ export default function Features() {
           </div>
         </motion.div>
 
-        {/* ── Colorful Bento Features Grid ── */}
+        {/* ── Grouped Feature Clusters ── */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -127,63 +121,58 @@ export default function Features() {
             initial="hidden"
             animate="visible"
             exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-6"
+            className="flex flex-col gap-14"
           >
-            {features.map((feature, index) => {
-              const Icon = icons[feature.icon] ?? Search;
-              const colSpan = getBentoSpan(index);
-              const isWide = colSpan === "md:col-span-2 lg:col-span-2";
-
-              return (
-                <motion.div
-                  key={feature.title}
-                  variants={itemVariants}
-                  // We apply color blocking here: Wide cards get a soft green tint, regular cards get a crisp white/gray gradient
-                  className={`group relative overflow-hidden rounded-[32px] p-8 md:p-10 flex flex-col justify-between transition-all duration-500 border ${colSpan} ${isWide
-                      ? "bg-gradient-to-br from-[#f4fce8] to-[#ebf9eb] border-[#7ED321]/20 shadow-[0_8px_24px_rgba(126,211,33,0.05)] hover:shadow-[0_20px_40px_rgba(126,211,33,0.12)] hover:-translate-y-1 hover:border-[#7ED321]/40"
-                      : "bg-gradient-to-br from-white to-gray-50/80 border-gray-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-[#7ED321]/30"
-                    }`}
-                >
-                  {/* 1. Subtle Interior Texture (Dot Grid that appears on hover) */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />
-
-                  {/* Top Section: Icon & Decorative Elements */}
-                  <div className="relative z-10 flex justify-between items-start mb-10">
-
-                    {/* Highly Polished Icon Container */}
-                    <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center transition-all duration-500 shadow-sm border ${isWide
-                        ? "bg-white border-[#7ED321]/20 text-[#63a71b] group-hover:scale-110 group-hover:bg-[#7ED321] group-hover:text-white"
-                        : "bg-gradient-to-b from-white to-gray-50 border-gray-100 text-[#5C5C5C] group-hover:scale-110 group-hover:text-[#63a71b] group-hover:border-[#7ED321]/30"
-                      }`}>
-                      <Icon size={24} strokeWidth={2} />
-                    </div>
-
-                    {/* Background Watermark Icon for wide cards */}
-                    {isWide && (
-                      <Icon
-                        size={140}
-                        className="absolute -top-10 -right-6 text-[#7ED321]/5 opacity-0 group-hover:opacity-100 transition-all duration-700 rotate-12 group-hover:rotate-0 pointer-events-none"
-                        strokeWidth={1}
-                      />
-                    )}
-                  </div>
-
-                  {/* Bottom Section: Text Content */}
-                  <div className="relative z-10 flex flex-col">
-                    <h3 className={`font-bold tracking-tight mb-3 text-[#151515] transition-colors duration-300 ${isWide ? "text-2xl md:text-3xl" : "text-xl"}`}>
-                      {feature.title}
+            {clusters.map((cluster, cIndex) => (
+              <div key={cluster.category} className="flex flex-col gap-6">
+                {/* Cluster Header & Intro Sentence */}
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-gray-200/80 pb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#7ED321]" />
+                    <h3 className="text-xl md:text-2xl font-bold text-[#151515] tracking-tight">
+                      {cluster.category}
                     </h3>
-
-                    <p className={`text-[#5C5C5C] leading-relaxed font-medium ${isWide ? "text-base md:text-lg max-w-lg" : "text-sm"}`}>
-                      {feature.description}
-                    </p>
                   </div>
+                  <p className="text-sm md:text-base text-[#5C5C5C] font-medium max-w-xl">
+                    {cluster.tagline}
+                  </p>
+                </div>
 
-                  {/* Animated Bottom Highlight Line */}
-                  <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#7ED321] to-transparent opacity-0 group-hover:opacity-100 scale-x-0 group-hover:scale-x-100 transition-all duration-700 ease-out" />
-                </motion.div>
-              );
-            })}
+                {/* Cluster Cards Grid */}
+                <div className={`grid grid-cols-1 md:grid-cols-2 ${cluster.items.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-6`}>
+                  {cluster.items.map((item, iIndex) => {
+                    const Icon = ICONS[item.icon] ?? Search;
+                    return (
+                      <motion.div
+                        key={item.title}
+                        variants={itemVariants}
+                        className="group relative overflow-hidden rounded-[28px] p-7 md:p-8 bg-white border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(126,211,33,0.08)] hover:-translate-y-1 hover:border-[#7ED321]/40 transition-all duration-400 flex flex-col justify-between"
+                      >
+                        {/* Icon Container */}
+                        <div className="relative z-10 flex items-start mb-6">
+                          <div className="w-12 h-12 rounded-[16px] bg-gradient-to-b from-[#7ED321]/15 to-[#7ED321]/5 border border-[#7ED321]/20 text-[#5a9c14] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#7ED321] group-hover:text-white transition-all duration-400 shadow-sm">
+                            <Icon size={22} strokeWidth={2.2} />
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="relative z-10">
+                          <h4 className="font-bold text-lg md:text-xl text-[#151515] group-hover:text-[#5a9c14] transition-colors duration-300 mb-2">
+                            {item.title}
+                          </h4>
+                          <p className="text-sm text-[#5C5C5C] leading-relaxed font-medium">
+                            {item.description}
+                          </p>
+                        </div>
+
+                        {/* Bottom Highlight */}
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#7ED321] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </motion.div>
         </AnimatePresence>
       </div>

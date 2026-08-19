@@ -74,19 +74,19 @@ export default function WhyChoose() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] mb-6 transition-transform hover:scale-105">
             <Sparkles size={14} className="text-[#7ED321]" />
             <span className="text-[11px] font-bold text-[#151515] tracking-widest uppercase">
-              The Turfzy Edge
+              Why Turfzy
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#151515] tracking-tight leading-[1.1] mb-6 max-w-3xl text-balance">
-            Built Different. <br className="hidden md:block" />
+            The reliable way to book <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7ED321] to-[#5a9c14]">
-              Built for You.
+              and manage local sports.
             </span>
           </h2>
 
           <p className="text-lg text-[#5C5C5C] max-w-xl mx-auto font-medium leading-relaxed text-balance">
-            Every feature is meticulously designed with one single goal: to get you on the turf faster, with absolutely zero friction.
+            Built specifically for players and turf owners in India—accurate slot schedules, inspected playing surfaces, and secure checkouts.
           </p>
         </motion.div>
 

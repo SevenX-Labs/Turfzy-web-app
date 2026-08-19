@@ -121,7 +121,7 @@ export default function HowItWorks() {
           </h2>
 
           <p className="text-lg md:text-xl text-[#5C5C5C] max-w-2xl mx-auto font-medium leading-relaxed text-balance">
-            From discovering the perfect pitch to managing your venue effortlessly, see how Turfzy removes the friction from every step.
+            From finding the right pitch for your weekend match to keeping your venue fully booked, here is how Turfzy works for players and turf owners.
           </p>
         </motion.div>
 

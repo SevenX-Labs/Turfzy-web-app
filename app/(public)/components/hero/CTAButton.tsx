@@ -44,13 +44,13 @@ export default function CTAButton({ href, children, className = "" }: CTAButtonP
     <motion.div
       className="inline-block"
       style={{ borderRadius: "9999px" }}
-      whileHover={prefersReduced ? {} : { scale: 1.05 }}
-      whileTap={prefersReduced ? {} : { scale: 0.97 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      whileHover={prefersReduced ? {} : { scale: 1.03 }}
+      whileTap={prefersReduced ? {} : { scale: 0.98 }}
+      transition={{ duration: 0.18, ease: "easeOut" }}
     >
       <Link
         href={href}
-        className={`btn-black hero-cta-glow flex items-center gap-2 px-8 py-4 h-auto text-base ${className}`}
+        className={`inline-flex items-center justify-center gap-2.5 px-8 md:px-9 py-3.5 md:py-4 rounded-full bg-[#7ED321] text-[#111111] font-extrabold text-base md:text-lg shadow-[0_10px_30px_rgba(126,211,33,0.35)] hover:shadow-[0_16px_40px_rgba(126,211,33,0.48)] hover:bg-[#74c81b] active:scale-[0.98] transition-all duration-200 border border-lime-300/60 ${className}`}
       >
         {children}
       </Link>

@@ -68,12 +68,13 @@ export default function MouseSpotlight({ mouseX, mouseY }: MouseSpotlightProps) 
   const smoothY = useSpring(mouseY, { stiffness: 150, damping: 22 });
 
   /**
-   * 300px soft radial spotlight at 8% green tint — blends naturally
-   * with the aurora blobs underneath.
+   * 480px soft radial spotlight at 14% brand green tint — creates a
+   * luminous interactive feel across the blueprint grid.
    */
   const background = useMotionTemplate`radial-gradient(
-    300px circle at ${smoothX}px ${smoothY}px,
-    rgba(132, 204, 22, 0.08),
+    480px circle at ${smoothX}px ${smoothY}px,
+    rgba(126, 211, 33, 0.14),
+    rgba(126, 211, 33, 0.04) 50%,
     transparent 80%
   )`;
 

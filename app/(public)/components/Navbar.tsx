@@ -67,29 +67,26 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] md:max-w-max hidden md:block"
+        className="fixed top-6 md:top-7 left-1/2 -translate-x-1/2 z-50 w-full max-w-[95vw] md:max-w-max hidden md:block"
       >
         <nav
-          className={`flex items-center justify-between gap-8 p-1.5 rounded-full transition-all duration-500 ${
+          className={`flex items-center justify-between gap-10 lg:gap-14 px-3 py-2 md:py-2.5 rounded-full transition-all duration-500 ${
             isScrolled
-              ? "bg-[#FFFFFF]/60 backdrop-blur-3xl backdrop-saturate-[1.2] border border-[#FFFFFF]/40 shadow-[0_8px_32px_rgba(0,0,0,0.06)]"
-              : "bg-[#FFFFFF]/80 backdrop-blur-xl border border-[#E9E9E9]/50 shadow-[0_4px_24px_rgba(0,0,0,0.03)]"
+              ? "bg-[#FFFFFF]/75 backdrop-blur-3xl backdrop-saturate-[1.2] border border-[#FFFFFF]/60 shadow-[0_12px_40px_rgba(0,0,0,0.08)]"
+              : "bg-[#FFFFFF]/90 backdrop-blur-2xl border border-[#E9E9E9]/70 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="group flex items-center gap-1 pl-4 z-10 text-xl font-extrabold tracking-tighter text-[#151515] font-clash">
-            Turf<span className="text-[#7ED321]">zy</span>
-            <motion.div
-              className="text-[#7ED321]"
-              whileHover={{ rotate: 180, scale: 1.1 }}
-              transition={springConfig}
-            >
-              <Sparkles size={14} className="stroke-[2.5]" />
-            </motion.div>
+          <Link href="/" className="group flex items-center pl-3 pr-2 z-10">
+            <img
+              src="/logo copy.png"
+              alt="Turfzy"
+              className="h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
           {/* Links */}
-          <div className="flex items-center gap-1 relative z-10">
+          <div className="flex items-center gap-1.5 relative z-10">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
               const isHovered = hoveredPath === link.href;
@@ -100,8 +97,8 @@ export default function Navbar() {
                   href={link.href}
                   onMouseEnter={() => setHoveredPath(link.href)}
                   onMouseLeave={() => setHoveredPath(null)}
-                  className={`relative px-4 py-2 rounded-full text-[13px] font-semibold transition-colors duration-300 ${
-                    isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
+                  className={`relative px-5 py-2.5 rounded-full text-[15px] font-medium tracking-[-0.01em] transition-colors duration-300 ${
+                    isActive ? "text-[#151515] font-semibold" : "text-[#5C5C5C] hover:text-[#151515]"
                   }`}
                 >
                   <span className="relative z-10">{link.label}</span>
@@ -115,11 +112,11 @@ export default function Navbar() {
                     />
                   )}
 
-                  {/* Minimalist Active Indicator */}
+                  {/* Prominent Active Indicator */}
                   {isActive && (
                     <motion.div
                       layoutId="nav-active-dot"
-                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-[2px] bg-[#7ED321] rounded-full shadow-[0_0_8px_rgba(126,211,33,0.8)]"
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-[3px] bg-[#7ED321] rounded-full shadow-[0_0_12px_rgba(126,211,33,0.9)]"
                       transition={springConfig}
                     />
                   )}
@@ -128,30 +125,31 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Action Button */}
+          {/* Action Button: Ghost / Outline with Brand Green Border */}
           <Link
             href="/login/customer"
-            className="group relative flex items-center gap-2 bg-[#151515] text-[#FFFFFF] px-5 py-2 rounded-full text-[13px] font-semibold overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(21,21,21,0.2)]"
+            className="group relative flex items-center gap-2 border border-[#7ED321] bg-white/40 hover:bg-[#7ED321]/10 hover:border-[#72C01E] text-[#151515] px-6 py-2.5 md:px-7 md:py-2.5 rounded-full text-[14px] md:text-[15px] font-bold tracking-[-0.01em] overflow-hidden transition-all duration-300 hover:shadow-[0_4px_16px_rgba(126,211,33,0.2)] hover:scale-[1.02] active:scale-[0.98]"
           >
-            {/* Subtle inner gradient hover effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
             <span className="relative z-10">Sign In</span>
-            <ArrowRight size={14} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5" />
+            <ArrowRight size={16} className="relative z-10 text-[#63a71b] transition-transform duration-300 group-hover:translate-x-0.5" />
           </Link>
         </nav>
       </motion.div>
 
       {/* Mobile Top Bar */}
-      <div className={`md:hidden fixed top-0 inset-x-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-[#FFFFFF]/80 backdrop-blur-2xl border-b border-[#E9E9E9]' : 'bg-transparent'} p-4 flex justify-between items-center`}>
-         <Link href="/" className="flex items-center gap-1 text-xl font-extrabold tracking-tighter text-[#151515] font-clash">
-            Turf<span className="text-[#7ED321]">zy</span>
-            <Sparkles size={14} className="text-[#7ED321] stroke-[2.5]" />
+      <div className={`md:hidden fixed top-0 inset-x-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-[#FFFFFF]/85 backdrop-blur-2xl border-b border-[#E9E9E9]' : 'bg-transparent'} px-5 py-4 flex justify-between items-center`}>
+          <Link href="/" className="flex items-center">
+            <img
+              src="/logo copy.png"
+              alt="Turfzy"
+              className="h-9 w-auto object-contain"
+            />
           </Link>
           <button
             onClick={() => setIsMobileOpen(true)}
-            className="p-2.5 bg-[#FFFFFF] shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-[#E9E9E9] text-[#151515] rounded-full active:scale-95 transition-transform"
+            className="p-3 bg-[#FFFFFF] shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-[#E9E9E9] text-[#151515] rounded-2xl active:scale-95 transition-transform"
           >
-            <Menu size={18} />
+            <Menu size={22} />
           </button>
       </div>
 
@@ -172,12 +170,18 @@ export default function Navbar() {
             >
               {/* Header */}
               <div className="flex justify-between items-center mb-10">
-                <div className="text-sm font-semibold text-[#5C5C5C] uppercase tracking-widest">Navigation</div>
+                <Link href="/" onClick={() => setIsMobileOpen(false)} className="flex items-center">
+                  <img
+                    src="/logo copy.png"
+                    alt="Turfzy"
+                    className="h-9 w-auto object-contain"
+                  />
+                </Link>
                 <button
                   onClick={() => setIsMobileOpen(false)}
                   className="p-3 bg-[#FFFFFF] border border-[#E9E9E9] text-[#151515] rounded-full hover:bg-[#E9E9E9]/50 transition-colors"
                 >
-                  <X size={18} />
+                  <X size={20} />
                 </button>
               </div>
 

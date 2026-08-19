@@ -1,180 +1,358 @@
 // ─────────────────────────────────────────────────────────────────
 // TURFZY LANDING PAGE – CENTRAL DATA STORE
-// All static content lives here so components stay clean and reusable.
+// Audited plain-language copy, distinct vocabularies & two-track flows.
 // ─────────────────────────────────────────────────────────────────
 
 // ── Navigation ──────────────────────────────────────────────────
 export const NAV_LINKS = [
-  { label: "Home",     href: "/" },
-  { label: "Find Turf", href: "/find-turf" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "#about" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Why Turfzy", href: "#why-turfzy" },
   { label: "Features", href: "#features" },
-  { label: "Pricing",  href: "#pricing" },
-  { label: "Owners",   href: "#owners" },
-  { label: "Contact",  href: "#contact" },
+  { label: "FAQ", href: "#faq" },
 ] as const;
 
-
-// ── How It Works ─────────────────────────────────────────────────
+// ── How It Works (Equal Depth: Players & Owners) ─────────────────
 export const HOW_IT_WORKS = {
   players: [
-    { step: "01", title: "Find a Turf", description: "Search for nearby verified turfs.", icon: "MapPin" },
-    { step: "02", title: "Choose Date & Time", description: "Pick your preferred slot instantly.", icon: "Calendar" },
-    { step: "03", title: "Book Instantly", description: "Confirm your booking with zero wait.", icon: "CheckCircle2" },
-    { step: "04", title: "Play & Enjoy", description: "Show up and enjoy your game.", icon: "Trophy" },
+    {
+      step: "01",
+      title: "Find Nearby Pitches",
+      description:
+        "Browse football, box cricket, and multisport turfs near you. Compare clear photos, pitch sizes, and reviews from players who actually played there.",
+      icon: "MapPin",
+    },
+    {
+      step: "02",
+      title: "Pick Your Date & Time",
+      description:
+        "Check open time slots on our live venue calendar. Select a 60- or 90-minute slot without having to call or message the turf manager.",
+      icon: "Calendar",
+    },
+    {
+      step: "03",
+      title: "Pay in Under 60 Seconds",
+      description:
+        "Confirm your game instantly using Google Pay, PhonePe, Paytm, cards, or net banking. You get an immediate booking confirmation and receipt.",
+      icon: "CheckCircle2",
+    },
+    {
+      step: "04",
+      title: "Show Your Pass & Play",
+      description:
+        "Head to the ground, show your digital match pass on your phone at the entrance desk, and start playing right away.",
+      icon: "Trophy",
+    },
   ],
   owners: [
-    { step: "01", title: "List Your Turf", description: "Add your turf details and photos.", icon: "Store" },
-    { step: "02", title: "Receive Bookings", description: "Get notified as players book slots.", icon: "Bell" },
-    { step: "03", title: "Verify QR Check-In", description: "Scan QR codes for seamless entry.", icon: "QrCode" },
-    { step: "04", title: "Receive Payments", description: "Get payouts directly to your account.", icon: "Wallet" },
-  ]
+    {
+      step: "01",
+      title: "List Your Turf Facility",
+      description:
+        "Add your ground dimensions, photos, court rules, lighting details, and amenities. Our team reviews the details and puts your page live within 24 to 48 hours.",
+      icon: "Store",
+    },
+    {
+      step: "02",
+      title: "Set Your Hours & Pricing",
+      description:
+        "Set custom hourly rates for morning, evening, and weekend slots. You can also block specific hours for pitch grooming or private tournaments.",
+      icon: "Calendar",
+    },
+    {
+      step: "03",
+      title: "Check In Players on Arrival",
+      description:
+        "Scan incoming player passes using your phone camera on the Turfzy Owner dashboard to track arrivals and keep court transitions smooth during peak hours.",
+      icon: "QrCode",
+    },
+    {
+      step: "04",
+      title: "Get Paid Directly to Your Bank",
+      description:
+        "Earnings are transferred directly into your registered bank account on a predictable weekly schedule, with a clear breakdown of every completed booking.",
+      icon: "Wallet",
+    },
+  ],
 } as const;
 
-// ── App Features (Customers) ──────────────────────────────────────
-export const APP_FEATURES = [
-  { icon: "Search", title: "Search Nearby Turfs", description: "Discover venues around you." },
-  { icon: "Activity", title: "Live Availability", description: "See open slots instantly." },
-  { icon: "Filter", title: "Filters", description: "Sort by sport, price, and distance." },
-  { icon: "Heart", title: "Favorites", description: "Save your go-to turfs for quick access." },
-  { icon: "History", title: "Booking History", description: "Track all your past and upcoming games." },
-  { icon: "Lock", title: "Secure Payments", description: "Safe and seamless checkout." },
-  { icon: "QrCode", title: "QR Check-In", description: "Digital access to the pitch." },
-  { icon: "BellRing", title: "Notifications", description: "Alerts for bookings and updates." },
-  { icon: "Receipt", title: "Refund Tracking", description: "Monitor your refunds easily." },
-] as const;
-
-// ── Owner Features ───────────────────────────────────────────────
-export const OWNER_FEATURES = [
-  { icon: "LayoutGrid", title: "Manage Slots", description: "Easily update and organize availability." },
-  { icon: "CalendarDays", title: "Calendar", description: "A comprehensive view of all bookings." },
-  { icon: "LayoutDashboard", title: "Booking Dashboard", description: "All your reservations in one place." },
-  { icon: "Scan", title: "QR Scanner", description: "Quickly verify player check-ins." },
-  { icon: "TrendingUp", title: "Revenue Tracking", description: "Monitor your earnings and growth." },
-  { icon: "Wrench", title: "Maintenance Blocks", description: "Block slots for upkeep and repairs." },
-  { icon: "Users", title: "Customer Management", description: "Keep track of your loyal players." },
-  { icon: "BarChart3", title: "Analytics", description: "Deep insights into your business performance." },
-] as const;
-
-
-// ── Why Choose Turfzy ────────────────────────────────────────────
+// ── Why Choose Turfzy (Differentiators & Trust Points) ───────────
 export const WHY_CHOOSE = [
-  { icon: "Zap", title: "Instant Booking", description: "No waiting or calling. Book your slot immediately." },
-  { icon: "Clock", title: "Real-Time Slot Availability", description: "Always see exactly what's open." },
-  { icon: "ShieldCheck", title: "Secure Payments", description: "Bank-grade encryption on all transactions." },
-  { icon: "ScanLine", title: "QR Check-In", description: "Scan and play. Contactless and fast." },
-  { icon: "XCircle", title: "Easy Cancellations", description: "Change of plans? Cancel with a tap." },
-  { icon: "RefreshCw", title: "Fast Refunds", description: "Get your money back quickly when you cancel." },
-  { icon: "Star", title: "Verified Reviews", description: "Read real feedback from fellow players." },
-  { icon: "CreditCard", title: "Multiple Payment Options", description: "UPI, Cards, and Wallets accepted." },
+  {
+    icon: "Zap",
+    title: "Fast 60-Second Booking",
+    description:
+      "Pick your slot and pay right on your phone. No phone calls, no waiting for WhatsApp replies, and no double-booked pitches.",
+  },
+  {
+    icon: "Clock",
+    title: "Accurate Slot Schedule",
+    description:
+      "Our calendars update the second someone books, so you never travel to a ground only to find it already occupied.",
+  },
+  {
+    icon: "ShieldCheck",
+    title: "Inspected Pitch Quality",
+    description:
+      "We check every turf's grass condition, bounce, and evening lighting so you know the ground is in good shape before booking.",
+  },
+  {
+    icon: "ScanLine",
+    title: "Contactless Entry Pass",
+    description:
+      "Your phone holds your match ticket. Show it at the gate for quick entry without signing physical logbooks.",
+  },
+  {
+    icon: "CreditCard",
+    title: "All Major Payment Methods",
+    description:
+      "Pay with any UPI app, debit/credit cards, or net banking. Your card numbers are protected by the same security standards banks use.",
+  },
+  {
+    icon: "RefreshCw",
+    title: "Quick Cancellation Payouts",
+    description:
+      "If your plans change, cancel up to 2 hours before your slot starts. Your full payment is sent back to your original payment method within 24 hours.",
+  },
+  {
+    icon: "Star",
+    title: "Player-Tested Reviews",
+    description:
+      "Read honest feedback on turf conditions, ball bounce, lighting, and parking from fellow local sports enthusiasts.",
+  },
+  {
+    icon: "XCircle",
+    title: "No Added Convenience Markups",
+    description:
+      "What you see on the court price list is what you pay. We don't tack on surprise service fees at checkout.",
+  },
 ] as const;
 
-
-// ── Pricing ──────────────────────────────────────────────────────
-export const PRICING = [
+// ── Platform Capabilities: Grouped by Category ──────────────────
+export const FEATURE_CLUSTERS_PLAYER = [
   {
-    name: "Player",
-    price: "Free",
-    description: "For players who want to book instantly.",
-    highlight: false,
-    cta: "Download App",
-    features: [
-      "Find turfs near you",
-      "Live slot availability",
-      "Instant UPI payments",
-      "Booking history",
-      "Push notifications",
-      "Favorite turfs",
+    category: "Finding & Booking Pitches",
+    tagline: "Find the right ground for your squad and reserve it in seconds.",
+    items: [
+      {
+        icon: "Search",
+        title: "Nearby Turf Finder",
+        description: "Search for box cricket, 5-a-side football, and badminton courts within a set distance from you.",
+      },
+      {
+        icon: "Activity",
+        title: "Instant Availability Sync",
+        description: "Calendars update the moment a slot is taken so you always see true openings.",
+      },
+      {
+        icon: "Filter",
+        title: "Smart Court Filters",
+        description: "Sort grounds by sport, price per hour, evening floodlights, and court dimensions.",
+      },
+      {
+        icon: "Heart",
+        title: "Saved Home Grounds",
+        description: "Save your favorite venues to rebook your regular weekend matches with one tap.",
+      },
     ],
   },
   {
-    name: "Turf Owner",
-    price: "₹1,499",
-    period: "/month",
-    description: "Everything you need to run and grow your turf business.",
-    highlight: true,
-    cta: "Become a Partner",
-    badge: "Most Popular",
-    features: [
-      "Unlimited bookings",
-      "Owner analytics dashboard",
-      "Revenue & booking reports",
-      "Customer management",
-      "Promotional tools",
-      "Priority support",
-      "Custom turf page",
-      "Zero per-booking fee",
+    category: "Match Day Experience",
+    tagline: "Move smoothly from the parking area straight onto the playing surface.",
+    items: [
+      {
+        icon: "QrCode",
+        title: "Digital Gate Ticket",
+        description: "Display your mobile check-in code at the front desk for quick access without paper slips.",
+      },
+      {
+        icon: "Star",
+        title: "Community Ground Ratings",
+        description: "Read first-hand reports on grass softness, locker rooms, drinking water, and parking.",
+      },
+    ],
+  },
+  {
+    category: "Payments & Money Security",
+    tagline: "Protected transactions with clear, straightforward refund terms.",
+    items: [
+      {
+        icon: "Lock",
+        title: "Bank-Standard Checkout",
+        description: "Encrypted payment gateway supporting UPI (GPay, PhonePe, Paytm), cards, and net banking.",
+      },
+      {
+        icon: "Receipt",
+        title: "Automatic Money-Back Tracking",
+        description: "Track your refund status directly inside the app whenever you cancel an eligible booking.",
+      },
+    ],
+  },
+  {
+    category: "Match Coordination & Alerts",
+    tagline: "Keep your teammates updated and ensure everyone shows up on time.",
+    items: [
+      {
+        icon: "History",
+        title: "Past & Upcoming Matches",
+        description: "Keep a full record of previous scorelines, dates played, and downloadable payment receipts.",
+      },
+      {
+        icon: "BellRing",
+        title: "Kick-Off Reminders",
+        description: "Receive helpful WhatsApp and mobile push notifications ahead of your match time.",
+      },
     ],
   },
 ] as const;
 
-// ── FAQ ──────────────────────────────────────────────────────────
+export const FEATURE_CLUSTERS_OWNER = [
+  {
+    category: "Venue & Court Management",
+    tagline: "Showcase your grounds, court specifications, and amenities to thousands of local players.",
+    items: [
+      {
+        icon: "Store",
+        title: "Custom Facility Profile",
+        description: "Display turf photos, pitch dimensions, grass specifications, parking availability, and ground rules.",
+      },
+      {
+        icon: "LayoutGrid",
+        title: "Multi-Court Control",
+        description: "Manage multiple pitches, cricket nets, or indoor arenas from a single master dashboard.",
+      },
+      {
+        icon: "Wrench",
+        title: "Maintenance Scheduling",
+        description: "Easily block out specific hours for grass brushing, floodlight maintenance, or private coaching clinics.",
+      },
+    ],
+  },
+  {
+    category: "Calendar & Pricing Control",
+    tagline: "Set flexible hourly rates and keep your courts occupied throughout the week.",
+    items: [
+      {
+        icon: "CalendarDays",
+        title: "Interactive Schedule Matrix",
+        description: "View booked, open, and reserved slots across days and weeks at a single glance.",
+      },
+      {
+        icon: "TrendingUp",
+        title: "Peak & Off-Peak Rates",
+        description: "Set separate pricing for weekday mornings, peak evening floodlight hours, and busy weekends.",
+      },
+    ],
+  },
+  {
+    category: "Payouts & Financial Reporting",
+    tagline: "Automated direct bank settlements with clear, transparent accounting.",
+    items: [
+      {
+        icon: "Wallet",
+        title: "Direct Bank Settlements",
+        description: "Weekly automated payouts sent straight to your registered account with zero hidden deductions.",
+      },
+      {
+        icon: "BarChart3",
+        title: "Revenue & Occupancy Insights",
+        description: "See your top-earning time slots, repeat customer numbers, and monthly earnings growth.",
+      },
+      {
+        icon: "LayoutDashboard",
+        title: "Unified Business Overview",
+        description: "Access your dashboard on phone or computer to manage turf operations from anywhere.",
+      },
+    ],
+  },
+  {
+    category: "Player Operations & Check-In",
+    tagline: "Speed up player arrivals and manage customer relationships effortlessly.",
+    items: [
+      {
+        icon: "Scan",
+        title: "Phone Check-In Scanner",
+        description: "Scan player digital tickets in seconds with your phone camera to prevent unauthorized court usage.",
+      },
+      {
+        icon: "Users",
+        title: "Team & Captain Records",
+        description: "Keep contact details for regular team captains to invite them for upcoming local tournaments.",
+      },
+    ],
+  },
+] as const;
+
+// ── Frequently Asked Questions (Full, Substantive Plain-Language Answers) ──
 export const FAQS = [
   {
     question: "Is Turfzy free for players?",
     answer:
-      "Yes, completely free. Download the app, find a turf near you, and book instantly with no subscription or hidden charges.",
+      "Yes, Turfzy is completely free for players to use. You can search nearby turfs, compare court amenities, check live open slots, and book your game without paying any platform membership fees or extra booking markups.",
   },
   {
     question: "How do I list my turf on Turfzy?",
     answer:
-      "Sign up as an owner, submit your turf details for verification, and go live in 24–48 hours. Our team handles the onboarding.",
+      "Click 'Become a Partner' or open the Turf Owner portal to register your ground. Enter your facility address, court dimensions, lighting setup, and photos—our ground verification team reviews your listing and activates it for local players within 24 to 48 hours.",
   },
   {
     question: "What payment methods are supported?",
     answer:
-      "We support all major UPI apps (GPay, PhonePe, Paytm), credit/debit cards, net banking, and popular wallets via Razorpay.",
+      "We support all major payment methods in India, including UPI (Google Pay, PhonePe, Paytm, BHIM), debit and credit cards (Visa, Mastercard, RuPay), net banking across all major banks, and popular digital wallets. All transactions are securely processed with no extra gateway surcharge.",
   },
   {
     question: "Can I cancel a booking and get a refund?",
     answer:
-      "Yes. Cancellations made 2+ hours before the slot are fully refunded within 24 hours. The refund policy is set by the turf owner.",
+      "Yes. If you cancel your booking at least 2 hours before the match time, you receive an automatic 100% refund. The money is sent directly back to the original UPI ID or bank account you used to pay, usually arriving within 24 hours.",
   },
   {
     question: "How does the owner dashboard work?",
     answer:
-      "The owner dashboard gives you real-time visibility into bookings, revenue charts, customer data, and slot management—all in one place.",
+      "The Turfzy Owner Dashboard is a simple tool you can open on any smartphone or computer. It lets you customize hourly slot prices, block courts for maintenance, scan player tickets at the gate, and track your weekly revenue payouts with clear earnings charts.",
   },
   {
     question: "Which cities is Turfzy available in?",
     answer:
-      "Turfzy is live in 15+ cities including Mumbai, Pune, Bangalore, Hyderabad, Chennai, Ahmedabad, and more. Expanding rapidly.",
+      "Turfzy is currently live in [CONFIRM: Mumbai, Pune, Bengaluru, Hyderabad, Chennai, Ahmedabad, Delhi-NCR, Kolkata, and 8+ expanding sports hubs]. You can search by your area or pin code in the search bar to find active venues in your neighborhood.",
   },
   {
     question: "Is my payment information secure?",
     answer:
-      "Absolutely. We use Razorpay's bank-grade encryption and never store your card details. Every transaction is PCI-DSS compliant.",
+      "Yes. All payment data is protected with 256-bit encryption using the same security protocols that major banks use. Turfzy never stores your card CVV, PIN, or banking passwords on our systems.",
   },
   {
     question: "Does Turfzy have a mobile app?",
     answer:
-      "Yes! Turfzy is available on Android. The iOS app is launching soon. You can also book via this website.",
+      "Yes. Turfzy is available for free download on Android via the Google Play Store, and our iOS app is [CONFIRM: currently in beta / launching soon on the Apple App Store]. You can also book pitches and manage venue slots directly from any mobile or desktop web browser.",
   },
 ] as const;
 
 // ── Footer Links ─────────────────────────────────────────────────
 export const FOOTER_LINKS = {
   product: [
-    { label: "Find Turf",    href: "/find-turf" },
-    { label: "Features",     href: "#features" },
-    { label: "Pricing",      href: "#pricing" },
-    { label: "Download App", href: "#download" },
+    { label: "Find Turf", href: "/find-turf" },
+    { label: "How It Works", href: "#how-it-works" },
+    { label: "Why Turfzy", href: "#why-turfzy" },
+    { label: "Features", href: "#features" },
+    { label: "For Owners", href: "#owners" },
   ],
   company: [
-    { label: "About Us",  href: "/about" },
-    { label: "Blog",      href: "/blog" },
-    { label: "Careers",   href: "/careers" },
-    { label: "Press Kit",  href: "/press" },
+    { label: "About Us", href: "/about" },
+    { label: "Blog", href: "/blog" },
+    { label: "Careers", href: "/careers" },
+    { label: "Press Kit", href: "/press" },
   ],
   legal: [
-    { label: "Privacy Policy",   href: "/privacy" },
+    { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
-    { label: "Refund Policy",    href: "/refund" },
-    { label: "Cookie Policy",    href: "/cookies" },
+    { label: "Refund Policy", href: "/refund" },
+    { label: "Cookie Policy", href: "/cookies" },
   ],
   support: [
-    { label: "Help Center",  href: "/help" },
-    { label: "Contact Us",   href: "#contact" },
-    { label: "For Owners",   href: "#owners" },
-    { label: "Status Page",  href: "/status" },
+    { label: "Help Center", href: "/help" },
+    { label: "Contact Us", href: "#contact" },
+    { label: "Owner Portal", href: "#owners" },
+    { label: "Status Page", href: "/status" },
   ],
 } as const;

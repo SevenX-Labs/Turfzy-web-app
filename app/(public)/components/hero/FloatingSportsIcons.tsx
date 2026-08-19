@@ -37,11 +37,11 @@ const ICONS: FloatingIconConfig[] = [
   {
     Icon:     Star,
     iconSize: 20,
-    top:      "14%",
+    top:      "15%",
     left:     "3.5%",
-    color:    "#65a30d",
-    bgColor:  "rgba(132,204,22,0.12)",
-    floatY:   [0, -12, 0],
+    color:    "#5ba30c",
+    bgColor:  "rgba(126,211,33,0.12)",
+    floatY:   [0, -14, 0],
     rotateKF: [-4, 4, -4],
     duration: 7,
     delay:    0,
@@ -49,11 +49,11 @@ const ICONS: FloatingIconConfig[] = [
   {
     Icon:     Trophy,
     iconSize: 20,
-    top:      "42%",
-    left:     "5%",
-    color:    "#374151",
-    bgColor:  "rgba(55,65,81,0.07)",
-    floatY:   [0, -10, 0],
+    top:      "44%",
+    left:     "4%",
+    color:    "#151515",
+    bgColor:  "rgba(255,255,255,0.75)",
+    floatY:   [0, -12, 0],
     rotateKF: [3, -3, 3],
     duration: 9,
     delay:    1.5,
@@ -61,11 +61,11 @@ const ICONS: FloatingIconConfig[] = [
   {
     Icon:     Users,
     iconSize: 20,
-    top:      "68%",
-    left:     "3%",
-    color:    "#65a30d",
-    bgColor:  "rgba(132,204,22,0.10)",
-    floatY:   [0, -14, 0],
+    top:      "72%",
+    left:     "3.5%",
+    color:    "#5ba30c",
+    bgColor:  "rgba(126,211,33,0.12)",
+    floatY:   [0, -15, 0],
     rotateKF: [-2, 5, -2],
     duration: 11,
     delay:    3,
@@ -76,9 +76,9 @@ const ICONS: FloatingIconConfig[] = [
     iconSize: 20,
     top:      "18%",
     right:    "4%",
-    color:    "#374151",
-    bgColor:  "rgba(55,65,81,0.07)",
-    floatY:   [0, -11, 0],
+    color:    "#151515",
+    bgColor:  "rgba(255,255,255,0.75)",
+    floatY:   [0, -12, 0],
     rotateKF: [3, -3, 3],
     duration: 8,
     delay:    0.8,
@@ -88,21 +88,21 @@ const ICONS: FloatingIconConfig[] = [
     iconSize: 22,
     top:      "48%",
     right:    "3.5%",
-    color:    "#65a30d",
-    bgColor:  "rgba(132,204,22,0.12)",
-    floatY:   [0, -13, 0],
+    color:    "#5ba30c",
+    bgColor:  "rgba(126,211,33,0.12)",
+    floatY:   [0, -14, 0],
     rotateKF: [-4, 2, -4],
     duration: 10,
     delay:    2.2,
   },
   {
     Icon:     Target,
-    iconSize: 18,
-    top:      "68%",
-    right:    "5%",
-    color:    "#16a34a",
-    bgColor:  "rgba(34,197,94,0.10)",
-    floatY:   [0, -9, 0],
+    iconSize: 20,
+    top:      "72%",
+    right:    "4%",
+    color:    "#151515",
+    bgColor:  "rgba(255,255,255,0.75)",
+    floatY:   [0, -10, 0],
     rotateKF: [2, -5, 2],
     duration: 6.5,
     delay:    4,
@@ -115,8 +115,8 @@ export default function FloatingSportsIcons() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 hidden lg:block"
-      style={{ zIndex: 5 }}
+      className="pointer-events-none absolute inset-0 hidden xl:block overflow-hidden"
+      style={{ zIndex: 10 }}
     >
       {ICONS.map((cfg, i) => {
         const posStyle: React.CSSProperties = {
@@ -144,23 +144,15 @@ export default function FloatingSportsIcons() {
               ease:     "easeInOut",
             }}
           >
-            {/* Pill chip — clearly visible but not distracting */}
+            {/* Glassmorphic Pill Chip */}
             <div
+              className="flex items-center justify-center w-12 h-12 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.06)] border border-white/80 backdrop-blur-md transition-transform duration-300"
               style={{
-                display:      "flex",
-                alignItems:   "center",
-                justifyContent: "center",
-                width:        "44px",
-                height:       "44px",
-                borderRadius: "14px",
-                background:   cfg.bgColor,
-                border:       `1px solid ${cfg.color}30`,
-                color:        cfg.color,
-                boxShadow:    `0 4px 16px ${cfg.color}18`,
-                backdropFilter: "blur(6px)",
+                background: cfg.bgColor,
+                color: cfg.color,
               }}
             >
-              <cfg.Icon size={cfg.iconSize} strokeWidth={1.8} />
+              <cfg.Icon size={cfg.iconSize} strokeWidth={2} />
             </div>
           </motion.div>
         );

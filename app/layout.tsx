@@ -13,11 +13,22 @@ export const metadata: Metadata = {
   description:
     "Turfzy is the fastest way to discover nearby sports turfs, book available slots instantly, and pay securely online. Available across 15+ cities in India.",
   keywords: ["sports turf booking", "cricket ground booking", "football turf", "Turfzy", "book turf online"],
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: ["/logo.png"],
+    apple: [
+      { url: "/logo.png" },
+    ],
+  },
   openGraph: {
     title: "Turfzy – Book Sports Turfs in Seconds",
     description: "Discover nearby sports turfs, book instantly, pay securely.",
     type: "website",
     locale: "en_IN",
+    images: ["/logo.png"],
   },
 };
 
@@ -27,6 +38,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <head>
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         {/* Clash Display font from Fontshare */}
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link

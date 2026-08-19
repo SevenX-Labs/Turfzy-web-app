@@ -32,41 +32,47 @@ export default function CTA() {
             {/* Text Content */}
             <div className="max-w-3xl flex flex-col items-center justify-center gap-8">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white font-clash tracking-tight leading-[1.1]">
-                Ready to elevate your game?
+                Ready to step onto the pitch?
               </h2>
 
               <p className="text-lg md:text-xl text-gray-400 font-medium max-w-xl leading-relaxed">
-                Join the platform designed to make booking turfs and managing venues entirely effortless.
+                Join thousands of sports squads and venue owners across India who organize and book games on Turfzy.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
                 <Link
                   href="/find-turf"
-                  className="w-full sm:w-auto bg-lime-500 hover:bg-lime-400 text-black font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_0_20px_rgba(132,204,22,0.2)]"
+                  className="w-full sm:w-auto bg-[#7ED321] hover:bg-lime-400 text-black font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_0_20px_rgba(126,211,33,0.25)]"
                 >
-                  Get Started
+                  Find a Pitch Near You
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href="#owners"
+                  href="/owner/dashboard"
                   className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center"
                 >
-                  I'm a Turf Owner
+                  Partner as a Turf Owner
                 </Link>
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400 font-medium mt-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full bg-lime-500/20 flex items-center justify-center">
-                    <Check size={12} className="text-lime-500" />
+                  <div className="w-5 h-5 rounded-full bg-[#7ED321]/20 flex items-center justify-center">
+                    <Check size={12} className="text-[#7ED321]" />
                   </div>
-                  No credit card required
+                  No membership fee
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full bg-lime-500/20 flex items-center justify-center">
-                    <Check size={12} className="text-lime-500" />
+                  <div className="w-5 h-5 rounded-full bg-[#7ED321]/20 flex items-center justify-center">
+                    <Check size={12} className="text-[#7ED321]" />
                   </div>
-                  Instant booking
+                  Direct slot confirmation
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-full bg-[#7ED321]/20 flex items-center justify-center">
+                    <Check size={12} className="text-[#7ED321]" />
+                  </div>
+                  2-hour refund policy
                 </div>
               </div>
             </div>
