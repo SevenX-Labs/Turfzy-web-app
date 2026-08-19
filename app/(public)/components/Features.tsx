@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
 import {
   Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
   LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3,
@@ -12,12 +12,12 @@ import { APP_FEATURES, OWNER_FEATURES } from "../constants";
 const PLAYER_ICONS: Record<string, any> = { Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt };
 const OWNER_ICONS: Record<string, any> = { LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3 };
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30, scale: 0.96 },
   visible: {
     opacity: 1, y: 0, scale: 1,

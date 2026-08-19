@@ -71,11 +71,7 @@ export default function HeroAnimations({ children, className = "", style }: Hero
       className={className}
       style={style}
       variants={heroContainerVariants}
-      /**
-       * Skip the "hidden" initial state when the user prefers
-       * reduced motion — jump straight to "visible".
-       */
-      initial={prefersReduced ? "visible" : "hidden"}
+      initial="hidden"
       animate="visible"
     >
       {children}
