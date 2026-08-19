@@ -83,6 +83,19 @@ html { scroll-behavior: smooth; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: var(--radius-full); }
 
+/* Prevent image dragging, ghost movement, and accidental selection across browsers */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 /* ==========================================================================
    TYPOGRAPHY
    ========================================================================== */

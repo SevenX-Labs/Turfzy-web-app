@@ -6,14 +6,9 @@
  * Clean, high-conversion hero section calibrated to fit within a single screen.
  */
 
-import React, { MouseEvent, useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { APP_URLS } from "../constants";
 
@@ -22,49 +17,18 @@ import { TurfPitchIcon } from "./hero/GroundSportsIcons";
 
 /* ── Interaction / animation helpers ── */
 import HeroAnimations, { heroChildVariants } from "./hero/HeroAnimations";
-import MouseSpotlight from "./hero/MouseSpotlight";
 import TurfzyAppMockup from "./hero/TurfzyAppMockup";
 
 export default function Hero() {
-  /* ── Mouse Tracking for Parallax ── */
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: 1200,
-    height: 800,
-  });
-
-  useEffect(() => {
-    const update = () =>
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
   return (
     <section
-      onMouseMove={handleMouseMove}
-      className="relative min-h-[calc(100vh-5rem)] lg:min-h-screen pt-22 pb-12 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] group selection:bg-[#7ED321] selection:text-black"
+      className="relative min-h-[calc(100vh-5rem)] lg:min-h-screen pt-22 pb-12 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] selection:bg-[#7ED321] selection:text-black"
     >
       {/* ══════════════════════════════════════════════════════════════════
-          BACKGROUND LAYERS (Pitch Blueprint, Mesh Gradients & Spotlight)
+          BACKGROUND LAYERS (Pitch Blueprint & Ambient Mesh Gradients)
       ══════════════════════════════════════════════════════════════════ */}
 
-      {/* 1. Interactive Cursor Spotlight */}
-      <MouseSpotlight mouseX={mouseX} mouseY={mouseY} />
-
-      {/* 2. Fluid Ambient Mesh Gradients */}
+      {/* 1. Fluid Ambient Mesh Gradients */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden blur-[120px] md:blur-[140px] saturate-[1.25] opacity-80 z-0">
         <motion.div
           animate={{

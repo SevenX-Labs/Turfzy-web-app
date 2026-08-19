@@ -28,10 +28,11 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/logo.png", type: "image/png" },
       { url: "/icon.png", type: "image/png" },
     ],
-    shortcut: ["/logo.png"],
+    shortcut: ["/favicon.ico"],
     apple: [{ url: "/logo.png" }],
   },
   openGraph: {
@@ -50,6 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
         {/* Clash Display font from Fontshare */}
@@ -57,6 +59,23 @@ export default function RootLayout({
         <link
           href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
           rel="stylesheet"
+        />
+        {/* Prevent image drag and save context menus globally */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              document.addEventListener('contextmenu', function(e) {
+                if (e.target && (e.target.tagName === 'IMG' || (e.target.closest && e.target.closest('img')))) {
+                  e.preventDefault();
+                }
+              }, { passive: false });
+              document.addEventListener('dragstart', function(e) {
+                if (e.target && (e.target.tagName === 'IMG' || (e.target.closest && e.target.closest('img')))) {
+                  e.preventDefault();
+                }
+              }, { passive: false });
+            `,
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col font-body">{children}</body>
