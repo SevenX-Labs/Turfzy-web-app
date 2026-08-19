@@ -109,16 +109,19 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Center: Official Turfzy Logo */}
+          {/* Center: Official Turfzy Transparent Logo */}
           <Link
             href="/"
             onClick={closeDropdown}
-            className="flex items-center hover:opacity-90 transition-opacity"
+            onContextMenu={(e) => e.preventDefault()}
+            className="flex items-center hover:opacity-90 transition-opacity select-none"
           >
             <img
               src="/logo copy.png"
               alt="Turfzy"
-              className="h-8 sm:h-9 w-auto object-contain"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              className="h-7 sm:h-8 w-auto object-contain select-none pointer-events-none"
             />
           </Link>
 
@@ -226,7 +229,7 @@ export default function Navbar() {
 
                     {/* Heading */}
                     <h3 className="text-[22px] lg:text-[23px] font-extrabold text-white font-clash leading-[1.12] tracking-tight mb-4">
-                      For Turf Owners
+                      For Partners
                     </h3>
                   </div>
 
