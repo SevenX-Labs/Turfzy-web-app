@@ -1,160 +1,224 @@
 "use client";
 
+/**
+ * About Section — Turfzy
+ * ─────────────────────────────────────────────────────────────────
+ * Refined, high-end sports-tech mission and core pillars:
+ * 1. Clean hero header with clear typography hierarchy.
+ * 2. Three uniform pillar cards (Player First, Owner Success, Standardized Quality)
+ *    with consistent rhythm, subtle numbers, line icons, and contextual footers.
+ * 3. Section connector statement: "One platform. Two sides. One goal — more time on the pitch."
+ * 4. Semantic HTML (<section>, <h2>, <article>) with lightweight 200ms micro-motion.
+ */
+
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  Sparkles, Target, Users, ShieldCheck,
-  TrendingUp, Award, CheckCircle2, ArrowRight
+  Target,
+  TrendingUp,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
-import Link from "next/link";
+import { APP_URLS } from "../constants";
 
-const PLATFORM_STANDARDS = [
-  { value: "Instant", label: "Slot Confirmation", sub: "Live venue availability" },
-  { value: "Verified", label: "Ground Quality", sub: "Checked grass & floodlights" },
-  { value: "Direct", label: "Venue Pricing", sub: "Zero hidden extra fees" },
-  { value: "Secure", label: "UPI & Card Checkout", sub: "Protected digital payments" },
-];
+interface Pillar {
+  number: string;
+  badge: string;
+  icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
+  title: string;
+  subtitle: string;
+  description: string;
+  actionText: string;
+  href: string;
+  isExternal?: boolean;
+}
 
-const PILLARS = [
+const PILLARS: Pillar[] = [
   {
-    icon: Target,
+    number: "01",
     badge: "Player First",
-    title: "Bringing Players Back to the Pitch",
+    icon: Target,
+    title: "Bring Players Back to the Pitch",
+    subtitle: "Less calling. Less waiting. More playing.",
     description:
-      "We replace messy WhatsApp chats, endless phone calls, and manual registers with a 60-second booking experience and live slot schedules.",
-    highlight: "Book in 60s",
+      "Turfzy replaces scattered calls, messages, and manual coordination with a simpler digital booking experience.",
+    actionText: "Explore Player Experience",
+    href: APP_URLS.customerWeb,
+    isExternal: true,
   },
   {
-    icon: TrendingUp,
+    number: "02",
     badge: "Owner Success",
-    title: "Fueling Sports Entrepreneurs",
+    icon: TrendingUp,
+    title: "Help Venues Run Better",
+    subtitle: "Turn empty slots into opportunities.",
     description:
-      "We provide turf owners with high-speed digital check-ins, dynamic pricing controls, and automated weekly bank payouts that eliminate empty courts.",
-    highlight: "Automated Payouts",
+      "Give turf owners digital tools for bookings, availability, pricing, and day-to-day venue management.",
+    actionText: "Explore Owner Tools",
+    href: APP_URLS.ownerWeb,
+    isExternal: true,
   },
   {
-    icon: ShieldCheck,
+    number: "03",
     badge: "Standardized Quality",
-    title: "Ground-Checked Venues",
+    icon: ShieldCheck,
+    title: "Know What You're Booking",
+    subtitle: "Better information before game day.",
     description:
-      "Every facility listed is checked for turf grass density, shock absorption, adequate floodlights, and safe amenities for evening games.",
-    highlight: "Quality Inspected",
+      "Help players understand the venue, playing surface, lighting, amenities, and overall experience before they arrive.",
+    actionText: "See Venue Standards",
+    href: "#why-turfzy",
+    isExternal: false,
   },
 ];
 
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <section
       id="about"
-      className="relative bg-[#FAFAF6] py-24 md:py-32 overflow-hidden border-b border-gray-200/50"
+      className="relative bg-[#FAFAF6] py-20 sm:py-24 md:py-28 lg:py-32 overflow-hidden border-b border-black/[0.05]"
     >
-      {/* ── Background Ambient Glows ── */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:24px_24px] opacity-60 pointer-events-none" />
-      <div className="absolute top-1/4 -left-40 w-[600px] h-[600px] bg-gradient-to-tr from-[#7ED321]/15 to-transparent rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 -right-40 w-[600px] h-[600px] bg-gradient-to-bl from-emerald-500/10 to-transparent rounded-full blur-[100px] pointer-events-none" />
+      {/* ── Background Subtle Dotted Grid Accent ── */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-30"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* Soft Ambient Green Halo */}
+      <div className="absolute top-1/3 -left-32 w-[450px] h-[450px] bg-[#7ED321]/10 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-10 -right-32 w-[450px] h-[450px] bg-emerald-400/8 rounded-full blur-[110px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
 
-        {/* ── Section Header ── */}
+        {/* ══════════════════════════════════════════════════════════════════
+            1. SECTION HERO AREA (Clear Hierarchy)
+        ══════════════════════════════════════════════════════════════════ */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-16 md:mb-20 flex flex-col items-center"
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto mb-12 sm:mb-14 lg:mb-16 flex flex-col items-center"
         >
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] mb-6 transition-transform hover:scale-105">
-            <Sparkles size={14} className="text-[#7ED321]" />
-            <span className="text-[11px] font-bold text-[#151515] tracking-widest uppercase">
+          {/* Small Eyebrow Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.03)] mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#7ED321]" />
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#151515] tracking-widest uppercase">
               About Turfzy
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#151515] tracking-tight leading-[1.1] mb-6 max-w-3xl text-balance">
-            Building the digital home for <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7ED321] to-[#5a9c14]">
-              India's sports community.
+          {/* Main Semantic Heading (H2) */}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111111] font-clash tracking-tight leading-[1.1] mb-4">
+            Building a better way to play. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#111111] via-[#3a6809] to-[#7ED321]">
+              For India's sports community.
             </span>
           </h2>
 
-          <p className="text-lg md:text-xl text-[#5C5C5C] max-w-2xl mx-auto font-medium leading-relaxed text-balance">
-            Turfzy is bridging the gap between passionate players and premium local venues. From late-night 5-a-side football to weekend box cricket leagues, we make playing effortless.
+          {/* Short Supporting Paragraph */}
+          <p className="text-sm sm:text-base md:text-lg text-[#555555] font-medium leading-relaxed max-w-2xl text-balance">
+            Turfzy connects players with local sports venues and gives venue owners a simpler way to manage their business.
           </p>
         </motion.div>
 
-        {/* ── Core Value Pillars (3 Cards) ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        {/* ══════════════════════════════════════════════════════════════════
+            2. THREE VALUE PILLARS (Uniform Rhythm & Identical Height)
+        ══════════════════════════════════════════════════════════════════ */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 mb-10 sm:mb-12">
           {PILLARS.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
-              <motion.div
+              <motion.article
                 key={pillar.title}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 22 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.12 }}
-                className="group relative rounded-[28px] p-8 bg-white border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(126,211,33,0.08)] hover:-translate-y-1 hover:border-[#7ED321]/40 transition-all duration-400 flex flex-col justify-between"
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="group relative rounded-[24px] p-6 sm:p-7 bg-white/95 backdrop-blur-md border border-black/[0.07] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(126,211,33,0.08)] hover:-translate-y-1 hover:border-[#7ED321]/45 transition-all duration-200 flex flex-col justify-between text-left"
               >
+                {/* Top Subtle Green Accent Bar */}
+                <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#7ED321]/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+
                 <div>
-                  {/* Top Row: Icon & Pill */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-[16px] bg-[#7ED321]/15 border border-[#7ED321]/20 text-[#5a9c14] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#7ED321] group-hover:text-white transition-all duration-400 shadow-sm">
-                      <Icon size={22} strokeWidth={2.2} />
-                    </div>
-                    <span className="text-[11px] font-bold text-[#559414] bg-[#7ED321]/10 border border-[#7ED321]/20 px-3 py-1 rounded-full uppercase tracking-wider">
-                      {pillar.badge}
+                  {/* Top Header Row: Category Badge & Subtle Number */}
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#7ED321]/10 text-[#4c8413] border border-[#7ED321]/20 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider">
+                      <span className="font-mono">{pillar.number}</span>
+                      <span>·</span>
+                      <span>{pillar.badge}</span>
+                    </span>
+
+                    <span className="font-mono text-xs font-extrabold text-gray-300 group-hover:text-[#7ED321] transition-colors">
+                      {pillar.number}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#151515] group-hover:text-[#5a9c14] transition-colors duration-300 mb-3">
+                  {/* Icon in Soft-Green Container */}
+                  <div className="w-11 h-11 rounded-xl bg-[#7ED321]/12 text-[#467d0e] border border-[#7ED321]/25 flex items-center justify-center mb-4 group-hover:scale-105 group-hover:bg-[#7ED321] group-hover:text-white transition-all duration-200 shadow-sm">
+                    <Icon size={20} strokeWidth={2.2} />
+                  </div>
+
+                  {/* Pillar Heading (22-24px semibold/bold) */}
+                  <h3 className="text-xl sm:text-[22px] font-extrabold text-[#111111] font-clash leading-tight tracking-tight mb-1.5 group-hover:text-[#3d700d] transition-colors">
                     {pillar.title}
                   </h3>
 
-                  <p className="text-sm text-[#5C5C5C] leading-relaxed font-medium">
+                  {/* Bold Emotional Supporting Line */}
+                  <p className="text-xs sm:text-sm font-bold text-[#559414] leading-snug mb-2.5">
+                    {pillar.subtitle}
+                  </p>
+
+                  {/* Short Description */}
+                  <p className="text-xs sm:text-[13px] text-[#555555] leading-relaxed font-normal">
                     {pillar.description}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-gray-500">
-                  <span className="text-[#151515] font-semibold flex items-center gap-1.5">
-                    <CheckCircle2 size={14} className="text-[#7ED321]" />
-                    {pillar.highlight}
-                  </span>
-                  <span className="text-gray-400 group-hover:text-[#7ED321] group-hover:translate-x-1 transition-all">
-                    →
-                  </span>
+                {/* Card Footer: Contextual Clickable Link */}
+                <div className="pt-4 mt-5 border-t border-black/[0.05]">
+                  <a
+                    href={pillar.href}
+                    target={pillar.isExternal ? "_blank" : undefined}
+                    rel={pillar.isExternal ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#111111] group-hover:text-[#42790e] transition-colors"
+                  >
+                    <span>{pillar.actionText}</span>
+                    <ArrowRight
+                      size={13}
+                      className="stroke-[2.5] text-[#5da610] transition-transform duration-150 group-hover:translate-x-1"
+                    />
+                  </a>
                 </div>
-              </motion.div>
+              </motion.article>
             );
           })}
         </div>
 
-        {/* ── Impact Numbers Strip ── */}
+        {/* ══════════════════════════════════════════════════════════════════
+            3. SECTION CONNECTION STATEMENT
+        ══════════════════════════════════════════════════════════════════ */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="rounded-[32px] bg-[#151515] text-white p-8 md:p-12 shadow-2xl relative overflow-hidden"
+          transition={{ duration: 0.45, delay: 0.35, ease: "easeOut" }}
+          className="text-center pt-2"
         >
-          {/* Subtle green line on top */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#7ED321] to-transparent" />
-          
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 text-center relative z-10">
-            {PLATFORM_STANDARDS.map((standard) => (
-              <div key={standard.label} className="flex flex-col items-center">
-                <p className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-200 font-clash mb-1">
-                  {standard.value}
-                </p>
-                <p className="text-sm md:text-base font-bold text-white mb-0.5">
-                  {standard.label}
-                </p>
-                <p className="text-xs text-gray-400 font-medium">
-                  {standard.sub}
-                </p>
-              </div>
-            ))}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-black/[0.06] shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#7ED321] animate-pulse" />
+            <p className="text-xs sm:text-sm font-semibold text-[#555555]">
+              One platform. Two sides. One goal — more time on the pitch.
+            </p>
           </div>
         </motion.div>
 
