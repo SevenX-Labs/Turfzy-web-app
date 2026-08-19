@@ -23,7 +23,6 @@ import { TurfPitchIcon } from "./hero/GroundSportsIcons";
 /* ── Interaction / animation helpers ── */
 import HeroAnimations, { heroChildVariants } from "./hero/HeroAnimations";
 import MouseSpotlight from "./hero/MouseSpotlight";
-import FloatingSportsIcons from "./hero/FloatingSportsIcons";
 import TurfzyAppMockup from "./hero/TurfzyAppMockup";
 
 export default function Hero() {
@@ -65,10 +64,7 @@ export default function Hero() {
       {/* 1. Interactive Cursor Spotlight */}
       <MouseSpotlight mouseX={mouseX} mouseY={mouseY} />
 
-      {/* 2. Floating Ground Sports Badges in Gutters (Desktop only) */}
-      <FloatingSportsIcons />
-
-      {/* 3. Fluid Ambient Mesh Gradients */}
+      {/* 2. Fluid Ambient Mesh Gradients */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden blur-[120px] md:blur-[140px] saturate-[1.25] opacity-80 z-0">
         <motion.div
           animate={{
