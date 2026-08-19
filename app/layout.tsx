@@ -9,23 +9,35 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Turfzy – Book Sports Turfs in Seconds",
+  title: "Turfzy — Book Sports Turfs & Game Slots Online",
   description:
-    "Turfzy is the fastest way to discover nearby sports turfs, book available slots instantly, and pay securely online. Available across 15+ cities in India.",
-  keywords: ["sports turf booking", "cricket ground booking", "football turf", "Turfzy", "book turf online"],
+    "Find football turfs, box cricket grounds, badminton courts, and sports venues near you. Check availability and book your game online with Turfzy.",
+  keywords: [
+    "sports turf booking",
+    "turf booking",
+    "sports turf",
+    "football turf",
+    "box cricket",
+    "badminton courts",
+    "sports venues",
+    "turf near me",
+    "online turf booking",
+    "turf availability",
+    "sports venue booking",
+    "Turfzy",
+  ],
   icons: {
     icon: [
       { url: "/logo.png", type: "image/png" },
       { url: "/icon.png", type: "image/png" },
     ],
     shortcut: ["/logo.png"],
-    apple: [
-      { url: "/logo.png" },
-    ],
+    apple: [{ url: "/logo.png" }],
   },
   openGraph: {
-    title: "Turfzy – Book Sports Turfs in Seconds",
-    description: "Discover nearby sports turfs, book instantly, pay securely.",
+    title: "Turfzy — Book Sports Turfs & Game Slots Online",
+    description:
+      "Find football turfs, box cricket grounds, badminton courts, and sports venues near you. Check availability and book your game online with Turfzy.",
     type: "website",
     locale: "en_IN",
     images: ["/logo.png"],

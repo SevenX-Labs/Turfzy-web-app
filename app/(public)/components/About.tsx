@@ -8,11 +8,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const STATS = [
-  { value: "50,000+", label: "Match Hours Played", sub: "Across football & cricket" },
-  { value: "100+", label: "Inspected Grounds", sub: "Top-grade artificial turf" },
-  { value: "99.8%", label: "Slot Accuracy Rate", sub: "Zero double-booking risk" },
-  { value: "4.9 ★", label: "Player Satisfaction", sub: "From local sports squads" },
+const PLATFORM_STANDARDS = [
+  { value: "Instant", label: "Slot Confirmation", sub: "Live venue availability" },
+  { value: "Verified", label: "Ground Quality", sub: "Checked grass & floodlights" },
+  { value: "Direct", label: "Venue Pricing", sub: "Zero hidden extra fees" },
+  { value: "Secure", label: "UPI & Card Checkout", sub: "Protected digital payments" },
 ];
 
 const PILLARS = [
@@ -142,16 +142,16 @@ export default function About() {
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#7ED321] to-transparent" />
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 text-center relative z-10">
-            {STATS.map((stat, i) => (
-              <div key={stat.label} className="flex flex-col items-center">
-                <p className="text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-300 font-clash mb-1">
-                  {stat.value}
+            {PLATFORM_STANDARDS.map((standard) => (
+              <div key={standard.label} className="flex flex-col items-center">
+                <p className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-200 font-clash mb-1">
+                  {standard.value}
                 </p>
                 <p className="text-sm md:text-base font-bold text-white mb-0.5">
-                  {stat.label}
+                  {standard.label}
                 </p>
                 <p className="text-xs text-gray-400 font-medium">
-                  {stat.sub}
+                  {standard.sub}
                 </p>
               </div>
             ))}
