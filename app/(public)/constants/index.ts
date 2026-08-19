@@ -3,6 +3,12 @@
 // Audited plain-language copy, distinct vocabularies & two-track flows.
 // ─────────────────────────────────────────────────────────────────
 
+// ── External Application URLs ──────────────────────────────────
+export const APP_URLS = {
+  customerWeb: process.env.NEXT_PUBLIC_CUSTOMER_APP_URL || "http://localhost:3001",
+  ownerWeb: process.env.NEXT_PUBLIC_OWNER_APP_URL || "http://localhost:3002",
+} as const;
+
 // ── Navigation ──────────────────────────────────────────────────
 export const NAV_LINKS = [
   { label: "Home", href: "/" },

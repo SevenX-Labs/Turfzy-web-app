@@ -14,7 +14,8 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { APP_URLS } from "../constants";
 
 /* ── Ground Sports Vector Icons ── */
 import { TurfPitchIcon } from "./hero/GroundSportsIcons";
@@ -168,22 +169,27 @@ export default function Hero() {
               variants={heroChildVariants}
               className="flex flex-wrap items-center gap-3 pt-1"
             >
-              {/* Primary CTA */}
-              <Link
-                href="/find-turf"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-[#7ED321] text-[#111111] font-extrabold text-sm sm:text-base shadow-[0_6px_20px_rgba(126,211,33,0.35)] hover:shadow-[0_10px_28px_rgba(126,211,33,0.48)] hover:bg-[#74c81b] active:scale-[0.98] transition-all duration-200 border border-lime-300/60"
+              {/* Customer Web App CTA */}
+              <a
+                href={APP_URLS.customerWeb}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-[#7ED321] text-[#111111] font-extrabold text-sm sm:text-base shadow-[0_6px_20px_rgba(126,211,33,0.35)] hover:shadow-[0_10px_28px_rgba(126,211,33,0.48)] hover:bg-[#74c81b] active:scale-[0.98] transition-all duration-200 border border-lime-300/60 group"
               >
-                <span>Find a Turf</span>
-                <ArrowRight size={16} className="stroke-[2.5]" />
-              </Link>
+                <span>Customer Web App</span>
+                <ArrowUpRight size={17} className="stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
 
-              {/* Secondary CTA */}
-              <Link
-                href="/turf-partner"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 rounded-full bg-white/95 hover:bg-white text-[#151515] font-bold text-sm sm:text-base border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-black/20 active:scale-[0.98] transition-all duration-200"
+              {/* Owner Web App CTA */}
+              <a
+                href={APP_URLS.ownerWeb}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 rounded-full bg-white/95 hover:bg-white text-[#151515] font-bold text-sm sm:text-base border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-black/20 active:scale-[0.98] transition-all duration-200 group"
               >
-                List Your Turf
-              </Link>
+                <span>Owner Web App</span>
+                <ArrowUpRight size={17} className="stroke-[2.2] text-gray-500 group-hover:text-black transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
             </motion.div>
 
             {/* 6. Trust Indicators Row */}
