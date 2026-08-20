@@ -99,7 +99,7 @@ export default function TurfzyAppMockup() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onContextMenu={(e) => e.preventDefault()}
-      className="relative w-full max-w-[195px] sm:max-w-[210px] md:max-w-[225px] lg:max-w-[240px] xl:max-w-[250px] mx-auto py-2 flex items-center justify-center select-none"
+      className="relative w-full max-w-[195px] sm:max-w-[210px] md:max-w-[225px] lg:max-w-[240px] xl:max-w-[250px] mx-auto py-2 flex items-center justify-center select-none overflow-visible"
       style={{ perspective: 1200 }}
     >
       {/* ── Ambient Under-Glow & Atmosphere ── */}
@@ -199,18 +199,18 @@ export default function TurfzyAppMockup() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════════════
-            FLOATING GLASSMORPHISM CARDS (Layered around 3D Phone)
+            FLOATING GLASSMORPHISM CARDS (Positioned OUTSIDE 3D Phone)
         ══════════════════════════════════════════════════════════════════ */}
 
-        {/* ── CARD 1: Top-Left "Slot 8:00 PM Available" ── */}
+        {/* ── CARD 1: Outside Left "Slot 8:00 PM Available" ── */}
         <motion.div
           style={{
             x: badge1X,
             y: badge1Y,
             opacity: badge1Opacity,
-            transform: "translateZ(36px)",
+            transform: "translateZ(45px)",
           }}
-          className="absolute -left-4 sm:-left-6 top-[20%] z-30 bg-white/95 backdrop-blur-xl border border-black/[0.08] rounded-2xl p-2 sm:p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.1),0_0_15px_rgba(126,211,33,0.12)] pointer-events-none"
+          className="absolute -left-14 sm:-left-20 md:-left-24 top-[22%] z-40 bg-white/75 backdrop-blur-2xl border border-white/90 rounded-2xl p-2.5 sm:p-3 shadow-[0_16px_36px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04),0_0_24px_rgba(126,211,33,0.12)] pointer-events-none min-w-[105px] sm:min-w-[115px]"
         >
           <div className="text-[9px] font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1">
             <Clock size={11} className="text-[#5da610]" />
@@ -219,7 +219,7 @@ export default function TurfzyAppMockup() {
           <div className="text-xs sm:text-sm font-extrabold text-[#111] font-clash leading-tight mt-0.5">
             8:00 PM
           </div>
-          <div className="flex items-center gap-1 mt-0.5">
+          <div className="flex items-center gap-1.5 mt-1 pt-1 border-t border-black/[0.06]">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7ED321] opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#5da610]" />
@@ -230,15 +230,15 @@ export default function TurfzyAppMockup() {
           </div>
         </motion.div>
 
-        {/* ── CARD 2: Right "10+ Players" ── */}
+        {/* ── CARD 2: Outside Right "10+ Players" ── */}
         <motion.div
           style={{
             x: badge2X,
             y: badge2Y,
             opacity: badge2Opacity,
-            transform: "translateZ(36px)",
+            transform: "translateZ(45px)",
           }}
-          className="absolute -right-4 sm:-right-6 top-[44%] z-30 bg-white/95 backdrop-blur-xl border border-black/[0.08] rounded-2xl p-2 sm:p-2.5 shadow-[0_14px_30px_rgba(0,0,0,0.1),0_0_20px_rgba(126,211,33,0.12)] pointer-events-none min-w-[110px] sm:min-w-[120px]"
+          className="absolute -right-14 sm:-right-20 md:-right-24 top-[44%] z-40 bg-white/75 backdrop-blur-2xl border border-white/90 rounded-2xl p-2.5 sm:p-3 shadow-[0_16px_36px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04),0_0_24px_rgba(126,211,33,0.12)] pointer-events-none min-w-[115px] sm:min-w-[125px]"
         >
           <div className="flex items-center gap-1.5 mb-1">
             <div className="w-5 h-5 rounded-full bg-[#7ED321]/20 flex items-center justify-center text-[#4e910e]">

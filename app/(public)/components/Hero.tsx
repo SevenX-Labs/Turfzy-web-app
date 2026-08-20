@@ -177,7 +177,7 @@ export default function Hero() {
           {/* ── RIGHT COLUMN: Prominent Turfzy Product Mockup ── */}
           <motion.div
             variants={heroChildVariants}
-            className="lg:col-span-5 flex justify-center lg:justify-end items-center relative w-full pt-2 lg:pt-0"
+            className="lg:col-span-5 flex justify-center lg:justify-end items-center relative w-full pt-2 lg:pt-0 overflow-visible"
           >
             <TurfzyAppMockup />
           </motion.div>
