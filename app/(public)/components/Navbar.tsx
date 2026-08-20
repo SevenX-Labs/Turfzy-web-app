@@ -86,17 +86,20 @@ export default function Navbar() {
               : "bg-white/90 backdrop-blur-xl border border-[#E9E9E9]/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
           }`}
         >
-          {/* Left: Interactive Menu Toggle Squircle (X when open, dash-dash when closed) */}
+          {/* Left: Menu Toggle Squircle Button */}
           <div className="flex items-center">
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                setIsMobileOpen(!isMobileOpen);
+              }}
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gray-100/90 hover:bg-gray-200 active:scale-95 border border-black/5 flex items-center justify-center transition-all duration-150 group text-[#151515]"
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-              title={isOpen ? "Close Menu" : "Open Menu"}
+              aria-label={isOpen || isMobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen || isMobileOpen}
+              title={isOpen || isMobileOpen ? "Close Menu" : "Open Menu"}
             >
               <div className="relative w-4 h-4 flex items-center justify-center">
-                {isOpen ? (
+                {isOpen || isMobileOpen ? (
                   <X size={17} strokeWidth={2.4} className="text-[#111111] transition-transform duration-150" />
                 ) : (
                   <div className="flex flex-col gap-1 w-3.5 items-center justify-center">
@@ -124,24 +127,17 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Right: Contact Us Button */}
-          <div className="flex items-center gap-2">
+          {/* Right: Contact Us (Desktop only), Empty Spacer on Mobile for Perfect Center Balance */}
+          <div className="flex items-center">
             <a
               href="#cta"
               onClick={closeDropdown}
-              className="inline-flex items-center justify-center bg-[#111111] hover:bg-black text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm tracking-tight shadow-sm hover:shadow active:scale-95 transition-all duration-150"
+              className="hidden md:inline-flex items-center justify-center bg-[#111111] hover:bg-black text-white px-5 py-2 rounded-full font-bold text-sm tracking-tight shadow-sm hover:shadow active:scale-95 transition-all duration-150"
             >
               Contact Us
             </a>
-
-            {/* Mobile Toggle Button */}
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden p-1.5 rounded-full bg-gray-100 text-[#111111] hover:bg-gray-200 transition-colors"
-              aria-label="Toggle mobile menu"
-            >
-              {isMobileOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
+            {/* Mobile Spacer to match left button width for symmetrical centering */}
+            <div className="w-9 h-9 sm:w-10 sm:h-10 md:hidden pointer-events-none" />
           </div>
         </div>
 

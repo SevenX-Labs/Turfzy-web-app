@@ -21,7 +21,7 @@ import TurfzyPhone from "./3d/TurfzyPhone";
 export default function Hero() {
   return (
     <section
-      className="relative min-h-[92vh] lg:min-h-screen pt-20 pb-8 sm:pt-22 sm:pb-10 lg:pt-24 lg:pb-10 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] selection:bg-[#7ED321] selection:text-black"
+      className="relative min-h-[92vh] lg:min-h-screen pt-28 sm:pt-28 md:pt-24 lg:pt-24 pb-8 sm:pb-10 lg:pb-10 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] selection:bg-[#7ED321] selection:text-black"
     >
       {/* ══════════════════════════════════════════════════════════════════
           BACKGROUND LAYERS (Pitch Blueprint & Ambient Mesh Gradients)
