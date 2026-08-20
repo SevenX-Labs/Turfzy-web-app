@@ -19,7 +19,8 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       autoRaf: false, // We will manually handle requestAnimationFrame with GSAP ticker
       lerp: 0.08,     // Smoothness factor (lower is smoother/slower)
       smoothWheel: true,
-      wheelMultiplier: 1,
+      syncTouch: true, // Forces smooth scrolling on touch devices for consistent feel
+      wheelMultiplier: 1.1,
     });
     lenisRef.current = lenis;
 

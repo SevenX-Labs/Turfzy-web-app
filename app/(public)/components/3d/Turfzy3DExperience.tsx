@@ -71,6 +71,7 @@ export default function Turfzy3DExperience() {
         const heroTarget = document.getElementById("hero-phone-target");
         const aboutTarget = document.getElementById("about-phone-target");
         const aboutSection = document.getElementById("about");
+        
         if (!heroTarget || !aboutSection) return;
 
         setIsReady(true);
