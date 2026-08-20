@@ -39,15 +39,18 @@ export default function Turfzy3DExperience() {
   const smoothRotateY = useSpring(phoneRotateY, springConfig);
   const smoothRotateZ = useSpring(phoneRotateZ, springConfig);
   const smoothScale = useSpring(phoneScale, springConfig);
-  const smoothY = useSpring(phoneY, springConfig);
-  const smoothX = useSpring(phoneX, springConfig);
-  const smoothOpacity = useSpring(phoneOpacity, { damping: 60, stiffness: 400, mass: 0.5 });
+  
+  // Use raw motion values for X/Y so it sticks perfectly to targets on scroll without physics lag!
+  const smoothY = phoneY;
+  const smoothX = phoneX;
+  
+  const smoothOpacity = useSpring(phoneOpacity, { damping: 100, stiffness: 500, mass: 0.1 });
 
   const smoothBadge1X = useSpring(badge1X, springConfig);
   const smoothBadge1Y = useSpring(badge1Y, springConfig);
   const smoothBadge2X = useSpring(badge2X, springConfig);
   const smoothBadge2Y = useSpring(badge2Y, springConfig);
-  const smoothBadgesOpacity = useSpring(badgesOpacity, springConfig);
+  const smoothBadgesOpacity = useSpring(badgesOpacity, { damping: 100, stiffness: 500, mass: 0.1 });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -134,8 +137,7 @@ export default function Turfzy3DExperience() {
 
         // ── ZONE 3: ABOUT SECTION FULLY IN VIEW (Phone locked in About center) ──
         // aboutRect.top <= 0 means About top has passed the top of the viewport
-        // aboutRect.bottom >= 0 means About bottom is still visible
-        if (aboutRect.top <= 0 && aboutRect.bottom >= 0) {
+        if (aboutRect.top <= 0 && aboutRect.bottom >= vh * 0.3) {
           const targetX = aboutTarget ? aboutCenterX : 0;
           const targetY = aboutTarget ? aboutCenterY : 0;
 
