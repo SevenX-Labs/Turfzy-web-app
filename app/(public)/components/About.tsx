@@ -6,13 +6,12 @@
  * Refined, high-end sports-tech mission and core pillars:
  * 1. Clean hero header with clear typography hierarchy.
  * 2. Three uniform pillar cards (Player First, Owner Success, Standardized Quality)
- *    with consistent rhythm, subtle numbers, line icons, and contextual footers.
+ *    with 3D scroll entrance and interactive tilt.
  * 3. Section connector statement: "One platform. Two sides. One goal — more time on the pitch."
- * 4. Semantic HTML (<section>, <h2>, <article>) with lightweight 200ms micro-motion.
  */
 
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import {
   Target,
   TrendingUp,
@@ -75,13 +74,28 @@ const PILLARS: Pillar[] = [
 
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { damping: 25, stiffness: 100 });
+  const sectionRotateX = useTransform(smoothProgress, [0, 1], [10, 0]);
+  const sectionScale = useTransform(smoothProgress, [0, 1], [0.96, 1]);
+  const sectionY = useTransform(smoothProgress, [0, 1], [40, 0]);
 
   return (
     <section
       id="about"
-      className="relative bg-[#FAFAF6] py-20 sm:py-24 md:py-28 lg:py-32 overflow-hidden border-b border-black/[0.05]"
+      ref={ref}
+      className="relative bg-[#FAFAF6] py-16 sm:py-20 md:py-24 lg:py-28 overflow-hidden border-b border-black/[0.05]"
     >
+      {/* ── 3D Laser Light Bridge from Hero into About ── */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#7ED321]/50 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-[#7ED321]/10 via-transparent to-transparent blur-2xl pointer-events-none" />
+
       {/* ── Background Subtle Dotted Grid Accent ── */}
       <div
         className="absolute inset-0 pointer-events-none opacity-30"
@@ -96,16 +110,24 @@ export default function About() {
       <div className="absolute top-1/3 -left-32 w-[450px] h-[450px] bg-[#7ED321]/10 rounded-full blur-[110px] pointer-events-none" />
       <div className="absolute bottom-10 -right-32 w-[450px] h-[450px] bg-emerald-400/8 rounded-full blur-[110px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+      <motion.div
+        style={{
+          rotateX: sectionRotateX,
+          scale: sectionScale,
+          y: sectionY,
+          transformPerspective: 1200,
+        }}
+        className="max-w-6xl mx-auto px-6 relative z-10"
+      >
 
         {/* ══════════════════════════════════════════════════════════════════
             1. SECTION HERO AREA (Clear Hierarchy)
         ══════════════════════════════════════════════════════════════════ */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center max-w-3xl mx-auto mb-12 sm:mb-14 lg:mb-16 flex flex-col items-center"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14 flex flex-col items-center"
         >
           {/* Small Eyebrow Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-black/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.03)] mb-4">
@@ -130,7 +152,7 @@ export default function About() {
         </motion.div>
 
         {/* ══════════════════════════════════════════════════════════════════
-            2. THREE VALUE PILLARS (Uniform Rhythm & Identical Height)
+            2. THREE VALUE PILLARS (3D Responsive Stacking)
         ══════════════════════════════════════════════════════════════════ */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 mb-10 sm:mb-12">
           {PILLARS.map((pillar, index) => {
@@ -138,17 +160,24 @@ export default function About() {
             return (
               <motion.article
                 key={pillar.title}
-                initial={{ opacity: 0, y: 22 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
+                initial={{ opacity: 0, y: 30, rotateX: 12 }}
+                animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.1,
+                  duration: 0.55,
+                  delay: index * 0.12,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group relative rounded-[24px] p-6 sm:p-7 bg-white/95 backdrop-blur-md border border-black/[0.07] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(126,211,33,0.08)] hover:-translate-y-1 hover:border-[#7ED321]/45 transition-all duration-200 flex flex-col justify-between text-left"
+                whileHover={{
+                  y: -5,
+                  rotateX: 2,
+                  rotateY: index === 0 ? 3 : index === 2 ? -3 : 0,
+                  transition: { duration: 0.2 },
+                }}
+                className="group relative rounded-[24px] p-6 sm:p-7 bg-white/95 backdrop-blur-md border border-black/[0.07] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_18px_40px_rgba(126,211,33,0.12)] hover:border-[#7ED321]/50 transition-all duration-200 flex flex-col justify-between text-left"
+                style={{ transformStyle: "preserve-3d" }}
               >
                 {/* Top Subtle Green Accent Bar */}
-                <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#7ED321]/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#7ED321]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
 
                 <div>
                   {/* Top Header Row: Category Badge & Subtle Number */}
@@ -169,7 +198,7 @@ export default function About() {
                     <Icon size={20} strokeWidth={2.2} />
                   </div>
 
-                  {/* Pillar Heading (22-24px semibold/bold) */}
+                  {/* Pillar Heading */}
                   <h3 className="text-xl sm:text-[22px] font-extrabold text-[#111111] font-clash leading-tight tracking-tight mb-1.5 group-hover:text-[#3d700d] transition-colors">
                     {pillar.title}
                   </h3>
@@ -222,7 +251,8 @@ export default function About() {
           </div>
         </motion.div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }
+

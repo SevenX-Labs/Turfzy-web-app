@@ -1,35 +1,95 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useScroll,
+} from "framer-motion";
 import { Check, Clock } from "lucide-react";
 
 export default function TurfzyAppMockup() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
 
   // Mouse interaction for realistic 3D parallax tilt
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 120 };
+  const springConfig = { damping: 26, stiffness: 130 };
   const smoothMouseX = useSpring(mouseX, springConfig);
   const smoothMouseY = useSpring(mouseY, springConfig);
+  const smoothScroll = useSpring(scrollY, { damping: 28, stiffness: 100 });
 
-  // 3D Rotation transforms around base isometric bend
-  // Base angle: rotateX(14deg) rotateY(-18deg) rotateZ(6deg)
-  const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], [19, 9]);
-  const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-24, -12]);
-  const rotateZ = useTransform(smoothMouseX, [-0.5, 0.5], [4, 8]);
+  // ── CRAZY 3D SCROLL & MOUSE COMPOSITE TRANSFORMS ──
+  // Base 3D isometric angle + mouse interaction + dynamic scroll revolution
+  const rotateX = useTransform(
+    [smoothMouseY, smoothScroll],
+    ([latestMouseY, latestScroll]) => {
+      const mouseOffset = (latestMouseY as number) * -12;
+      // As user scrolls down, phone tilts forward in 3D space
+      const scrollOffset = Math.min((latestScroll as number) * 0.038, 20);
+      return 14 + mouseOffset + scrollOffset;
+    }
+  );
 
-  // Floating badges parallax offsets
-  const badge1X = useTransform(smoothMouseX, [-0.5, 0.5], [-8, 8]);
-  const badge1Y = useTransform(smoothMouseY, [-0.5, 0.5], [-8, 8]);
+  const rotateY = useTransform(
+    [smoothMouseX, smoothScroll],
+    ([latestMouseX, latestScroll]) => {
+      const mouseOffset = (latestMouseX as number) * 14;
+      // Scroll sweeps the phone around the Y-axis
+      const scrollOffset = Math.min((latestScroll as number) * 0.05, 28);
+      return -18 + mouseOffset + scrollOffset;
+    }
+  );
 
-  const badge2X = useTransform(smoothMouseX, [-0.5, 0.5], [10, -10]);
-  const badge2Y = useTransform(smoothMouseY, [-0.5, 0.5], [-6, 6]);
+  const rotateZ = useTransform(
+    [smoothMouseX, smoothScroll],
+    ([latestMouseX, latestScroll]) => {
+      const mouseOffset = (latestMouseX as number) * 4;
+      const scrollOffset = Math.min((latestScroll as number) * -0.018, -8);
+      return 6 + mouseOffset + scrollOffset;
+    }
+  );
 
-  const badge3X = useTransform(smoothMouseX, [-0.5, 0.5], [8, -8]);
-  const badge3Y = useTransform(smoothMouseY, [-0.5, 0.5], [10, -10]);
+  const phoneY = useTransform(smoothScroll, [0, 600], [0, 90]);
+  const phoneScale = useTransform(smoothScroll, [0, 300, 600], [1, 1.05, 0.94]);
+
+  // Floating badges 3D explosion & parallax detachment during scroll
+  const badge1X = useTransform(
+    [smoothMouseX, smoothScroll],
+    ([mX, s]) => (mX as number) * -12 - (s as number) * 0.1
+  );
+  const badge1Y = useTransform(
+    [smoothMouseY, smoothScroll],
+    ([mY, s]) => (mY as number) * -10 - (s as number) * 0.08
+  );
+  const badge1Opacity = useTransform(smoothScroll, [0, 380], [1, 0.2]);
+
+  const badge2X = useTransform(
+    [smoothMouseX, smoothScroll],
+    ([mX, s]) => (mX as number) * 14 + (s as number) * 0.14
+  );
+  const badge2Y = useTransform(
+    [smoothMouseY, smoothScroll],
+    ([mY, s]) => (mY as number) * -8 + (s as number) * 0.05
+  );
+  const badge2Opacity = useTransform(smoothScroll, [0, 380], [1, 0.2]);
+
+  const badge3X = useTransform(
+    [smoothMouseX, smoothScroll],
+    ([mX, s]) => (mX as number) * 12 + (s as number) * 0.09
+  );
+  const badge3Y = useTransform(
+    [smoothMouseY, smoothScroll],
+    ([mY, s]) => (mY as number) * 14 + (s as number) * 0.16
+  );
+  const badge3Opacity = useTransform(smoothScroll, [0, 380], [1, 0.2]);
+
+  // Screen glare moves dynamically with scroll
+  const glareTranslate = useTransform(smoothScroll, [0, 500], [-30, 20]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -51,11 +111,11 @@ export default function TurfzyAppMockup() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onContextMenu={(e) => e.preventDefault()}
-      className="relative w-full max-w-[170px] sm:max-w-[185px] md:max-w-[195px] lg:max-w-[205px] xl:max-w-[215px] mx-auto py-2 flex items-center justify-center select-none"
+      className="relative w-full max-w-[180px] sm:max-w-[195px] md:max-w-[210px] lg:max-w-[220px] xl:max-w-[230px] mx-auto py-1 flex items-center justify-center select-none"
       style={{ perspective: 1100 }}
     >
       {/* ── Ambient Under-Glow & Atmosphere ── */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] sm:w-[260px] h-[300px] sm:h-[360px] bg-gradient-to-tr from-[#7ED321]/24 via-emerald-400/16 to-transparent blur-[50px] -z-20 rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] sm:w-[260px] h-[300px] sm:h-[340px] bg-gradient-to-tr from-[#7ED321]/24 via-emerald-400/16 to-transparent blur-[55px] -z-20 rounded-full pointer-events-none" />
 
       {/* ── MAIN 3D ROTATED PHONE CONTAINER ── */}
       <motion.div
@@ -63,10 +123,12 @@ export default function TurfzyAppMockup() {
           rotateX,
           rotateY,
           rotateZ,
+          y: phoneY,
+          scale: phoneScale,
           transformStyle: "preserve-3d",
         }}
         animate={{
-          y: [0, -8, 0],
+          y: [0, -6, 0],
         }}
         transition={{
           y: {
@@ -118,13 +180,15 @@ export default function TurfzyAppMockup() {
                 className="w-full h-full object-cover object-top block absolute inset-0 bg-[#09090b] pointer-events-none select-none"
               />
 
-              {/* Dynamic Screen Glare Diagonal Highlight */}
-              <div
+              {/* Dynamic Screen Glare Diagonal Highlight that moves on scroll */}
+              <motion.div
                 className="absolute inset-0 w-[200%] h-[200%] pointer-events-none z-20"
                 style={{
                   background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
-                  transform: "translate(-30%, -30%) rotate(-15deg)",
+                    "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
+                  transform: "rotate(-15deg)",
+                  top: glareTranslate,
+                  left: glareTranslate,
                 }}
               />
 
@@ -154,6 +218,7 @@ export default function TurfzyAppMockup() {
           style={{
             x: badge1X,
             y: badge1Y,
+            opacity: badge1Opacity,
             transform: "translateZ(35px)",
           }}
           className="absolute -left-5 sm:-left-7 top-[16%] z-30 bg-[#141417]/92 backdrop-blur-xl border border-white/[0.12] rounded-xl p-2 sm:p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.5),0_0_15px_rgba(126,211,33,0.12)] pointer-events-none"
@@ -181,6 +246,7 @@ export default function TurfzyAppMockup() {
           style={{
             x: badge2X,
             y: badge2Y,
+            opacity: badge2Opacity,
             transform: "translateZ(30px)",
           }}
           className="absolute -right-3 sm:-right-6 top-[44%] z-30 bg-[#141417]/92 backdrop-blur-xl border border-white/[0.12] rounded-xl p-2 sm:p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.5),0_0_15px_rgba(126,211,33,0.12)] pointer-events-none min-w-[110px] sm:min-w-[125px]"
@@ -207,6 +273,7 @@ export default function TurfzyAppMockup() {
           style={{
             x: badge3X,
             y: badge3Y,
+            opacity: badge3Opacity,
             transform: "translateZ(40px)",
           }}
           className="absolute -right-2 sm:-right-4 bottom-[8%] z-30 bg-[#141417]/92 backdrop-blur-xl border border-white/[0.12] rounded-xl p-2 sm:p-2.5 shadow-[0_14px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(126,211,33,0.15)] pointer-events-none"
@@ -251,5 +318,6 @@ export default function TurfzyAppMockup() {
     </div>
   );
 }
+
 
 

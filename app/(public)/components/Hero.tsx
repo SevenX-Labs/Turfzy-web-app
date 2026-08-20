@@ -22,7 +22,7 @@ import TurfzyAppMockup from "./hero/TurfzyAppMockup";
 export default function Hero() {
   return (
     <section
-      className="relative min-h-[calc(100vh-5rem)] lg:min-h-screen pt-22 pb-12 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] selection:bg-[#7ED321] selection:text-black"
+      className="relative min-h-[92vh] lg:min-h-screen pt-20 pb-8 sm:pt-22 sm:pb-10 lg:pt-24 lg:pb-10 flex flex-col justify-center items-center overflow-hidden bg-[#FAFAF6] selection:bg-[#7ED321] selection:text-black"
     >
       {/* ══════════════════════════════════════════════════════════════════
           BACKGROUND LAYERS (Pitch Blueprint & Ambient Mesh Gradients)
