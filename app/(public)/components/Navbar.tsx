@@ -21,7 +21,6 @@ import {
   Store,
   Compass,
   Sparkles,
-  Menu,
   X,
 } from "lucide-react";
 import { APP_URLS } from "../constants";
