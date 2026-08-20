@@ -84,7 +84,8 @@ function FAQItem({
 }
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  // Keep the full question list visible on first arrival.
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   // Staggered animation for the left header column
   const headerVariants = {

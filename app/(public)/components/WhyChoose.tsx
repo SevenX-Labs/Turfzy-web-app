@@ -146,7 +146,7 @@ export default function WhyChoose() {
           </span>
         </div>
 
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#151515] tracking-tight leading-[1.1] mb-6">
+        <h2 className="!text-4xl md:!text-5xl lg:!text-[52px] font-extrabold text-[#151515] tracking-tight leading-[1.1] mb-6">
           Built around every <span className="text-[#7ED321]">game you</span> play.
         </h2>
 
@@ -230,7 +230,7 @@ export default function WhyChoose() {
                   onClick={() => setActiveIndex(index)}
                 >
                   <div 
-                     className={`w-[250px] sm:w-[270px] h-[370px] rounded-[32px] p-5 flex flex-col relative overflow-hidden transition-all duration-500 group
+                     className={`w-[250px] sm:w-[270px] h-[340px] rounded-[32px] p-5 flex flex-col relative overflow-hidden transition-all duration-500 group
                         ${isActive 
                            ? "bg-white shadow-[0_30px_60px_-15px_rgba(126,211,33,0.25)] border-2 border-[#7ED321] ring-4 ring-[#7ED321]/10" 
                            : "bg-white/70 backdrop-blur-md shadow-lg border border-gray-200"
@@ -253,10 +253,10 @@ export default function WhyChoose() {
 
                      {/* Text */}
                      <div className="relative z-20 mt-1">
-                        <h3 className={`text-[13.5px] font-bold mb-1.5 leading-[1.3] tracking-tight ${isActive ? "text-[#111]" : "text-gray-700"}`}>
+                        <h3 className={`!text-[24px] md:!text-[25px] font-bold mb-1.5 leading-[1.12] tracking-tight ${isActive ? "text-[#111]" : "text-gray-700"}`}>
                            {item.title}
                         </h3>
-                        <p className={`text-[10px] leading-[1.65] font-medium ${isActive ? "text-[#555]" : "text-gray-500"}`}>
+                        <p className={`!text-[14px] md:!text-[15px] leading-[1.45] font-medium ${isActive ? "text-[#555]" : "text-gray-500"}`}>
                            {item.description}
                         </p>
                      </div>

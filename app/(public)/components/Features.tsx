@@ -311,12 +311,12 @@ export default function Features() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
-                className="relative z-20 w-full h-[450px] flex items-center justify-center pointer-events-none"
+                className="relative z-20 w-full flex items-center justify-center pointer-events-none"
               >
-                <div className="absolute w-[340px] h-[600px] flex items-center justify-center">
+                <div className="relative w-full flex items-center justify-center">
                   <TurfzyPhone 
                     currentStep={activeTab === "players" ? "find" : "manage"} 
-                    phoneScale={0.7}
+                    phoneScale={0.75}
                     phoneRotateX={8}
                     phoneRotateY={-12}
                     showPlatform={false}
