@@ -8,7 +8,6 @@ import {
   Store, LayoutGrid, Wrench, CalendarDays, TrendingUp,
   BarChart3, Wallet, Smartphone, Monitor, Sparkles
 } from "lucide-react";
-import Image from "next/image";
 import TurfzyPhone from "./3d/TurfzyPhone";
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {

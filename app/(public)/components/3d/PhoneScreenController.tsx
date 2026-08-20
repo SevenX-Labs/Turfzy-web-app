@@ -10,9 +10,11 @@ import {
   QrCode,
   Star,
   Zap,
+  TrendingUp,
+  BarChart3,
 } from "lucide-react";
 
-export type ScreenStep = "find" | "choose" | "book" | "play";
+export type ScreenStep = "find" | "choose" | "book" | "play" | "manage";
 
 interface PhoneScreenControllerProps {
   currentStep?: ScreenStep;
@@ -242,6 +244,79 @@ export default function PhoneScreenController({
 
         <div className="text-center text-[10px] text-gray-400 pb-1">
           Show this pass at venue entrance
+        </div>
+      </motion.div>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          5. OWNER DASHBOARD / MANAGE SCREEN (Step 5: Manage)
+      ══════════════════════════════════════════════════════════════════ */}
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: currentStep === "manage" ? 1 : 0,
+          scale: currentStep === "manage" ? 1 : 0.96,
+          y: currentStep === "manage" ? 0 : 8,
+          pointerEvents: currentStep === "manage" ? "auto" : "none",
+        }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0 w-full h-full bg-[#0d0d10] p-3 flex flex-col justify-between"
+      >
+        <div className="pt-6">
+          <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
+            <div>
+              <span className="font-bold text-white text-xs block">Sahil Arena Admin</span>
+              <span className="text-[9px] text-[#7ED321]">Venue Control Center</span>
+            </div>
+            <span className="bg-[#7ED321]/20 text-[#7ED321] text-[9px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1">
+              LIVE
+            </span>
+          </div>
+
+          {/* Revenue Card */}
+          <div className="bg-gradient-to-br from-[#7ED321]/20 via-white/5 to-white/5 border border-[#7ED321]/30 rounded-xl p-2.5 mb-2">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-[9px] text-gray-300 font-bold uppercase">Today&apos;s Revenue</span>
+              <TrendingUp size={12} className="text-[#7ED321]" />
+            </div>
+            <div className="text-base font-extrabold text-white font-clash">₹14,500</div>
+            <div className="text-[9px] text-emerald-400 mt-0.5 flex items-center gap-1">
+              <span>↑ +18% vs yesterday</span>
+            </div>
+          </div>
+
+          {/* Schedule Matrix Summary */}
+          <div className="text-[10px] font-bold text-gray-300 mb-1 flex items-center justify-between">
+            <span className="flex items-center gap-1"><Calendar size={10} className="text-[#7ED321]" /> Today&apos;s Slots</span>
+            <span className="text-[9px] text-[#7ED321]">12/16 Booked</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1.5 text-[10px] mb-2">
+            <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 flex justify-between items-center">
+              <span>6 PM - Pitch A</span>
+              <span className="text-[8px] bg-emerald-500/20 text-emerald-400 font-bold px-1 rounded">Booked</span>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 flex justify-between items-center">
+              <span>8 PM - Pitch A</span>
+              <span className="text-[8px] bg-emerald-500/20 text-emerald-400 font-bold px-1 rounded">Booked</span>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 flex justify-between items-center">
+              <span>9 PM - Pitch B</span>
+              <span className="text-[8px] bg-amber-500/20 text-amber-400 font-bold px-1 rounded">Blocked</span>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 flex justify-between items-center">
+              <span>10 PM - Pitch A</span>
+              <span className="text-[8px] bg-[#7ED321]/20 text-[#7ED321] font-bold px-1 rounded">Open</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-2 pb-1 border-t border-white/10 flex items-center justify-between">
+          <div className="flex items-center gap-1 text-[9px] text-gray-400">
+            <BarChart3 size={11} className="text-[#7ED321]" />
+            <span>Peak Hours: 7-10 PM</span>
+          </div>
+          <button className="bg-[#7ED321] text-black font-extrabold text-[10px] px-3 py-1.5 rounded-lg">
+            Dashboard →
+          </button>
         </div>
       </motion.div>
 
