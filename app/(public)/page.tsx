@@ -8,6 +8,7 @@ import Features         from "./components/Features";
 
 import FAQ              from "./components/FAQ";
 import CTA              from "./components/CTA";
+import Turfzy3DExperience from "./components/3d/Turfzy3DExperience";
 
 /**
  * Turfzy Landing Page
@@ -16,6 +17,7 @@ import CTA              from "./components/CTA";
 export default function LandingPage() {
   return (
     <>
+      <Turfzy3DExperience />
       <Hero />
       <About />
       <HowItWorks />

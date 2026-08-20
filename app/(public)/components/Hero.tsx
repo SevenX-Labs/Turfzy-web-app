@@ -16,7 +16,7 @@ import { TurfPitchIcon } from "./hero/GroundSportsIcons";
 
 /* ── Interaction / animation helpers ── */
 import HeroAnimations, { heroChildVariants } from "./hero/HeroAnimations";
-import TurfzyAppMockup from "./hero/TurfzyAppMockup";
+import TurfzyPhone from "./3d/TurfzyPhone";
 
 export default function Hero() {
   return (
@@ -174,12 +174,17 @@ export default function Hero() {
 
           </div>
 
-          {/* ── RIGHT COLUMN: Prominent Turfzy Product Mockup ── */}
+          {/* ── RIGHT COLUMN: Prominent Turfzy Product Mockup Target Slot ── */}
           <motion.div
             variants={heroChildVariants}
             className="lg:col-span-5 flex justify-center lg:justify-end items-center relative w-full pt-2 lg:pt-0 overflow-visible"
           >
-            <TurfzyAppMockup />
+            {/* Mobile fallback phone */}
+            <div className="lg:hidden w-full flex justify-center">
+              <TurfzyPhone currentStep="find" showBadges={false} phoneScale={0.95} />
+            </div>
+            {/* Desktop spacer for fixed 3D layer */}
+            <div id="hero-phone-target" className="hidden lg:block w-full max-w-[260px] aspect-[9/18.8] pointer-events-none" />
           </motion.div>
 
         </HeroAnimations>

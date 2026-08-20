@@ -1,33 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
-  MapPin, Calendar, CheckCircle2, Trophy,
-  Store, Bell, QrCode, Wallet, ArrowRight, Layers
+  Search,
+  Calendar,
+  CreditCard,
+  Ticket,
+  CheckCircle2,
 } from "lucide-react";
-import { HOW_IT_WORKS } from "../constants";
-
-const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
-  MapPin, Calendar, CheckCircle2, Trophy,
-  Store, Bell, QrCode, Wallet
-};
-
-// Placeholder paths - keep your existing ones
-const APP_SCREENSHOTS = {
-  players: [
-    "/WhatsApp Image 2026-07-14 at 14.43.24.jpeg",
-    "/WhatsApp Image 2026-07-14 at 14.43.24.jpeg",
-    "/WhatsApp Image 2026-07-14 at 14.43.24.jpeg",
-    "/WhatsApp Image 2026-07-14 at 14.43.24.jpeg",
-  ],
-  owners: [
-    "/app-ui-mockup.png",
-    "/app-ui-mockup.png",
-    "/app-ui-mockup.png",
-    "/app-ui-mockup.png",
-  ]
-};
+import TurfzyPhone from "./3d/TurfzyPhone";
+import { ScreenStep } from "./3d/PhoneScreenController";
 
 export default function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,227 +18,331 @@ export default function HowItWorks() {
 
   const [activeTab, setActiveTab] = useState<"players" | "owners">("players");
   const [activeStep, setActiveStep] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [sectionInView, setSectionInView] = useState(false);
 
-  const currentSteps = HOW_IT_WORKS[activeTab];
-
-  // Auto-cycle through steps every 5 seconds
+  // Detect when How It Works section enters/leaves viewport
   useEffect(() => {
-    if (isHovering) return;
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % currentSteps.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [activeTab, currentSteps.length, isHovering]);
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setSectionInView(entry.isIntersecting),
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-cycle images ONLY when section is visible
+  useEffect(() => {
+    if (!sectionInView) return;
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % 4);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [sectionInView]);
+
+  const STEPS = [
+    {
+      id: 0,
+      number: "01",
+      title: "FIND",
+      desc: "Discover turfs near you",
+      icon: Search,
+      key: "find",
+    },
+    {
+      id: 1,
+      number: "02",
+      title: "CHOOSE",
+      desc: "Pick your date, time & turf",
+      icon: Calendar,
+      key: "choose",
+    },
+    {
+      id: 2,
+      number: "03",
+      title: "PAY",
+      desc: "Pay securely within seconds",
+      icon: CreditCard,
+      key: "book",
+    },
+    {
+      id: 3,
+      number: "04",
+      title: "PLAY",
+      desc: "Show your pass and enjoy the game",
+      icon: Ticket,
+      key: "play",
+    },
+  ];
 
   return (
     <section
+      ref={sectionRef}
       id="how-it-works"
-      className="relative bg-[#FAFAF6] py-24 md:py-32 border-b border-gray-200/50 overflow-hidden"
+      className="relative bg-[#F9FAF6] py-20 md:py-28 border-b border-gray-200/50 overflow-hidden selection:bg-[#7ED321] selection:text-black"
     >
-      {/* ── Premium Alive Background ── */}
-      {/* 1. Fluid Mesh Gradients */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none blur-[90px] opacity-70">
-        <motion.div
-          animate={{
-            x: ["0%", "15%", "-5%", "0%"],
-            y: ["0%", "-10%", "15%", "0%"],
-            scale: [1, 1.2, 0.9, 1],
-            rotate: [0, 180, 360, 360]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 left-0 w-[60vw] h-[60vw] bg-[#7ED321]/20 rounded-full"
-        />
-        <motion.div
-          animate={{
-            x: ["0%", "-15%", "5%", "0%"],
-            y: ["0%", "10%", "-15%", "0%"],
-            scale: [1, 0.9, 1.1, 1],
-            rotate: [360, 180, 90, 0]
-          }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-0 right-0 w-[60vw] h-[60vw] bg-emerald-400/20 rounded-full"
-        />
-      </div>
-
-      {/* 2. Alive Blueprint Grid (Full width) */}
-      <motion.div
-        className="absolute inset-[-50px] pointer-events-none opacity-50 z-0"
+      {/* ── Background Subtle Grid Accent ── */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(132, 204, 34, 0.2) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(132, 204, 34, 0.2) 1px, transparent 1px)
-          `,
-          backgroundSize: "40px 40px",
-          maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+          backgroundImage:
+            "radial-gradient(circle, rgba(126,211,33,0.18) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
-        animate={{ x: [0, -40], y: [0, -40] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#7ED321]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={containerRef}>
+      <div className="max-w-7xl mx-auto px-6 relative z-10" ref={containerRef}>
+        
+        {/* ── MAIN 2-COLUMN LAYOUT matching screenshot ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+          
+          {/* ══════════════════════════════════════════════════════════════════
+              LEFT COLUMN: Title, Description & Tab Switcher
+          ══════════════════════════════════════════════════════════════════ */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-4 flex flex-col justify-center pt-4 lg:pt-12"
+          >
+            {/* Title: "How it works" in green */}
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#7ED321] font-clash tracking-tight leading-[1.08] mb-4">
+              How it works
+            </h2>
 
-        {/* ── Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-16 flex flex-col items-center gap-8"
-        >
-          {/* Sleek Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-            <Layers size={14} className="text-[#7ED321]" />
-            <span className="text-[11px] font-bold text-[#151515] tracking-widest uppercase">
-              The Process
-            </span>
-          </div>
+            {/* Subheading / Description */}
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8 max-w-md font-medium">
+              From finding the right pitch for your weekend match to keeping your venue fully booked, here is how Turfzy works for players and turf owners.
+            </p>
 
-          <h2 className="text-5xl md:text-6xl lg:text-[5rem] font-extrabold text-[#7ED321] tracking-tight leading-[1.1]">
-            How it works
-          </h2>
+            {/* Tab Switcher Pills */}
+            <div className="inline-flex bg-gray-200/60 p-1.5 rounded-2xl w-fit shadow-inner border border-gray-200/50">
+              <button
+                onClick={() => {
+                  setActiveTab("players");
+                  setActiveStep(0);
+                }}
+                className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
+                  activeTab === "players"
+                    ? "bg-white text-[#5da610] shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                For Players
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("owners");
+                  setActiveStep(0);
+                }}
+                className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
+                  activeTab === "owners"
+                    ? "bg-white text-[#5da610] shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
+                    : "text-gray-500 hover:text-gray-900"
+                }`}
+              >
+                For Owners
+              </button>
+            </div>
+          </motion.div>
 
-          <p className="text-lg md:text-xl text-[#5C5C5C] max-w-2xl mx-auto font-medium leading-relaxed text-balance">
-            From finding the right pitch for your weekend match to keeping your venue fully booked, here is how Turfzy works for players and turf owners.
-          </p>
-        </motion.div>
-
-        {/* ── Tab Switcher ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex justify-center mb-20"
-        >
-          <div className="bg-gray-200/50 p-1.5 rounded-[16px] flex gap-1 relative shadow-inner">
-            {(["players", "owners"] as const).map((tab) => {
-              const isActive = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  onClick={() => {
-                    setActiveTab(tab);
-                    setActiveStep(0);
-                  }}
-                  className={`relative px-10 py-3 rounded-[12px] text-base font-semibold transition-colors duration-300 z-10 capitalize ${isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
-                    }`}
-                >
-                  For {tab}
-                  {isActive && (
-                    <motion.div
-                      layoutId="howItWorksTab"
-                      className="absolute inset-0 bg-white rounded-[12px] -z-10 shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-gray-100"
-                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* ── Main Content Grid ── */}
-        <div
-          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-
-          {/* Left Side: Phone Mockup */}
-          <div className="lg:col-span-5 lg:col-start-2 order-1 flex justify-center perspective-[1000px]">
-            <div className="relative w-full max-w-[260px] md:max-w-[280px]">
-
-              {/* Premium Phone Frame */}
-              <div className="rounded-[44px] md:rounded-[48px] border-[10px] md:border-[12px] border-[#151515] bg-[#151515] shadow-2xl overflow-hidden relative aspect-[9/19.5]">
-
-                {/* Dynamic Screen Image */}
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={`${activeTab}-${activeStep}`}
-                    src={APP_SCREENSHOTS[activeTab][activeStep]}
-                    alt={`${activeTab} ui step ${activeStep + 1}`}
-                    initial={{ opacity: 0, scale: 1.02 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="w-full h-full object-cover absolute inset-0 z-10 bg-white"
-                  />
-                </AnimatePresence>
+          {/* ══════════════════════════════════════════════════════════════════
+              RIGHT COLUMN: 3D Fanned App Screen Stack & Bottom Timeline
+          ══════════════════════════════════════════════════════════════════ */}
+          <div
+            className="lg:col-span-8 flex flex-col items-center"
+          >
+            
+            {/* ── 3D FANNED CARD STACK CONTAINER ── */}
+            <div className="relative w-full h-[420px] sm:h-[460px] md:h-[500px] flex items-center justify-center overflow-visible">
+              
+              {/* Steady 3D Phone Mockup for How It Works (Fixed in layout, zero bounce) */}
+              <div
+                id="how-it-works-phone-target"
+                className="absolute left-[4%] sm:left-[8%] md:left-[12%] top-1/2 -translate-y-1/2 z-40 w-[195px] sm:w-[215px] md:w-[235px] aspect-[9/18.8]"
+              >
+                <TurfzyPhone
+                  currentStep={STEPS[activeStep].key as ScreenStep}
+                  showBadges={false}
+                  phoneRotateX={0}
+                  phoneRotateY={-4}
+                  phoneRotateZ={0}
+                  phoneScale={1.0}
+                  phoneY={0}
+                  phoneX={0}
+                />
               </div>
 
-              {/* Minimal base shadow */}
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-black/15 blur-xl rounded-full z-0" />
+              {/* ── CASCADING BACKGROUND PREVIEW CARDS STACK ── */}
+              {[1, 2, 3].map((relIndex) => {
+                const cardIndex = (activeStep + relIndex) % 4;
+                const xOffset = relIndex * 52; // 52px, 104px, 156px
+                const scaleVal = 1 - relIndex * 0.08; // 0.92, 0.84, 0.76
+                const opacityVal = Math.max(0.2, 0.85 - relIndex * 0.22);
+                const zIndexVal = 25 - relIndex * 5;
+
+                return (
+                  <motion.div
+                    key={`card-${relIndex}`}
+                    initial={false}
+                    animate={{
+                      x: xOffset,
+                      scale: scaleVal,
+                      opacity: opacityVal,
+                      zIndex: zIndexVal,
+                    }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    onClick={() => setActiveStep(cardIndex)}
+                    className="absolute left-[20%] sm:left-[24%] md:left-[28%] top-1/2 -translate-y-1/2 w-[180px] sm:w-[200px] md:w-[220px] aspect-[9/18.5] bg-[#0c0c0e] rounded-[28px] p-2.5 border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.18)] cursor-pointer overflow-hidden transform-gpu"
+                  >
+                    {/* FIND preview */}
+                    {cardIndex === 0 && (
+                      <div className="w-full h-full bg-[#0d0d10] rounded-[20px] overflow-hidden relative">
+                        <img
+                          src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
+                          alt="Turfzy Find"
+                          className="w-full h-full object-cover object-top"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                          <div className="text-[10px] text-[#7ED321] font-extrabold">01 FIND</div>
+                          <div className="text-[9px] text-white/70">Discover turfs near you</div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* CHOOSE preview */}
+                    {cardIndex === 1 && (
+                      <div className="w-full h-full bg-[#111] rounded-[20px] p-2 flex flex-col justify-between text-white text-[10px]">
+                        <div className="pt-2">
+                          <div className="text-[10px] text-[#7ED321] font-extrabold mb-1">02 CHOOSE</div>
+                          <div className="font-bold text-xs">Sahil Turf</div>
+                          <div className="text-[9px] text-gray-400">Kothrud, Pune</div>
+                        </div>
+                        <div className="space-y-1 mt-2">
+                          <div className="bg-white/5 border border-white/10 rounded-lg p-1.5 text-[9px] flex justify-between">
+                            <span className="text-gray-400">6:00 PM</span>
+                            <span className="text-gray-500">Booked</span>
+                          </div>
+                          <div className="bg-[#7ED321]/15 border border-[#7ED321] rounded-lg p-1.5 text-[9px] flex justify-between font-bold">
+                            <span>8:00 PM</span>
+                            <span className="text-[#7ED321]">Open</span>
+                          </div>
+                        </div>
+                        <div className="bg-[#7ED321] text-black font-extrabold py-1 text-center rounded-lg mt-2">
+                          Continue →
+                        </div>
+                      </div>
+                    )}
+
+                    {/* PAY preview */}
+                    {cardIndex === 2 && (
+                      <div className="w-full h-full bg-[#111] rounded-[20px] p-2 text-white flex flex-col justify-between text-[10px]">
+                        <div className="pt-2">
+                          <div className="text-[10px] text-[#7ED321] font-extrabold mb-1">03 PAY</div>
+                          <div className="font-bold text-xs">Instant Checkout</div>
+                        </div>
+                        <div className="bg-white/5 border border-white/10 rounded-lg p-2 my-2 space-y-1">
+                          <div className="flex justify-between text-gray-400">
+                            <span>Venue</span>
+                            <span className="font-bold text-white">Sahil Turf</span>
+                          </div>
+                          <div className="flex justify-between text-gray-400">
+                            <span>Total</span>
+                            <span className="font-bold text-[#7ED321]">₹1,000</span>
+                          </div>
+                        </div>
+                        <div className="bg-[#7ED321] text-black font-extrabold py-1.5 text-center rounded-lg">
+                          Pay ₹1,000 →
+                        </div>
+                      </div>
+                    )}
+
+                    {/* PLAY preview */}
+                    {cardIndex === 3 && (
+                      <div className="w-full h-full bg-[#111] rounded-[20px] p-2 text-white flex flex-col justify-between text-[10px] text-center">
+                        <div className="pt-2">
+                          <div className="text-[10px] text-[#7ED321] font-extrabold mb-1">04 PLAY</div>
+                          <div className="w-6 h-6 mx-auto rounded-full bg-[#7ED321]/20 flex items-center justify-center text-[#7ED321] mb-1">
+                            <CheckCircle2 size={14} />
+                          </div>
+                          <div className="font-extrabold text-[#7ED321]">Booking Confirmed</div>
+                        </div>
+                        <div className="bg-white/5 border border-white/10 p-2 rounded-lg my-2 font-mono text-[8px] text-gray-300">
+                          TFZ-8924-PASS
+                        </div>
+                        <div className="bg-white/10 text-white font-bold py-1 rounded-lg">
+                          Match Pass
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
+
             </div>
-          </div>
 
-          {/* Right Side: Interactive Steps List */}
-          <div className="lg:col-span-5 lg:col-start-8 flex flex-col gap-2 order-2">
-            {currentSteps.map((step, index) => {
-              const isActive = activeStep === index;
-              const Icon = ICONS[step.icon] || CheckCircle2;
+            {/* ══════════════════════════════════════════════════════════════════
+                BOTTOM HORIZONTAL TIMELINE (01 FIND -> 02 CHOOSE -> 03 PAY -> 04 PLAY)
+            ══════════════════════════════════════════════════════════════════ */}
+            <div className="w-full mt-6 pt-6 border-t border-gray-200/60 relative">
+              
+              {/* Connecting Horizontal Dashed Line */}
+              <div className="absolute top-[38px] left-[10%] right-[10%] h-0.5 border-b-2 border-dashed border-[#7ED321]/40 -z-10" />
 
-              return (
-                <button
-                  key={index}
-                  onClick={() => setActiveStep(index)}
-                  className={`group relative w-full text-left p-6 rounded-2xl transition-all duration-300 border-none overflow-hidden ${isActive
-                      ? "bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
-                      : "bg-transparent hover:bg-black/[0.02]"
-                    }`}
-                >
-                  {/* SaaS-Style Vertical Progress Indicator */}
-                  {isActive && (
-                    <motion.div
-                      key={`progress-${activeTab}-${index}`}
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-[#7ED321]"
-                      initial={{ height: "0%" }}
-                      animate={{ height: isHovering ? "100%" : "100%" }}
-                      transition={{
-                        duration: isHovering ? 0 : 5,
-                        ease: "linear"
-                      }}
-                    />
-                  )}
+              <div className="grid grid-cols-4 gap-2 text-center">
+                {STEPS.map((step) => {
+                  const isActive = activeStep === step.id;
+                  const StepIcon = step.icon;
 
-                  <div className="flex items-start gap-5">
-                    {/* Icon Container */}
-                    <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${isActive
-                        ? "bg-[#7ED321]/10 text-[#68b01a]"
-                        : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"
-                      }`}>
-                      <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-                    </div>
+                  return (
+                    <button
+                      key={step.id}
+                      onClick={() => setActiveStep(step.id)}
+                      className="flex flex-col items-center text-center transition-all duration-300 cursor-pointer focus:outline-none"
+                    >
+                      {/* Circle Icon Badge */}
+                      <div
+                        className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-2.5 transition-all duration-300 ${
+                          isActive
+                            ? "bg-[#7ED321] text-black shadow-[0_0_20px_rgba(126,211,33,0.5)] scale-110"
+                            : "bg-white border-2 border-gray-200 text-gray-400"
+                        }`}
+                      >
+                        <StepIcon size={18} strokeWidth={isActive ? 2.5 : 2} />
+                      </div>
 
-                    {/* Text Content */}
-                    <div className="flex-1 pt-0.5">
-                      <h3 className={`text-lg font-bold tracking-tight mb-1.5 transition-colors duration-300 ${isActive ? "text-[#151515]" : "text-[#5C5C5C] group-hover:text-[#151515]"
-                        }`}>
-                        {step.title}
-                      </h3>
+                      {/* Number & Step Title */}
+                      <div className="flex items-center gap-1 mb-0.5">
+                        <span
+                          className={`text-xs font-black tracking-tight ${
+                            isActive ? "text-[#5da610]" : "text-gray-400"
+                          }`}
+                        >
+                          {step.number}
+                        </span>
+                        <span
+                          className={`text-xs font-black tracking-wider uppercase ${
+                            isActive ? "text-black" : "text-gray-500"
+                          }`}
+                        >
+                          {step.title}
+                        </span>
+                      </div>
 
-                      <AnimatePresence initial={false}>
-                        {isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.25, ease: "easeOut" }}
-                            className="overflow-hidden"
-                          >
-                            <p className="text-[#5C5C5C] text-sm leading-relaxed mb-3">
-                              {step.description}
-                            </p>
-                            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#151515] uppercase tracking-wider group-hover:text-[#7ED321] transition-colors">
-                              Learn more <ArrowRight size={12} />
-                            </span>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+                      {/* Short Step Subtitle */}
+                      <span className="text-[11px] text-gray-500 font-medium leading-tight max-w-[130px] hidden sm:block">
+                        {step.desc}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+            </div>
+
           </div>
 
         </div>
