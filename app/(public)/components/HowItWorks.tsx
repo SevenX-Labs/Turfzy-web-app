@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { HOW_IT_WORKS } from "../constants";
 
-const ICONS: Record<string, any> = {
+const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
   MapPin, Calendar, CheckCircle2, Trophy,
   Store, Bell, QrCode, Wallet
 };
@@ -47,11 +47,6 @@ export default function HowItWorks() {
     }, 5000);
     return () => clearInterval(interval);
   }, [activeTab, currentSteps.length, isHovering]);
-
-  // Reset step when tab changes
-  useEffect(() => {
-    setActiveStep(0);
-  }, [activeTab]);
 
   return (
     <section
@@ -138,7 +133,10 @@ export default function HowItWorks() {
               return (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setActiveStep(0);
+                  }}
                   className={`relative px-10 py-3 rounded-[12px] text-base font-semibold transition-colors duration-300 z-10 capitalize ${isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
                     }`}
                 >

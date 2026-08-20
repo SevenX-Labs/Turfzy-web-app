@@ -14,7 +14,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   TurfPitchIcon,
   CricketSportIcon,
-  FootballSportIcon,
   TennisSportIcon,
   BadmintonSportIcon,
   StadiumFloodlightsIcon,

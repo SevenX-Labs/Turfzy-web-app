@@ -1,2 +1,0 @@
-// Validators
-export const validators = {};

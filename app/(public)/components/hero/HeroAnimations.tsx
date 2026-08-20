@@ -70,9 +70,9 @@ export default function HeroAnimations({ children, className = "", style }: Hero
     <motion.div
       className={className}
       style={style}
-      variants={heroContainerVariants}
-      initial="hidden"
-      animate="visible"
+      variants={prefersReduced ? undefined : heroContainerVariants}
+      initial={prefersReduced ? undefined : "hidden"}
+      animate={prefersReduced ? undefined : "visible"}
     >
       {children}
     </motion.div>

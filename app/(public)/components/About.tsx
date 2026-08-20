@@ -17,7 +17,6 @@ import {
   TrendingUp,
   ShieldCheck,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 import { APP_URLS } from "../constants";
 
@@ -141,7 +140,7 @@ export default function About() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111111] font-clash tracking-tight leading-[1.1] mb-4">
             Building a better way to play. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#111111] via-[#3a6809] to-[#7ED321]">
-              For India's sports community.
+              For India&apos;s sports community.
             </span>
           </h2>
 

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { WHY_CHOOSE } from "../constants";
 
-const ICONS: Record<string, any> = {
+const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
   Zap, Clock, ShieldCheck, ScanLine,
   XCircle, RefreshCw, Star, CreditCard
 };
@@ -104,7 +104,6 @@ export default function WhyChoose() {
             // Theming logic for specific cards to break up the "too white" look
             const isGreenHero = index === 0;
             const isDarkHero = index === 4;
-            const isWhite = !isGreenHero && !isDarkHero;
 
             return (
               <motion.div

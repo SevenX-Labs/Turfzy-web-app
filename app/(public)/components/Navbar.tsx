@@ -17,7 +17,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowUpRight,
-  ChevronDown,
   Users,
   Store,
   Compass,

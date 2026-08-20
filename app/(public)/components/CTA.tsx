@@ -2,8 +2,8 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
+import { APP_URLS } from "../constants";
 
 export default function CTA() {
   const ref = useRef<HTMLDivElement>(null);
@@ -40,19 +40,23 @@ export default function CTA() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
-                <Link
-                  href="/find-turf"
+                <a
+                  href={APP_URLS.customerWeb}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto bg-[#7ED321] hover:bg-lime-400 text-black font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_0_20px_rgba(126,211,33,0.25)]"
                 >
                   Find a Pitch Near You
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="/owner/dashboard"
+                </a>
+                <a
+                  href={APP_URLS.ownerWeb}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold text-[15px] px-8 py-4 rounded-full transition-all duration-300 flex items-center justify-center"
                 >
                   Partner as a Turf Owner
-                </Link>
+                </a>
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400 font-medium mt-4">

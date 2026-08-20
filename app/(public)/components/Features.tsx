@@ -5,11 +5,11 @@ import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
 import {
   Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
   LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3, Star,
-  Store, Wallet, Smartphone, Monitor, Sparkles, Layers
+  Store, Wallet, Smartphone, Monitor, Sparkles
 } from "lucide-react";
 import { FEATURE_CLUSTERS_PLAYER, FEATURE_CLUSTERS_OWNER } from "../constants";
 
-const ICONS: Record<string, any> = {
+const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
   Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
   LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3, Star,
   Store, Wallet
@@ -123,7 +123,7 @@ export default function Features() {
             exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
             className="flex flex-col gap-14"
           >
-            {clusters.map((cluster, cIndex) => (
+            {clusters.map((cluster) => (
               <div key={cluster.category} className="flex flex-col gap-6">
                 {/* Cluster Header & Intro Sentence */}
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-gray-200/80 pb-4">
@@ -140,7 +140,7 @@ export default function Features() {
 
                 {/* Cluster Cards Grid */}
                 <div className={`grid grid-cols-1 md:grid-cols-2 ${cluster.items.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-6`}>
-                  {cluster.items.map((item, iIndex) => {
+                  {cluster.items.map((item) => {
                     const Icon = ICONS[item.icon] ?? Search;
                     return (
                       <motion.div

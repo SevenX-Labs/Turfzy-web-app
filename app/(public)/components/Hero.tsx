@@ -7,9 +7,8 @@
  */
 
 import React from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { APP_URLS } from "../constants";
 
 /* ── Ground Sports Vector Icons ── */
