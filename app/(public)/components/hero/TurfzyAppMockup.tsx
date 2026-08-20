@@ -8,7 +8,7 @@ import {
   useTransform,
   useScroll,
 } from "framer-motion";
-import { Check, Clock } from "lucide-react";
+import { Clock, Users } from "lucide-react";
 
 export default function TurfzyAppMockup() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,34 +28,32 @@ export default function TurfzyAppMockup() {
   const rotateX = useTransform(
     [smoothMouseY, smoothScroll],
     ([latestMouseY, latestScroll]) => {
-      const mouseOffset = (latestMouseY as number) * -12;
-      // As user scrolls down, phone tilts forward in 3D space
-      const scrollOffset = Math.min((latestScroll as number) * 0.038, 20);
-      return 14 + mouseOffset + scrollOffset;
+      const mouseOffset = (latestMouseY as number) * -5;
+      const scrollOffset = Math.min((latestScroll as number) * 0.012, 6);
+      return 6 + mouseOffset + scrollOffset;
     }
   );
 
   const rotateY = useTransform(
     [smoothMouseX, smoothScroll],
     ([latestMouseX, latestScroll]) => {
-      const mouseOffset = (latestMouseX as number) * 14;
-      // Scroll sweeps the phone around the Y-axis
-      const scrollOffset = Math.min((latestScroll as number) * 0.05, 28);
-      return -18 + mouseOffset + scrollOffset;
+      const mouseOffset = (latestMouseX as number) * 6;
+      const scrollOffset = Math.min((latestScroll as number) * 0.015, 8);
+      return -12 + mouseOffset + scrollOffset;
     }
   );
 
   const rotateZ = useTransform(
     [smoothMouseX, smoothScroll],
     ([latestMouseX, latestScroll]) => {
-      const mouseOffset = (latestMouseX as number) * 4;
-      const scrollOffset = Math.min((latestScroll as number) * -0.018, -8);
-      return 6 + mouseOffset + scrollOffset;
+      const mouseOffset = (latestMouseX as number) * 2;
+      const scrollOffset = Math.min((latestScroll as number) * -0.005, -2);
+      return -4 + mouseOffset + scrollOffset;
     }
   );
 
-  const phoneY = useTransform(smoothScroll, [0, 600], [0, 90]);
-  const phoneScale = useTransform(smoothScroll, [0, 300, 600], [1, 1.05, 0.94]);
+  const phoneY = useTransform(smoothScroll, [0, 600], [0, 40]);
+  const phoneScale = useTransform(smoothScroll, [0, 300, 600], [1, 1.02, 0.98]);
 
   // Floating badges 3D explosion & parallax detachment during scroll
   const badge1X = useTransform(
@@ -77,16 +75,6 @@ export default function TurfzyAppMockup() {
     ([mY, s]) => (mY as number) * -8 + (s as number) * 0.05
   );
   const badge2Opacity = useTransform(smoothScroll, [0, 380], [1, 0.2]);
-
-  const badge3X = useTransform(
-    [smoothMouseX, smoothScroll],
-    ([mX, s]) => (mX as number) * 12 + (s as number) * 0.09
-  );
-  const badge3Y = useTransform(
-    [smoothMouseY, smoothScroll],
-    ([mY, s]) => (mY as number) * 14 + (s as number) * 0.16
-  );
-  const badge3Opacity = useTransform(smoothScroll, [0, 380], [1, 0.2]);
 
   // Screen glare moves dynamically with scroll
   const glareTranslate = useTransform(smoothScroll, [0, 500], [-30, 20]);
@@ -111,8 +99,8 @@ export default function TurfzyAppMockup() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onContextMenu={(e) => e.preventDefault()}
-      className="relative w-full max-w-[180px] sm:max-w-[195px] md:max-w-[210px] lg:max-w-[220px] xl:max-w-[230px] mx-auto py-1 flex items-center justify-center select-none"
-      style={{ perspective: 1100 }}
+      className="relative w-full max-w-[195px] sm:max-w-[210px] md:max-w-[225px] lg:max-w-[240px] xl:max-w-[250px] mx-auto py-2 flex items-center justify-center select-none"
+      style={{ perspective: 1200 }}
     >
       {/* ── Ambient Under-Glow & Atmosphere ── */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] sm:w-[260px] h-[300px] sm:h-[340px] bg-gradient-to-tr from-[#7ED321]/24 via-emerald-400/16 to-transparent blur-[55px] -z-20 rounded-full pointer-events-none" />
@@ -141,32 +129,33 @@ export default function TurfzyAppMockup() {
       >
         {/* ── 3D PHYSICAL PHONE CHASSIS (Titanium Bevel & Edge Extrusion) ── */}
         <div
-          className="relative w-full h-full rounded-[32px] sm:rounded-[36px] p-[2px] bg-gradient-to-b from-[#3a3a42] via-[#222226] to-[#121215] transition-shadow duration-300"
+          className="relative w-full h-full rounded-[34px] sm:rounded-[38px] p-[2.5px] bg-gradient-to-b from-[#3e3e48] via-[#242428] to-[#141416] transition-shadow duration-300"
           style={{
             transformStyle: "preserve-3d",
             boxShadow: `
-              1px 1px 0px #383840,
-              2px 2px 0px #2a2a30,
-              3px 3px 0px #222226,
-              4px 4px 0px #1a1a1d,
-              5px 5px 0px #151517,
-              6px 6px 0px #101012,
-              10px 18px 36px -6px rgba(0,0,0,0.7),
-              -8px 20px 45px rgba(0,0,0,0.3),
-              0 0 40px rgba(126,211,33,0.15)
+              1px 1px 0px #3c3c44,
+              2px 2px 0px #303038,
+              3px 3px 0px #24242c,
+              4px 4px 0px #1a1a20,
+              5px 5px 0px #141418,
+              6px 6px 0px #0e0e12,
+              7px 7px 0px #08080a,
+              14px 24px 44px -8px rgba(0,0,0,0.65),
+              -4px 14px 32px rgba(0,0,0,0.25),
+              0 0 50px rgba(126,211,33,0.16)
             `,
           }}
         >
           {/* Side Hardware Buttons (Simulated 3D side buttons on the right side) */}
-          <div className="absolute -right-[5px] top-[24%] w-[3px] h-[26px] bg-[#3a3a40] rounded-r-sm shadow-sm pointer-events-none" />
-          <div className="absolute -right-[5px] top-[34%] w-[3px] h-[36px] bg-[#3a3a40] rounded-r-sm shadow-sm pointer-events-none" />
-          <div className="absolute -right-[5px] top-[46%] w-[3px] h-[36px] bg-[#3a3a40] rounded-r-sm shadow-sm pointer-events-none" />
+          <div className="absolute -right-[5px] top-[22%] w-[3px] h-[30px] bg-[#3a3a40] rounded-r-sm shadow-sm pointer-events-none" />
+          <div className="absolute -right-[5px] top-[34%] w-[3px] h-[40px] bg-[#3a3a40] rounded-r-sm shadow-sm pointer-events-none" />
+          <div className="absolute -right-[5px] top-[48%] w-[3px] h-[40px] bg-[#3a3a40] rounded-r-sm shadow-sm pointer-events-none" />
 
           {/* Left SIM / Action Button */}
-          <div className="absolute -left-[4px] top-[20%] w-[2.5px] h-[20px] bg-[#3a3a40] rounded-l-sm shadow-sm pointer-events-none" />
+          <div className="absolute -left-[4px] top-[20%] w-[2.5px] h-[22px] bg-[#3a3a40] rounded-l-sm shadow-sm pointer-events-none" />
 
           {/* Inner Black OLED Bezel */}
-          <div className="relative w-full h-full rounded-[30px] sm:rounded-[34px] bg-[#0c0c0e] p-[5px] sm:p-[6px] overflow-hidden border border-white/[0.08] flex flex-col justify-between">
+          <div className="relative w-full h-full rounded-[32px] sm:rounded-[36px] bg-[#0c0c0e] p-[5px] sm:p-[6px] overflow-hidden border border-white/[0.08] flex flex-col justify-between">
 
             {/* ── Screen Frame Housing the Screenshot ── */}
             <div className="relative w-full h-full rounded-[25px] sm:rounded-[28px] overflow-hidden bg-black select-none pointer-events-none">
@@ -219,88 +208,59 @@ export default function TurfzyAppMockup() {
             x: badge1X,
             y: badge1Y,
             opacity: badge1Opacity,
-            transform: "translateZ(35px)",
+            transform: "translateZ(36px)",
           }}
-          className="absolute -left-5 sm:-left-7 top-[16%] z-30 bg-[#141417]/92 backdrop-blur-xl border border-white/[0.12] rounded-xl p-2 sm:p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.5),0_0_15px_rgba(126,211,33,0.12)] pointer-events-none"
+          className="absolute -left-4 sm:-left-6 top-[20%] z-30 bg-white/95 backdrop-blur-xl border border-black/[0.08] rounded-2xl p-2 sm:p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.1),0_0_15px_rgba(126,211,33,0.12)] pointer-events-none"
         >
-          <div className="text-[9px] font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1">
-            <Clock size={10} className="text-[#7ED321]" />
+          <div className="text-[9px] font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1">
+            <Clock size={11} className="text-[#5da610]" />
             <span>Slot</span>
           </div>
-          <div className="text-xs sm:text-sm font-extrabold text-white font-clash leading-tight mt-0.5">
+          <div className="text-xs sm:text-sm font-extrabold text-[#111] font-clash leading-tight mt-0.5">
             8:00 PM
           </div>
           <div className="flex items-center gap-1 mt-0.5">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7ED321] opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#7ED321]" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#5da610]" />
             </span>
-            <span className="text-[9px] font-bold text-[#7ED321] tracking-tight">
+            <span className="text-[9px] font-bold text-[#5da610] tracking-tight">
               Available
             </span>
           </div>
         </motion.div>
 
-        {/* ── CARD 2: Right "Booking Confirmed" ── */}
+        {/* ── CARD 2: Right "10+ Players" ── */}
         <motion.div
           style={{
             x: badge2X,
             y: badge2Y,
             opacity: badge2Opacity,
-            transform: "translateZ(30px)",
+            transform: "translateZ(36px)",
           }}
-          className="absolute -right-3 sm:-right-6 top-[44%] z-30 bg-[#141417]/92 backdrop-blur-xl border border-white/[0.12] rounded-xl p-2 sm:p-2.5 shadow-[0_12px_28px_rgba(0,0,0,0.5),0_0_15px_rgba(126,211,33,0.12)] pointer-events-none min-w-[110px] sm:min-w-[125px]"
+          className="absolute -right-4 sm:-right-6 top-[44%] z-30 bg-white/95 backdrop-blur-xl border border-black/[0.08] rounded-2xl p-2 sm:p-2.5 shadow-[0_14px_30px_rgba(0,0,0,0.1),0_0_20px_rgba(126,211,33,0.12)] pointer-events-none min-w-[110px] sm:min-w-[120px]"
         >
-          <div className="flex items-center gap-1.5">
-            <div className="w-5 h-5 rounded-full bg-[#7ED321]/20 border border-[#7ED321]/50 flex items-center justify-center text-[#7ED321]">
-              <Check size={11} strokeWidth={3} />
+          <div className="flex items-center gap-1.5 mb-1">
+            <div className="w-5 h-5 rounded-full bg-[#7ED321]/20 flex items-center justify-center text-[#4e910e]">
+              <Users size={12} strokeWidth={2.5} />
             </div>
-            <div>
-              <div className="text-[8px] font-semibold text-gray-400 leading-none">Booking</div>
-              <div className="text-[11px] sm:text-xs font-extrabold text-white leading-tight mt-0.5">
-                Confirmed
-              </div>
+            <div className="text-xs sm:text-[13px] font-extrabold text-[#111] font-clash leading-none tracking-tight">
+              10+ Players
             </div>
-          </div>
-          <div className="text-[9px] font-medium text-gray-300 mt-1 pt-1 border-t border-white/[0.08] flex items-center justify-between">
-            <span>Today</span>
-            <span className="text-[#7ED321] font-bold">8:00 PM</span>
-          </div>
-        </motion.div>
-
-        {/* ── CARD 3: Bottom-Right "Trusted by 10K+ Players" ── */}
-        <motion.div
-          style={{
-            x: badge3X,
-            y: badge3Y,
-            opacity: badge3Opacity,
-            transform: "translateZ(40px)",
-          }}
-          className="absolute -right-2 sm:-right-4 bottom-[8%] z-30 bg-[#141417]/92 backdrop-blur-xl border border-white/[0.12] rounded-xl p-2 sm:p-2.5 shadow-[0_14px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(126,211,33,0.15)] pointer-events-none"
-        >
-          <div className="flex items-center gap-1 mb-0.5">
-            <div className="w-3.5 h-3.5 rounded-full bg-[#7ED321] flex items-center justify-center text-black">
-              <Check size={8} strokeWidth={3.5} />
-            </div>
-            <span className="text-[9px] font-bold text-gray-300">Trusted by</span>
-          </div>
-
-          <div className="text-xs sm:text-[13px] font-extrabold text-white font-clash leading-none tracking-tight">
-            10K+ Players
           </div>
 
           {/* Styled Avatar Cluster */}
-          <div className="flex items-center -space-x-1 mt-1.5">
-            <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 border border-[#141417] flex items-center justify-center text-[7px] font-bold text-white shadow-sm">
+          <div className="flex items-center -space-x-1.5 mt-1.5 pl-0.5">
+            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border-2 border-white flex items-center justify-center text-[8px] font-bold text-white shadow-sm">
               S
             </div>
-            <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-400 border border-[#141417] flex items-center justify-center text-[7px] font-bold text-white shadow-sm">
+            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 border-2 border-white flex items-center justify-center text-[8px] font-bold text-white shadow-sm">
               R
             </div>
-            <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-amber-500 to-orange-400 border border-[#141417] flex items-center justify-center text-[7px] font-bold text-white shadow-sm">
+            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 border-2 border-white flex items-center justify-center text-[8px] font-bold text-white shadow-sm">
               A
             </div>
-            <div className="w-4 h-4 rounded-full bg-[#7ED321] border border-[#141417] flex items-center justify-center text-[6px] font-black text-black shadow-sm">
+            <div className="w-5 h-5 rounded-full bg-[#7ED321] border-2 border-white flex items-center justify-center text-[7px] font-black text-black shadow-sm">
               +
             </div>
           </div>
@@ -310,7 +270,7 @@ export default function TurfzyAppMockup() {
 
       {/* ── Ground Contact Perspective Shadow ── */}
       <div
-        className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[80%] h-6 bg-black/30 blur-lg rounded-full pointer-events-none -z-10"
+        className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[85%] h-7 bg-black/30 blur-lg rounded-full pointer-events-none -z-10"
         style={{
           transform: "rotateX(70deg) scale(1.1)",
         }}
