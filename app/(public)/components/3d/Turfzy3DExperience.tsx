@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { useMotionValue, useSpring, useReducedMotion, useTransform, motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TurfzyPhone from "./TurfzyPhone";
@@ -15,11 +15,6 @@ export default function Turfzy3DExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
-
-  // Cache the How It Works target position so it doesn't recalculate every scroll frame
-  const hwLockedPos = useRef<{ x: number; y: number } | null>(null);
-  const aboutLockedPos = useRef<{ x: number; y: number } | null>(null);
-  const lastSection = useRef<string>("hero");
 
   // Motion values for smooth 3D interpolation
   const phoneRotateX = useMotionValue(2);
@@ -46,7 +41,7 @@ export default function Turfzy3DExperience() {
   const smoothScale = useSpring(phoneScale, springConfig);
   const smoothY = useSpring(phoneY, springConfig);
   const smoothX = useSpring(phoneX, springConfig);
-  const smoothOpacity = useSpring(phoneOpacity, springConfig);
+  const smoothOpacity = useSpring(phoneOpacity, { damping: 60, stiffness: 400, mass: 0.5 });
 
   const smoothBadge1X = useSpring(badge1X, springConfig);
   const smoothBadge1Y = useSpring(badge1Y, springConfig);
@@ -71,8 +66,6 @@ export default function Turfzy3DExperience() {
         const heroTarget = document.getElementById("hero-phone-target");
         const aboutTarget = document.getElementById("about-phone-target");
         const aboutSection = document.getElementById("about");
-        const howItWorksSection = document.getElementById("how-it-works");
-
         if (!heroTarget || !aboutSection) return;
 
         const windowCenterX = window.innerWidth / 2;
@@ -92,9 +85,19 @@ export default function Turfzy3DExperience() {
         }
 
         const aboutRect = aboutSection.getBoundingClientRect();
+        const vh = window.innerHeight;
 
-        // 1. HERO SECTION (Scroll at top - Full Size Phone)
-        if (!aboutRect || aboutRect.top > window.innerHeight * 0.75) {
+        // ─────────────────────────────────────────────────────────────
+        // RULE: Phone is ONLY visible when:
+        //   a) Hero section is in view (aboutRect.top > 0)
+        //   b) About section is in view (aboutRect.top <= vh && aboutRect.bottom >= 0)
+        // RULE: Phone is IMMEDIATELY HIDDEN when:
+        //   - About section has fully scrolled off the top (aboutRect.bottom < 0)
+        //   - Below About entirely
+        // ─────────────────────────────────────────────────────────────
+
+        // ── ZONE 1: HERO (About not yet in view, scrolled above it) ──
+        if (aboutRect.top > vh * 0.6) {
           phoneX.set(heroCenterX);
           phoneY.set(heroCenterY);
           phoneScale.set(0.95);
@@ -103,94 +106,56 @@ export default function Turfzy3DExperience() {
           phoneRotateZ.set(2);
           phoneOpacity.set(1);
           badgesOpacity.set(1);
-          aboutLockedPos.current = null;
           setCurrentStep("find");
           return;
         }
 
-        // 2. HERO → ABOUT TRANSITION (Glides into center of About orbital ring, shrinking from 0.95 -> 0.68)
-        if (aboutRect.top <= window.innerHeight * 0.75 && aboutRect.top > window.innerHeight * 0.15) {
-          // Progress goes 0 -> 1 as aboutRect.top goes from 0.75vh down to 0.15vh
-          const rawProgress = (window.innerHeight * 0.75 - aboutRect.top) / (window.innerHeight * 0.60);
-          const progress = Math.max(0, Math.min(1, rawProgress));
+        // ── ZONE 2: HERO → ABOUT TRANSITION (About entering from bottom) ──
+        // aboutRect.top goes from vh*0.6 down to 0
+        if (aboutRect.top > 0 && aboutRect.top <= vh * 0.6) {
+          const progress = Math.max(0, Math.min(1,
+            (vh * 0.6 - aboutRect.top) / (vh * 0.6)
+          ));
 
           const targetX = aboutTarget ? aboutCenterX : 0;
           const targetY = aboutTarget ? aboutCenterY : 0;
 
-          phoneX.set(heroCenterX * (1 - progress) + targetX * progress);
-          phoneY.set(heroCenterY * (1 - progress) + targetY * progress);
+          phoneX.set(heroCenterX + (targetX - heroCenterX) * progress);
+          phoneY.set(heroCenterY + (targetY - heroCenterY) * progress);
           phoneRotateY.set(-10 * (1 - progress));
           phoneRotateX.set(2 * (1 - progress));
           phoneRotateZ.set(2 * (1 - progress));
-          phoneScale.set(0.95 * (1 - progress) + 0.68 * progress);
+          phoneScale.set(0.95 + (0.70 - 0.95) * progress);
           phoneOpacity.set(1);
-          badgesOpacity.set(Math.max(0, 1 - progress * 2));
+          badgesOpacity.set(Math.max(0, 1 - progress * 1.8));
           setCurrentStep("find");
           return;
         }
 
-        // 3. ABOUT SECTION CENTERED (Compact 0.68 Phone locked inside about-phone-target)
-        if (aboutRect.top <= window.innerHeight * 0.15 && aboutRect.bottom > window.innerHeight * 0.5) {
-          if (!aboutLockedPos.current) {
-            aboutLockedPos.current = {
-              x: aboutTarget ? aboutCenterX : 0,
-              y: aboutTarget ? aboutCenterY : 0,
-            };
-          }
-
-          const targetX = aboutLockedPos.current.x;
-          const targetY = aboutLockedPos.current.y;
-
-          // Check if phone target is getting too close to top navbar
-          let currentOpacity = 1;
-          if (aboutTarget) {
-            const targetTopInViewport = aboutTarget.getBoundingClientRect().top;
-            if (targetTopInViewport < 140) {
-              const navFadeProgress = Math.max(0, Math.min(1, (140 - targetTopInViewport) / 80));
-              currentOpacity = 1 - navFadeProgress;
-            }
-          }
+        // ── ZONE 3: ABOUT SECTION FULLY IN VIEW (Phone locked in About center) ──
+        // aboutRect.top <= 0 means About top has passed the top of the viewport
+        // aboutRect.bottom >= 0 means About bottom is still visible
+        if (aboutRect.top <= 0 && aboutRect.bottom >= 0) {
+          const targetX = aboutTarget ? aboutCenterX : 0;
+          const targetY = aboutTarget ? aboutCenterY : 0;
 
           phoneX.set(targetX);
           phoneY.set(targetY);
           phoneRotateY.set(0);
           phoneRotateX.set(0);
           phoneRotateZ.set(0);
-          phoneScale.set(0.68);
-          phoneOpacity.set(currentOpacity);
+          phoneScale.set(0.70);
+          phoneOpacity.set(1);
           badgesOpacity.set(0);
           setCurrentStep("find");
           return;
         }
 
-        // 4. ABOUT EXIT → FADE OUT IMMEDIATELY INSIDE ABOUT (NO DOWNWARD MOTION BELOW ABOUT)
-        if (aboutRect.bottom <= window.innerHeight * 0.5) {
-          if (!aboutLockedPos.current) {
-            aboutLockedPos.current = {
-              x: aboutTarget ? aboutCenterX : 0,
-              y: aboutTarget ? aboutCenterY : 0,
-            };
-          }
-          const fadeProgress = Math.max(0, Math.min(1, (window.innerHeight * 0.5 - aboutRect.bottom) / (window.innerHeight * 0.25)));
-
-          const targetX = aboutLockedPos.current.x;
-          const targetY = aboutLockedPos.current.y;
-
-          phoneX.set(targetX);
-          phoneY.set(targetY);
-          phoneScale.set(0.68 - fadeProgress * 0.15);
-          phoneOpacity.set(Math.max(0, 1 - fadeProgress * 2.5));
-          badgesOpacity.set(0);
-          setCurrentStep("find");
-          return;
-        }
-
-        // 5. HIDDEN BELOW ABOUT
+        // ── ZONE 4: PAST ABOUT (scrolled below About section) — IMMEDIATELY HIDDEN ──
         phoneOpacity.set(0);
         badgesOpacity.set(0);
       };
 
-      // Create main ScrollTrigger listener for 60fps tracking
       ScrollTrigger.create({
         trigger: "body",
         start: "top top",
@@ -199,7 +164,6 @@ export default function Turfzy3DExperience() {
         onRefresh: updatePhonePosition,
       });
 
-      // Initial positioning call
       updatePhonePosition();
     }, containerRef);
 
@@ -212,9 +176,10 @@ export default function Turfzy3DExperience() {
   }
 
   return (
-    <div
+    <motion.div
       ref={containerRef}
       className="fixed inset-0 pointer-events-none z-20 overflow-visible flex items-center justify-center select-none"
+      style={{ opacity: smoothOpacity }}
     >
       <TurfzyPhone
         currentStep={currentStep}
@@ -229,8 +194,7 @@ export default function Turfzy3DExperience() {
         badge2X={smoothBadge2X}
         badge2Y={smoothBadge2Y}
         badgesOpacity={smoothBadgesOpacity}
-        style={{ opacity: smoothOpacity.get() }}
       />
-    </div>
+    </motion.div>
   );
 }
