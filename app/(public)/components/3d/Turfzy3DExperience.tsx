@@ -18,6 +18,7 @@ export default function Turfzy3DExperience() {
 
   // Cache the How It Works target position so it doesn't recalculate every scroll frame
   const hwLockedPos = useRef<{ x: number; y: number } | null>(null);
+  const aboutLockedPos = useRef<{ x: number; y: number } | null>(null);
   const lastSection = useRef<string>("hero");
 
   // Motion values for smooth 3D interpolation
@@ -102,6 +103,7 @@ export default function Turfzy3DExperience() {
           phoneRotateZ.set(2);
           phoneOpacity.set(1);
           badgesOpacity.set(1);
+          aboutLockedPos.current = null;
           setCurrentStep("find");
           return;
         }
@@ -128,9 +130,16 @@ export default function Turfzy3DExperience() {
         }
 
         // 3. ABOUT SECTION CENTERED (Compact 0.68 Phone locked inside about-phone-target)
-        if (aboutRect.top <= window.innerHeight * 0.15 && aboutRect.bottom > window.innerHeight * 0.35) {
-          const targetX = aboutTarget ? aboutCenterX : 0;
-          const targetY = aboutTarget ? aboutCenterY : 0;
+        if (aboutRect.top <= window.innerHeight * 0.15 && aboutRect.bottom > window.innerHeight * 0.5) {
+          if (!aboutLockedPos.current) {
+            aboutLockedPos.current = {
+              x: aboutTarget ? aboutCenterX : 0,
+              y: aboutTarget ? aboutCenterY : 0,
+            };
+          }
+
+          const targetX = aboutLockedPos.current.x;
+          const targetY = aboutLockedPos.current.y;
 
           // Check if phone target is getting too close to top navbar
           let currentOpacity = 1;
@@ -154,17 +163,23 @@ export default function Turfzy3DExperience() {
           return;
         }
 
-        // 4. ABOUT EXIT → HOW IT WORKS (Smooth fade out)
-        if (aboutRect.bottom <= window.innerHeight * 0.35) {
-          const fadeProgress = Math.max(0, Math.min(1, (window.innerHeight * 0.35 - aboutRect.bottom) / (window.innerHeight * 0.3)));
+        // 4. ABOUT EXIT → FADE OUT IMMEDIATELY INSIDE ABOUT (NO DOWNWARD MOTION BELOW ABOUT)
+        if (aboutRect.bottom <= window.innerHeight * 0.5) {
+          if (!aboutLockedPos.current) {
+            aboutLockedPos.current = {
+              x: aboutTarget ? aboutCenterX : 0,
+              y: aboutTarget ? aboutCenterY : 0,
+            };
+          }
+          const fadeProgress = Math.max(0, Math.min(1, (window.innerHeight * 0.5 - aboutRect.bottom) / (window.innerHeight * 0.25)));
 
-          const targetX = aboutTarget ? aboutCenterX : 0;
-          const targetY = aboutTarget ? aboutCenterY : 0;
+          const targetX = aboutLockedPos.current.x;
+          const targetY = aboutLockedPos.current.y;
 
           phoneX.set(targetX);
-          phoneY.set(targetY + fadeProgress * 40);
-          phoneScale.set(0.85 - fadeProgress * 0.2);
-          phoneOpacity.set(Math.max(0, 1 - fadeProgress * 1.5));
+          phoneY.set(targetY);
+          phoneScale.set(0.68 - fadeProgress * 0.15);
+          phoneOpacity.set(Math.max(0, 1 - fadeProgress * 2.5));
           badgesOpacity.set(0);
           setCurrentStep("find");
           return;
