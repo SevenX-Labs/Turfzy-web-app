@@ -55,7 +55,7 @@ function FeatureCard({ icon, label, title, description, side, index, inView }: F
       transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
       className="group relative bg-white/75 backdrop-blur-xl rounded-2xl p-4 border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_rgba(126,211,33,0.16)] hover:border-[#7ED321]/60 hover:bg-white/90 transition-all duration-300 flex gap-3 items-start text-left w-full"
     >
-      {/* Accent hover top gradient */}
+      {/* Top hover accent line */}
       <div className="absolute top-0 left-4 right-4 h-[2px] bg-gradient-to-r from-transparent via-[#7ED321] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
 
       {/* Icon Badge */}
@@ -186,7 +186,7 @@ export default function Features() {
         </motion.div>
 
         {/* ══════════════════════════════════════════════════════════════════
-            3. FEATURE HUB: GLASSMORPHISM CARDS + 3D PHONE + CONNECTED RAYS
+            3. FEATURE HUB: ROCK-SOLID STABLE PEDESTAL MOCKUP CARD + CONNECTED RAYS
         ══════════════════════════════════════════════════════════════════ */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -195,7 +195,7 @@ export default function Features() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="hidden md:grid grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center max-w-5xl mx-auto relative min-h-[440px]"
+            className="hidden md:grid grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center max-w-5xl mx-auto relative min-h-[460px]"
           >
 
             {/* ── LEFT FEATURE CARDS (Glassmorphism + Edge Node) ── */}
@@ -207,25 +207,25 @@ export default function Features() {
               ))}
             </div>
 
-            {/* ── CENTER: SVG CONNECTING LINES + 3D PHONE CHASSIS (NO DOTS ON MOCKUP) ── */}
-            <div className="relative flex items-center justify-center w-[230px] sm:w-[250px] lg:w-[270px] shrink-0 h-full">
+            {/* ── CENTER: STABLE FEATURED MOCKUP PEDESTAL CARD ── */}
+            <div className="relative flex items-center justify-center w-[250px] sm:w-[270px] lg:w-[290px] shrink-0 h-full">
 
               {/* ── SVG CONNECTING RAYS & DASHED LINES ── */}
               <svg
                 className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-10"
                 style={{ width: "100%", height: "100%" }}
               >
-                {/* Left Card Nodes -> Phone Left Edge */}
+                {/* Left Card Nodes -> Center Card Pedestal */}
                 {[0, 1, 2].map((i) => {
                   const startYPer = i === 0 ? "15%" : i === 1 ? "50%" : "85%";
-                  const endYPer = i === 0 ? "25%" : i === 1 ? "50%" : "75%";
+                  const endYPer = i === 0 ? "22%" : i === 1 ? "50%" : "78%";
                   return (
                     <g key={`left-line-${i}`}>
                       {/* Smooth Green Dashed Line */}
                       <line
                         x1="-8"
                         y1={startYPer}
-                        x2="45"
+                        x2="10"
                         y2={endYPer}
                         stroke="#7ED321"
                         strokeWidth="1.8"
@@ -238,7 +238,7 @@ export default function Features() {
                         fill="#7ED321"
                         filter="url(#greenGlow)"
                         animate={{
-                          cx: ["-8px", "45px"],
+                          cx: ["-8px", "10px"],
                           cy: [startYPer, endYPer],
                           opacity: [0, 1, 1, 0],
                         }}
@@ -254,15 +254,15 @@ export default function Features() {
                   );
                 })}
 
-                {/* Phone Right Edge -> Right Card Nodes */}
+                {/* Center Card Pedestal -> Right Card Nodes */}
                 {[0, 1, 2].map((i) => {
-                  const startYPer = i === 0 ? "25%" : i === 1 ? "50%" : "75%";
+                  const startYPer = i === 0 ? "22%" : i === 1 ? "50%" : "78%";
                   const endYPer = i === 0 ? "15%" : i === 1 ? "50%" : "85%";
                   return (
                     <g key={`right-line-${i}`}>
                       {/* Smooth Green Dashed Line */}
                       <line
-                        x1="calc(100% - 45px)"
+                        x1="calc(100% - 10px)"
                         y1={startYPer}
                         x2="calc(100% + 8px)"
                         y2={endYPer}
@@ -277,7 +277,7 @@ export default function Features() {
                         fill="#7ED321"
                         filter="url(#greenGlow)"
                         animate={{
-                          cx: ["calc(100% - 45px)", "calc(100% + 8px)"],
+                          cx: ["calc(100% - 10px)", "calc(100% + 8px)"],
                           cy: [startYPer, endYPer],
                           opacity: [0, 1, 1, 0],
                         }}
@@ -305,76 +305,62 @@ export default function Features() {
                 </defs>
               </svg>
 
-              {/* ── 3D PHYSICAL PHONE CHASSIS (NO DOTS ON MOCKUP) ── */}
+              {/* ── STABLE PEDESTAL CONTAINER CARD (Identical layout structure to reference image) ── */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.92, rotateY: -6, rotateX: 3 }}
-                animate={inView ? { opacity: 1, scale: 1, rotateY: -6, rotateX: 3 } : {}}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                className="relative z-20 w-[170px] sm:w-[185px] lg:w-[200px] aspect-[9/18.8] select-none"
-                style={{
-                  perspective: 1000,
-                  transformStyle: "preserve-3d",
-                }}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                className="relative z-20 w-full bg-white/85 backdrop-blur-xl rounded-[28px] p-4.5 border border-white/80 shadow-[0_12px_40px_rgba(0,0,0,0.05)] flex flex-col items-center select-none"
               >
-                {/* 3D Hardware Bezel & Titanium Frame */}
-                <div
-                  className="relative w-full h-full rounded-[34px] p-[3px] bg-gradient-to-b from-[#3e3e48] via-[#242428] to-[#141416]"
-                  style={{
-                    boxShadow: `
-                      1px 1px 0px #3c3c44,
-                      2px 2px 0px #303038,
-                      3px 3px 0px #24242c,
-                      4px 4px 0px #1a1a20,
-                      5px 5px 0px #141418,
-                      12px 20px 40px -6px rgba(0,0,0,0.55),
-                      0 0 45px rgba(126,211,33,0.18)
-                    `,
-                  }}
-                >
-                  {/* Side Volume Buttons */}
-                  <div className="absolute -left-[4px] top-[22%] w-[2.5px] h-[22px] bg-[#3a3a40] rounded-l-sm" />
-                  <div className="absolute -left-[4px] top-[34%] w-[2.5px] h-[32px] bg-[#3a3a40] rounded-l-sm" />
-                  <div className="absolute -left-[4px] top-[46%] w-[2.5px] h-[32px] bg-[#3a3a40] rounded-l-sm" />
+                {/* Top Highlight Badge Pill */}
+                <div className="w-full bg-[#7ED321]/12 border border-[#7ED321]/25 rounded-full py-1 px-3 mb-3 text-center flex items-center justify-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#7ED321] animate-pulse" />
+                  <span className="text-[10px] font-extrabold text-[#4c8413] tracking-wide uppercase">
+                    Highlighted: {activeTab === "players" ? "Turfzy Player App" : "Turfzy Owner Operating System"}
+                  </span>
+                </div>
 
-                  {/* Right Power Button */}
-                  <div className="absolute -right-[4px] top-[28%] w-[2.5px] h-[36px] bg-[#3a3a40] rounded-r-sm" />
-
-                  {/* Inner Black OLED Screen Bezel */}
-                  <div className="relative w-full h-full rounded-[31px] bg-[#0c0c0e] p-[5px] overflow-hidden border border-white/10 flex flex-col justify-between">
-                    
-                    {/* Screen Housing */}
-                    <div className="relative w-full h-full rounded-[26px] overflow-hidden bg-black">
-                      <Image
-                        src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
-                        alt="Turfzy Mobile App"
-                        fill
-                        className="object-cover"
-                        priority
-                      />
-
-                      {/* Screen Glare Highlight */}
-                      <div
-                        className="absolute inset-0 w-[200%] h-[200%] pointer-events-none z-20"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
-                          transform: "rotate(-15deg)",
-                          top: "-25%",
-                          left: "-25%",
-                        }}
-                      />
-
-                      {/* Dynamic Island Notch */}
-                      <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-[64px] h-[16px] bg-black rounded-full z-30 flex items-center justify-between px-2 shadow-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#111] border border-[#222]" />
-                        <div className="w-1 h-1 rounded-full bg-[#0d0d0f]" />
-                      </div>
-
-                      {/* Home Bar Indicator */}
-                      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-white/40 rounded-full z-30" />
-                    </div>
-
+                {/* Rock-Solid Stable Mobile Chassis */}
+                <div className="relative w-[155px] sm:w-[170px] aspect-[9/18.8] rounded-[30px] p-[2.5px] bg-gradient-to-b from-[#3e3e48] via-[#242428] to-[#141416] shadow-[0_10px_30px_rgba(0,0,0,0.35)] overflow-hidden">
+                  
+                  {/* Dynamic Island Notch */}
+                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-[56px] h-[14px] bg-black rounded-full z-30 flex items-center justify-between px-1.5 shadow-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#111]" />
+                    <div className="w-1 h-1 rounded-full bg-[#0d0d0f]" />
                   </div>
+
+                  {/* Inner OLED Display */}
+                  <div className="relative w-full h-full rounded-[27px] overflow-hidden bg-black">
+                    <Image
+                      src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
+                      alt="Turfzy Mobile App"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+
+                    {/* Glass Glare Highlight */}
+                    <div
+                      className="absolute inset-0 w-[200%] h-[200%] pointer-events-none z-20"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
+                        transform: "rotate(-15deg)",
+                        top: "-25%",
+                        left: "-25%",
+                      }}
+                    />
+
+                    {/* Home Bar Indicator */}
+                    <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-14 h-0.5 bg-white/40 rounded-full z-30" />
+                  </div>
+                </div>
+
+                {/* Bottom Verification Pill */}
+                <div className="mt-3 text-center">
+                  <span className="text-[10px] font-bold text-[#555] block">
+                    100% Real-Time Slots • Verified Venues
+                  </span>
                 </div>
 
               </motion.div>

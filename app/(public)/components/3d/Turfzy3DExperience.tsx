@@ -151,7 +151,7 @@ export default function Turfzy3DExperience() {
           return;
         }
 
-        // ── ZONE 4: PAST ABOUT (scrolled below About section) — IMMEDIATELY HIDDEN ──
+        // ── ZONE 4: PAST ABOUT (scrolled below About section) — 100% INSTANTLY HIDDEN ──
         phoneOpacity.set(0);
         badgesOpacity.set(0);
       };
