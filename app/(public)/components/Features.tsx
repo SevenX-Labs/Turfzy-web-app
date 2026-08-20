@@ -9,6 +9,7 @@ import {
   BarChart3, Wallet, Smartphone, Monitor, Sparkles
 } from "lucide-react";
 import Image from "next/image";
+import TurfzyPhone from "./3d/TurfzyPhone";
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
   Search, Activity, Filter, Heart, QrCode, Star,
@@ -223,9 +224,9 @@ export default function Features() {
                     <g key={`left-line-${i}`}>
                       {/* Smooth Green Dashed Line */}
                       <line
-                        x1="-8"
+                        x1="-40"
                         y1={startYPer}
-                        x2="10"
+                        x2="48"
                         y2={endYPer}
                         stroke="#7ED321"
                         strokeWidth="1.8"
@@ -238,7 +239,7 @@ export default function Features() {
                         fill="#7ED321"
                         filter="url(#greenGlow)"
                         animate={{
-                          cx: ["-8px", "10px"],
+                          cx: ["-40px", "48px"],
                           cy: [startYPer, endYPer],
                           opacity: [0, 1, 1, 0],
                         }}
@@ -262,9 +263,9 @@ export default function Features() {
                     <g key={`right-line-${i}`}>
                       {/* Smooth Green Dashed Line */}
                       <line
-                        x1="calc(100% - 10px)"
+                        x1="calc(100% - 48px)"
                         y1={startYPer}
-                        x2="calc(100% + 8px)"
+                        x2="calc(100% + 40px)"
                         y2={endYPer}
                         stroke="#7ED321"
                         strokeWidth="1.8"
@@ -277,7 +278,7 @@ export default function Features() {
                         fill="#7ED321"
                         filter="url(#greenGlow)"
                         animate={{
-                          cx: ["calc(100% - 10px)", "calc(100% + 8px)"],
+                          cx: ["calc(100% - 48px)", "calc(100% + 40px)"],
                           cy: [startYPer, endYPer],
                           opacity: [0, 1, 1, 0],
                         }}
@@ -305,64 +306,24 @@ export default function Features() {
                 </defs>
               </svg>
 
-              {/* ── STABLE PEDESTAL CONTAINER CARD (Identical layout structure to reference image) ── */}
+              {/* ── 3D CENTER MOBILE MOCKUP ── */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-                className="relative z-20 w-full bg-white/85 backdrop-blur-xl rounded-[28px] p-4.5 border border-white/80 shadow-[0_12px_40px_rgba(0,0,0,0.05)] flex flex-col items-center select-none"
+                transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
+                className="relative z-20 w-full h-[450px] flex items-center justify-center pointer-events-none"
               >
-                {/* Top Highlight Badge Pill */}
-                <div className="w-full bg-[#7ED321]/12 border border-[#7ED321]/25 rounded-full py-1 px-3 mb-3 text-center flex items-center justify-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#7ED321] animate-pulse" />
-                  <span className="text-[10px] font-extrabold text-[#4c8413] tracking-wide uppercase">
-                    Highlighted: {activeTab === "players" ? "Turfzy Player App" : "Turfzy Owner Operating System"}
-                  </span>
+                <div className="absolute w-[340px] h-[600px] flex items-center justify-center">
+                  <TurfzyPhone 
+                    currentStep={activeTab === "players" ? "find" : "manage"} 
+                    phoneScale={0.7}
+                    phoneRotateX={8}
+                    phoneRotateY={-12}
+                    showPlatform={false}
+                    showFootball={true}
+                    showBadges={false}
+                  />
                 </div>
-
-                {/* Rock-Solid Stable Mobile Chassis */}
-                <div className="relative w-[155px] sm:w-[170px] aspect-[9/18.8] rounded-[30px] p-[2.5px] bg-gradient-to-b from-[#3e3e48] via-[#242428] to-[#141416] shadow-[0_10px_30px_rgba(0,0,0,0.35)] overflow-hidden">
-                  
-                  {/* Dynamic Island Notch */}
-                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-[56px] h-[14px] bg-black rounded-full z-30 flex items-center justify-between px-1.5 shadow-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#111]" />
-                    <div className="w-1 h-1 rounded-full bg-[#0d0d0f]" />
-                  </div>
-
-                  {/* Inner OLED Display */}
-                  <div className="relative w-full h-full rounded-[27px] overflow-hidden bg-black">
-                    <Image
-                      src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
-                      alt="Turfzy Mobile App"
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-
-                    {/* Glass Glare Highlight */}
-                    <div
-                      className="absolute inset-0 w-[200%] h-[200%] pointer-events-none z-20"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
-                        transform: "rotate(-15deg)",
-                        top: "-25%",
-                        left: "-25%",
-                      }}
-                    />
-
-                    {/* Home Bar Indicator */}
-                    <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-14 h-0.5 bg-white/40 rounded-full z-30" />
-                  </div>
-                </div>
-
-                {/* Bottom Verification Pill */}
-                <div className="mt-3 text-center">
-                  <span className="text-[10px] font-bold text-[#555] block">
-                    100% Real-Time Slots • Verified Venues
-                  </span>
-                </div>
-
               </motion.div>
 
             </div>

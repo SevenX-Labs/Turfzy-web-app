@@ -134,11 +134,11 @@ export default function WhyChoose() {
 
   return (
     <section
-      className="relative bg-[#FAFAF6] pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden"
+      className="relative bg-[#FAFAF6] pt-28 pb-8 md:pt-32 md:pb-12 overflow-hidden"
       id="why-turfzy"
     >
       {/* ── Header ── */}
-      <div className="text-center mb-16 md:mb-24 relative z-20 flex flex-col items-center px-4">
+      <div className="text-center mb-10 md:mb-14 relative z-20 flex flex-col items-center px-4">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm mb-6">
           <div className="w-2 h-2 rounded-full bg-[#7ED321]" />
           <span className="text-[11px] font-extrabold text-[#111] tracking-widest uppercase">
@@ -157,7 +157,7 @@ export default function WhyChoose() {
       </div>
 
       {/* ── Carousel Container ── */}
-      <div className="relative w-full max-w-[1440px] mx-auto h-[540px] flex items-center justify-center" ref={containerRef}>
+      <div className="relative w-full max-w-[1440px] mx-auto h-[450px] flex items-center justify-center" ref={containerRef}>
         
         {/* SVG Arched Dashed Line Background */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 flex items-center justify-center">
@@ -210,7 +210,7 @@ export default function WhyChoose() {
               const Icon = ICONS[item.icon] ?? Zap;
               
               // Refined positions and scales for premium look
-              const xPos = offset * 290;
+              const xPos = offset * 260;
               const scale = isActive ? 1.05 : isAdjacent ? 0.9 : 0.75;
               const yPos = isActive ? -20 : isAdjacent ? 15 : 45; 
               const opacity = isActive ? 1 : isAdjacent ? 0.8 : 0.45;
@@ -230,7 +230,7 @@ export default function WhyChoose() {
                   onClick={() => setActiveIndex(index)}
                 >
                   <div 
-                     className={`w-[270px] sm:w-[300px] h-[420px] rounded-[36px] p-7 flex flex-col relative overflow-hidden transition-all duration-500 group
+                     className={`w-[250px] sm:w-[270px] h-[370px] rounded-[32px] p-5 flex flex-col relative overflow-hidden transition-all duration-500 group
                         ${isActive 
                            ? "bg-white shadow-[0_30px_60px_-15px_rgba(126,211,33,0.25)] border-2 border-[#7ED321] ring-4 ring-[#7ED321]/10" 
                            : "bg-white/70 backdrop-blur-md shadow-lg border border-gray-200"
@@ -238,11 +238,11 @@ export default function WhyChoose() {
                      `}
                   >
                      {/* Header */}
-                     <div className="flex justify-between items-start mb-6 relative z-20">
-                        <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm
+                     <div className="flex justify-between items-start mb-4 relative z-20">
+                        <div className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm
                            ${isActive ? "border-none bg-[#7ED321]/10 text-[#5a9c14]" : "border border-gray-100 bg-white text-gray-400"}
                         `}>
-                           <Icon size={24} strokeWidth={2.5} />
+                           <Icon size={20} strokeWidth={2.5} />
                         </div>
                         <div className={`px-2.5 py-1 rounded-md text-[11px] font-extrabold transition-all duration-300
                            ${isActive ? "bg-[#7ED321] text-white shadow-md shadow-[#7ED321]/30" : "bg-white border border-gray-100 text-gray-400"}
@@ -253,10 +253,10 @@ export default function WhyChoose() {
 
                      {/* Text */}
                      <div className="relative z-20 mt-1">
-                        <h3 className={`text-[17px] font-bold mb-2 leading-tight tracking-tight ${isActive ? "text-[#111]" : "text-gray-700"}`}>
+                        <h3 className={`text-[13.5px] font-bold mb-1.5 leading-[1.3] tracking-tight ${isActive ? "text-[#111]" : "text-gray-700"}`}>
                            {item.title}
                         </h3>
-                        <p className={`text-[11.5px] leading-[1.6] font-medium ${isActive ? "text-[#555]" : "text-gray-500"}`}>
+                        <p className={`text-[10px] leading-[1.65] font-medium ${isActive ? "text-[#555]" : "text-gray-500"}`}>
                            {item.description}
                         </p>
                      </div>
@@ -292,18 +292,7 @@ export default function WhyChoose() {
         </div>
       </div>
 
-      {/* ── Pagination Dots ── */}
-      <div className="flex justify-center gap-3 mt-6">
-        {WHY_CHOOSE.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveIndex(i)}
-            className={`rounded-full transition-all duration-300 ${
-              activeIndex === i ? "w-8 h-2.5 bg-[#7ED321] shadow-[0_0_10px_rgba(126,211,33,0.5)]" : "w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400"
-            }`}
-          />
-        ))}
-      </div>
+
 
 
 
