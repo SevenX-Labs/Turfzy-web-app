@@ -75,7 +75,7 @@ html, body {
   padding: 0;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto !important; }
 ::selection { background-color: var(--color-primary); color: var(--color-black); }
 
 /* Custom scrollbar */

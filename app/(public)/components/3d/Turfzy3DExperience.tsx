@@ -23,8 +23,8 @@ export default function Turfzy3DExperience() {
   const phoneScale = useMotionValue(0.92);
   const phoneY = useMotionValue(0);
   const phoneX = useMotionValue(0);
-  // Default to visible so mockup shows up immediately on load.
-  const phoneOpacity = useMotionValue(1);
+  // Start hidden so refreshes at lower sections (FAQ, CTA, etc.) never flash the 3D phone mockup.
+  const phoneOpacity = useMotionValue(0);
 
   const badge1X = useMotionValue(0);
   const badge1Y = useMotionValue(0);
@@ -75,7 +75,7 @@ export default function Turfzy3DExperience() {
         const windowCenterY = window.innerHeight / 2;
 
         if (!heroTarget || !aboutSection) {
-          phoneOpacity.set(1);
+          phoneOpacity.set(0);
           return;
         }
 

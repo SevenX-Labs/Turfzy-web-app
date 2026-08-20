@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -14,31 +15,49 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis
+    // Initialize Lenis with butter-smooth exponential easing across the whole site
     const lenis = new Lenis({
-      autoRaf: false, // We will manually handle requestAnimationFrame with GSAP ticker
-      lerp: 0.08,     // Smoothness factor (lower is smoother/slower)
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
       smoothWheel: true,
-      syncTouch: true, // Forces smooth scrolling on touch devices for consistent feel
-      wheelMultiplier: 1.1,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
     });
     lenisRef.current = lenis;
 
-    // Synchronize Lenis with GSAP ScrollTrigger
+    // Synchronize Lenis scroll events with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Merge Lenis requestAnimationFrame into GSAP's ticker
-    // This is crucial for avoiding jitter when GSAP animations are tied to scroll
+    // Merge Lenis requestAnimationFrame into GSAP ticker for 60fps jitter-free sync
     const update = (time: number) => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(update);
 
-    // Disable GSAP lag smoothing to prevent desync during heavy frame drops
+    // Disable GSAP lag smoothing to prevent desync during heavy frame rendering
     gsap.ticker.lagSmoothing(0, 0);
 
+    // Smoothly handle internal anchor link navigation (#how-it-works, #features, #faq, #cta, #about, etc.)
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const anchor = target?.closest("a");
+      if (anchor) {
+        const href = anchor.getAttribute("href");
+        if (href && href.startsWith("#") && href.length > 1) {
+          const targetEl = document.querySelector(href);
+          if (targetEl) {
+            e.preventDefault();
+            lenis.scrollTo(targetEl as HTMLElement, { offset: -70, duration: 1.2 });
+          }
+        }
+      }
+    };
+    document.addEventListener("click", handleAnchorClick);
+
     return () => {
-      // Cleanup
+      document.removeEventListener("click", handleAnchorClick);
       gsap.ticker.remove(update);
       lenis.destroy();
     };
