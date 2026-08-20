@@ -5,6 +5,7 @@ import About            from "./components/About";
 import HowItWorks       from "./components/HowItWorks";
 import WhyChoose        from "./components/WhyChoose";
 import Features         from "./components/Features";
+import DownloadApp      from "./components/DownloadApp";
 
 import FAQ              from "./components/FAQ";
 import CTA              from "./components/CTA";
@@ -23,6 +24,7 @@ export default function LandingPage() {
       <HowItWorks />
       <WhyChoose />
       <Features />
+      <DownloadApp />
 
       <FAQ />
       <CTA />
