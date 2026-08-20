@@ -45,6 +45,8 @@ export const metadata: Metadata = {
   },
 };
 
+import LenisProvider from "./(public)/components/LenisProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -78,7 +80,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-body">{children}</body>
+      <body className="min-h-full flex flex-col font-body">
+        <LenisProvider>{children}</LenisProvider>
+      </body>
     </html>
   );
 }
