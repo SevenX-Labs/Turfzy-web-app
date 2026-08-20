@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useMotionValue, useSpring, useReducedMotion, useTransform, motion } from "framer-motion";
+import { useMotionValue, useSpring, useReducedMotion, motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TurfzyPhone from "./TurfzyPhone";
@@ -15,6 +15,7 @@ export default function Turfzy3DExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   // Motion values for smooth 3D interpolation
   const phoneRotateX = useMotionValue(2);
@@ -23,7 +24,8 @@ export default function Turfzy3DExperience() {
   const phoneScale = useMotionValue(0.92);
   const phoneY = useMotionValue(0);
   const phoneX = useMotionValue(0);
-  const phoneOpacity = useMotionValue(1);
+  // Start hidden so refreshes at lower sections never flash the Hero mockup.
+  const phoneOpacity = useMotionValue(0);
 
   const badge1X = useMotionValue(0);
   const badge1Y = useMotionValue(0);
@@ -70,6 +72,8 @@ export default function Turfzy3DExperience() {
         const aboutTarget = document.getElementById("about-phone-target");
         const aboutSection = document.getElementById("about");
         if (!heroTarget || !aboutSection) return;
+
+        setIsReady(true);
 
         const windowCenterX = window.innerWidth / 2;
         const windowCenterY = window.innerHeight / 2;
@@ -178,25 +182,54 @@ export default function Turfzy3DExperience() {
   }
 
   return (
-    <motion.div
-      ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-20 overflow-visible flex items-center justify-center select-none"
-      style={{ opacity: smoothOpacity }}
-    >
-      <TurfzyPhone
-        currentStep={currentStep}
-        phoneRotateX={smoothRotateX}
-        phoneRotateY={smoothRotateY}
-        phoneRotateZ={smoothRotateZ}
-        phoneScale={smoothScale}
-        phoneY={smoothY}
-        phoneX={smoothX}
-        badge1X={smoothBadge1X}
-        badge1Y={smoothBadge1Y}
-        badge2X={smoothBadge2X}
-        badge2Y={smoothBadge2Y}
-        badgesOpacity={smoothBadgesOpacity}
-      />
-    </motion.div>
+    <>
+      <motion.div
+        ref={containerRef}
+        className="fixed inset-0 pointer-events-none z-20 overflow-visible flex items-center justify-center select-none"
+        style={{ opacity: smoothOpacity }}
+      >
+        <TurfzyPhone
+          currentStep={currentStep}
+          phoneRotateX={smoothRotateX}
+          phoneRotateY={smoothRotateY}
+          phoneRotateZ={smoothRotateZ}
+          phoneScale={smoothScale}
+          phoneY={smoothY}
+          phoneX={smoothX}
+          badge1X={smoothBadge1X}
+          badge1Y={smoothBadge1Y}
+          badge2X={smoothBadge2X}
+          badge2Y={smoothBadge2Y}
+          badgesOpacity={smoothBadgesOpacity}
+          style={{ opacity: smoothOpacity.get() }}
+        />
+      </motion.div>
+
+      {!isReady && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#FAFAF6]"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="flex flex-col items-center gap-5">
+            <motion.img
+              src="/icon.png"
+              alt="Turfzy"
+              className="h-16 w-16 rounded-2xl shadow-[0_12px_30px_rgba(126,211,33,0.25)]"
+              animate={{ scale: [1, 1.06, 1], rotate: [0, 2, 0] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="h-1.5 w-28 overflow-hidden rounded-full bg-lime-100">
+              <motion.div
+                className="h-full w-1/2 rounded-full bg-[#7ED321]"
+                animate={{ x: ["-100%", "200%"] }}
+                transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </>
   );
 }
