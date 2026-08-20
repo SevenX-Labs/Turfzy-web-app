@@ -1,91 +1,162 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
-  Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
-  LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3, Star,
-  Store, Wallet, Smartphone, Monitor, Sparkles
+  Search, Activity, Filter, Heart, QrCode, Star,
+  Lock, Receipt, History, BellRing,
+  Store, LayoutGrid, Wrench, CalendarDays, TrendingUp,
+  BarChart3, Wallet, Smartphone, Monitor, Sparkles
 } from "lucide-react";
-import { FEATURE_CLUSTERS_PLAYER, FEATURE_CLUSTERS_OWNER } from "../constants";
+import Image from "next/image";
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
-  Search, Activity, Filter, Heart, History, Lock, QrCode, BellRing, Receipt,
-  LayoutGrid, CalendarDays, LayoutDashboard, Scan, TrendingUp, Wrench, Users, BarChart3, Star,
-  Store, Wallet
+  Search, Activity, Filter, Heart, QrCode, Star,
+  Lock, Receipt, History, BellRing,
+  Store, LayoutGrid, Wrench, CalendarDays, TrendingUp,
+  BarChart3, Wallet
 };
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
+const PLAYER_FEATURES = [
+  { icon: "Search", label: "DISCOVERY", title: "Nearby Turf Finder", description: "Search box cricket, football, and badminton courts near you instantly." },
+  { icon: "Activity", label: "LIVE SYNC", title: "Instant Availability", description: "Calendars update the moment a slot is taken — always see true openings." },
+  { icon: "Filter", label: "FILTERING", title: "Smart Court Filters", description: "Sort by sport, price, floodlights, evening slots, and court dimensions." },
+  { icon: "Lock", label: "PAYMENTS", title: "Secure Checkout", description: "Encrypted UPI, card, and net banking checkout with auto-refund tracking." },
+  { icon: "QrCode", label: "CHECK-IN", title: "Digital Gate Ticket", description: "Show your mobile QR code at the gate — no paper slips needed." },
+  { icon: "BellRing", label: "ALERTS", title: "Kick-Off Reminders", description: "WhatsApp and push notifications so your squad never misses kick-off." },
+];
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20, scale: 0.98 },
-  visible: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring", stiffness: 120, damping: 20 },
-  },
-};
+const OWNER_FEATURES = [
+  { icon: "Store", label: "PROFILE", title: "Venue Profile", description: "Showcase turf photos, pitch specs, parking, and ground rules to players." },
+  { icon: "LayoutGrid", label: "COURTS", title: "Multi-Court Control", description: "Manage multiple pitches and arenas from a single master dashboard." },
+  { icon: "CalendarDays", label: "SCHEDULE", title: "Schedule Matrix", description: "View booked, open, and blocked slots across days and weeks at a glance." },
+  { icon: "TrendingUp", label: "PRICING", title: "Peak & Off-Peak Rates", description: "Set weekday, evening floodlight, and weekend pricing independently." },
+  { icon: "BarChart3", label: "ANALYTICS", title: "Revenue Analytics", description: "Track daily earnings, peak hours, and occupancy trends on one screen." },
+  { icon: "Wallet", label: "PAYOUTS", title: "Instant Payouts", description: "Auto-settle booking revenue directly to your registered bank account." },
+];
+
+interface FeatureCardProps {
+  icon: string;
+  label: string;
+  title: string;
+  description: string;
+  side: "left" | "right";
+  index: number;
+  inView: boolean;
+}
+
+function FeatureCard({ icon, label, title, description, side, index, inView }: FeatureCardProps) {
+  const Icon = ICONS[icon] ?? Search;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: side === "left" ? -25 : 25 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
+      className="group relative bg-white/75 backdrop-blur-xl rounded-2xl p-4 border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_rgba(126,211,33,0.16)] hover:border-[#7ED321]/60 hover:bg-white/90 transition-all duration-300 flex gap-3 items-start text-left w-full"
+    >
+      {/* Accent hover top gradient */}
+      <div className="absolute top-0 left-4 right-4 h-[2px] bg-gradient-to-r from-transparent via-[#7ED321] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+
+      {/* Icon Badge */}
+      <div className="w-9 h-9 rounded-xl bg-[#7ED321]/15 border border-[#7ED321]/30 text-[#4c8413] flex items-center justify-center shrink-0 group-hover:bg-[#7ED321] group-hover:text-black transition-all duration-250 mt-0.5 shadow-sm">
+        <Icon size={16} strokeWidth={2.2} />
+      </div>
+
+      {/* Content */}
+      <div className="min-w-0 flex-1">
+        <span className="text-[9px] font-extrabold text-[#5da610] uppercase tracking-widest block mb-0.5">
+          {label}
+        </span>
+        <h4 className="text-xs font-extrabold text-[#111] font-clash leading-snug mb-0.5">
+          {title}
+        </h4>
+        <p className="text-[10px] text-[#555] leading-relaxed">
+          {description}
+        </p>
+      </div>
+
+      {/* Sleek Node Dot (ON CARD ONLY) */}
+      <div
+        className={`absolute top-1/2 -translate-y-1/2 ${
+          side === "left" ? "-right-2" : "-left-2"
+        } w-3.5 h-3.5 rounded-full bg-white border-2 border-[#7ED321] shadow-[0_0_8px_rgba(126,211,33,0.6)] flex items-center justify-center group-hover:scale-125 transition-transform duration-200 z-30`}
+      >
+        <div className="w-1.5 h-1.5 rounded-full bg-[#7ED321]" />
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Features() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-50px" });
   const [activeTab, setActiveTab] = useState<"players" | "owners">("players");
 
-  const isPlayers = activeTab === "players";
-  const clusters = isPlayers ? FEATURE_CLUSTERS_PLAYER : FEATURE_CLUSTERS_OWNER;
+  const features = activeTab === "players" ? PLAYER_FEATURES : OWNER_FEATURES;
+  const leftFeatures = features.slice(0, 3);
+  const rightFeatures = features.slice(3, 6);
 
   return (
     <section
-      className="relative bg-[#FAFAF6] py-24 md:py-32 overflow-hidden border-b border-gray-200/50"
+      className="relative bg-[#FAFAF6] py-14 sm:py-16 md:py-20 overflow-hidden border-b border-gray-200/50 selection:bg-[#7ED321] selection:text-black"
       id="features"
     >
-      {/* ── Premium Ambient Background ── */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-[#7ED321]/15 via-transparent to-transparent rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-500/10 via-transparent to-transparent rounded-full blur-[100px] pointer-events-none -translate-x-1/3 translate-y-1/3" />
+      {/* ── Background Accent Grid & Radial Glow ── */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(126,211,33,0.18) 1.2px, transparent 1.2px)",
+          backgroundSize: "26px 26px",
+        }}
+      />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#7ED321]/8 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10" ref={ref}>
 
-        {/* ── Header ── */}
+        {/* ══════════════════════════════════════════════════════════════════
+            1. SECTION HEADER
+        ══════════════════════════════════════════════════════════════════ */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-16 flex flex-col items-center"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="text-center mb-6 md:mb-8 flex flex-col items-center"
         >
-          {/* Sleek Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.04)] mb-6 transition-transform hover:scale-105">
-            <Sparkles size={14} className="text-[#7ED321]" />
-            <span className="text-[11px] font-bold text-[#151515] tracking-widest uppercase">
-              Platform Capabilities
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white border border-black/[0.08] shadow-sm mb-3">
+            <Sparkles size={13} className="text-[#7ED321]" />
+            <span className="text-[10px] font-black text-[#151515] tracking-widest uppercase">
+              PLATFORM CAPABILITIES
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#151515] tracking-tight leading-[1.1] mb-6 max-w-3xl text-balance">
-            {isPlayers ? (
-              <>Everything you need to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7ED321] to-[#5a9c14]">book and play.</span></>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111111] font-clash tracking-tight leading-[1.12] mb-2.5 max-w-2xl">
+            {activeTab === "players" ? (
+              <>Everything you need to <span className="text-[#7ED321]">book and play.</span></>
             ) : (
-              <>Run your turf like a <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7ED321] to-[#5a9c14]">pro business.</span></>
+              <>Run your turf like a <span className="text-[#7ED321]">pro business.</span></>
             )}
           </h2>
 
-          <p className="text-lg md:text-xl text-[#5C5C5C] max-w-2xl mx-auto font-medium leading-relaxed text-balance">
-            {isPlayers
-              ? "Explore the full suite of player tools engineered to make finding venues, coordinating with your squad, and stepping onto the pitch completely frictionless."
-              : "A comprehensive operating system built to automate court bookings, streamline peak-hour check-ins, and give you deep visibility into venue revenue."}
+          <p className="text-xs sm:text-sm text-[#555555] max-w-xl mx-auto font-medium leading-relaxed">
+            {activeTab === "players"
+              ? "A full suite of player tools engineered to make finding grounds and stepping onto the pitch completely frictionless."
+              : "A comprehensive operating system to automate venue court bookings, peak-hour check-ins, and revenue growth."
+            }
           </p>
         </motion.div>
 
-        {/* ── Unified Light Tab Switcher ── */}
+        {/* ══════════════════════════════════════════════════════════════════
+            2. TAB SWITCHER
+        ══════════════════════════════════════════════════════════════════ */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex justify-center mb-16"
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="flex justify-center mb-8 md:mb-10"
         >
-          <div className="bg-gray-200/60 p-1.5 rounded-[16px] flex gap-1 relative shadow-inner">
+          <div className="bg-black/[0.05] p-1 rounded-2xl flex gap-1 shadow-inner">
             {([
               { key: "players" as const, label: "For Players", icon: Smartphone },
               { key: "owners" as const, label: "For Owners", icon: Monitor },
@@ -95,15 +166,16 @@ export default function Features() {
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`relative flex items-center gap-2 px-8 py-3 rounded-[12px] text-base font-semibold transition-all duration-300 z-10 ${isActive ? "text-[#151515]" : "text-[#5C5C5C] hover:text-[#151515]"
-                    }`}
+                  className={`relative flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-extrabold transition-all duration-300 z-10 ${
+                    isActive ? "text-[#111]" : "text-[#666] hover:text-[#111]"
+                  }`}
                 >
-                  <tab.icon size={18} />
+                  <tab.icon size={15} />
                   {tab.label}
                   {isActive && (
                     <motion.div
                       layoutId="activeFeatureTab"
-                      className="absolute inset-0 bg-white rounded-[12px] -z-10 shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-gray-100"
+                      className="absolute inset-0 bg-white rounded-xl -z-10 shadow-sm border border-black/[0.08]"
                       transition={{ type: "spring", stiffness: 500, damping: 35 }}
                     />
                   )}
@@ -113,69 +185,248 @@ export default function Features() {
           </div>
         </motion.div>
 
-        {/* ── Grouped Feature Clusters ── */}
+        {/* ══════════════════════════════════════════════════════════════════
+            3. FEATURE HUB: GLASSMORPHISM CARDS + 3D PHONE + CONNECTED RAYS
+        ══════════════════════════════════════════════════════════════════ */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-            className="flex flex-col gap-14"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="hidden md:grid grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center max-w-5xl mx-auto relative min-h-[440px]"
           >
-            {clusters.map((cluster) => (
-              <div key={cluster.category} className="flex flex-col gap-6">
-                {/* Cluster Header & Intro Sentence */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-gray-200/80 pb-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#7ED321]" />
-                    <h3 className="text-xl md:text-2xl font-bold text-[#151515] tracking-tight">
-                      {cluster.category}
-                    </h3>
+
+            {/* ── LEFT FEATURE CARDS (Glassmorphism + Edge Node) ── */}
+            <div className="flex flex-col justify-between h-full gap-5 z-30">
+              {leftFeatures.map((feature, i) => (
+                <div key={feature.title} className="relative">
+                  <FeatureCard {...feature} side="left" index={i} inView={inView} />
+                </div>
+              ))}
+            </div>
+
+            {/* ── CENTER: SVG CONNECTING LINES + 3D PHONE CHASSIS (NO DOTS ON MOCKUP) ── */}
+            <div className="relative flex items-center justify-center w-[230px] sm:w-[250px] lg:w-[270px] shrink-0 h-full">
+
+              {/* ── SVG CONNECTING RAYS & DASHED LINES ── */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-10"
+                style={{ width: "100%", height: "100%" }}
+              >
+                {/* Left Card Nodes -> Phone Left Edge */}
+                {[0, 1, 2].map((i) => {
+                  const startYPer = i === 0 ? "15%" : i === 1 ? "50%" : "85%";
+                  const endYPer = i === 0 ? "25%" : i === 1 ? "50%" : "75%";
+                  return (
+                    <g key={`left-line-${i}`}>
+                      {/* Smooth Green Dashed Line */}
+                      <line
+                        x1="-8"
+                        y1={startYPer}
+                        x2="45"
+                        y2={endYPer}
+                        stroke="#7ED321"
+                        strokeWidth="1.8"
+                        strokeDasharray="4 4"
+                        opacity="0.55"
+                      />
+                      {/* Animated Energy Particle Ray along line */}
+                      <motion.circle
+                        r="3"
+                        fill="#7ED321"
+                        filter="url(#greenGlow)"
+                        animate={{
+                          cx: ["-8px", "45px"],
+                          cy: [startYPer, endYPer],
+                          opacity: [0, 1, 1, 0],
+                        }}
+                        transition={{
+                          delay: i * 0.6,
+                          duration: 1.6,
+                          repeat: Infinity,
+                          repeatDelay: 0.8,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    </g>
+                  );
+                })}
+
+                {/* Phone Right Edge -> Right Card Nodes */}
+                {[0, 1, 2].map((i) => {
+                  const startYPer = i === 0 ? "25%" : i === 1 ? "50%" : "75%";
+                  const endYPer = i === 0 ? "15%" : i === 1 ? "50%" : "85%";
+                  return (
+                    <g key={`right-line-${i}`}>
+                      {/* Smooth Green Dashed Line */}
+                      <line
+                        x1="calc(100% - 45px)"
+                        y1={startYPer}
+                        x2="calc(100% + 8px)"
+                        y2={endYPer}
+                        stroke="#7ED321"
+                        strokeWidth="1.8"
+                        strokeDasharray="4 4"
+                        opacity="0.55"
+                      />
+                      {/* Animated Energy Particle Ray along line */}
+                      <motion.circle
+                        r="3"
+                        fill="#7ED321"
+                        filter="url(#greenGlow)"
+                        animate={{
+                          cx: ["calc(100% - 45px)", "calc(100% + 8px)"],
+                          cy: [startYPer, endYPer],
+                          opacity: [0, 1, 1, 0],
+                        }}
+                        transition={{
+                          delay: i * 0.6 + 0.3,
+                          duration: 1.6,
+                          repeat: Infinity,
+                          repeatDelay: 0.8,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    </g>
+                  );
+                })}
+
+                {/* SVG Glow Filter */}
+                <defs>
+                  <filter id="greenGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+              </svg>
+
+              {/* ── 3D PHYSICAL PHONE CHASSIS (NO DOTS ON MOCKUP) ── */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92, rotateY: -6, rotateX: 3 }}
+                animate={inView ? { opacity: 1, scale: 1, rotateY: -6, rotateX: 3 } : {}}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                className="relative z-20 w-[170px] sm:w-[185px] lg:w-[200px] aspect-[9/18.8] select-none"
+                style={{
+                  perspective: 1000,
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {/* 3D Hardware Bezel & Titanium Frame */}
+                <div
+                  className="relative w-full h-full rounded-[34px] p-[3px] bg-gradient-to-b from-[#3e3e48] via-[#242428] to-[#141416]"
+                  style={{
+                    boxShadow: `
+                      1px 1px 0px #3c3c44,
+                      2px 2px 0px #303038,
+                      3px 3px 0px #24242c,
+                      4px 4px 0px #1a1a20,
+                      5px 5px 0px #141418,
+                      12px 20px 40px -6px rgba(0,0,0,0.55),
+                      0 0 45px rgba(126,211,33,0.18)
+                    `,
+                  }}
+                >
+                  {/* Side Volume Buttons */}
+                  <div className="absolute -left-[4px] top-[22%] w-[2.5px] h-[22px] bg-[#3a3a40] rounded-l-sm" />
+                  <div className="absolute -left-[4px] top-[34%] w-[2.5px] h-[32px] bg-[#3a3a40] rounded-l-sm" />
+                  <div className="absolute -left-[4px] top-[46%] w-[2.5px] h-[32px] bg-[#3a3a40] rounded-l-sm" />
+
+                  {/* Right Power Button */}
+                  <div className="absolute -right-[4px] top-[28%] w-[2.5px] h-[36px] bg-[#3a3a40] rounded-r-sm" />
+
+                  {/* Inner Black OLED Screen Bezel */}
+                  <div className="relative w-full h-full rounded-[31px] bg-[#0c0c0e] p-[5px] overflow-hidden border border-white/10 flex flex-col justify-between">
+                    
+                    {/* Screen Housing */}
+                    <div className="relative w-full h-full rounded-[26px] overflow-hidden bg-black">
+                      <Image
+                        src="/WhatsApp Image 2026-07-14 at 14.43.24.jpeg"
+                        alt="Turfzy Mobile App"
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+
+                      {/* Screen Glare Highlight */}
+                      <div
+                        className="absolute inset-0 w-[200%] h-[200%] pointer-events-none z-20"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 30%, transparent 60%)",
+                          transform: "rotate(-15deg)",
+                          top: "-25%",
+                          left: "-25%",
+                        }}
+                      />
+
+                      {/* Dynamic Island Notch */}
+                      <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-[64px] h-[16px] bg-black rounded-full z-30 flex items-center justify-between px-2 shadow-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#111] border border-[#222]" />
+                        <div className="w-1 h-1 rounded-full bg-[#0d0d0f]" />
+                      </div>
+
+                      {/* Home Bar Indicator */}
+                      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-white/40 rounded-full z-30" />
+                    </div>
+
                   </div>
-                  <p className="text-sm md:text-base text-[#5C5C5C] font-medium max-w-xl">
-                    {cluster.tagline}
-                  </p>
                 </div>
 
-                {/* Cluster Cards Grid */}
-                <div className={`grid grid-cols-1 md:grid-cols-2 ${cluster.items.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-6`}>
-                  {cluster.items.map((item) => {
-                    const Icon = ICONS[item.icon] ?? Search;
-                    return (
-                      <motion.div
-                        key={item.title}
-                        variants={itemVariants}
-                        className="group relative overflow-hidden rounded-[28px] p-7 md:p-8 bg-white border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_36px_rgba(126,211,33,0.08)] hover:-translate-y-1 hover:border-[#7ED321]/40 transition-all duration-400 flex flex-col justify-between"
-                      >
-                        {/* Icon Container */}
-                        <div className="relative z-10 flex items-start mb-6">
-                          <div className="w-12 h-12 rounded-[16px] bg-gradient-to-b from-[#7ED321]/15 to-[#7ED321]/5 border border-[#7ED321]/20 text-[#5a9c14] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#7ED321] group-hover:text-white transition-all duration-400 shadow-sm">
-                            <Icon size={22} strokeWidth={2.2} />
-                          </div>
-                        </div>
+              </motion.div>
 
-                        {/* Content */}
-                        <div className="relative z-10">
-                          <h4 className="font-bold text-lg md:text-xl text-[#151515] group-hover:text-[#5a9c14] transition-colors duration-300 mb-2">
-                            {item.title}
-                          </h4>
-                          <p className="text-sm text-[#5C5C5C] leading-relaxed font-medium">
-                            {item.description}
-                          </p>
-                        </div>
+            </div>
 
-                        {/* Bottom Highlight */}
-                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#7ED321] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </motion.div>
-                    );
-                  })}
+            {/* ── RIGHT FEATURE CARDS (Glassmorphism + Edge Node) ── */}
+            <div className="flex flex-col justify-between h-full gap-5 z-30">
+              {rightFeatures.map((feature, i) => (
+                <div key={feature.title} className="relative">
+                  <FeatureCard {...feature} side="right" index={i + 3} inView={inView} />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
           </motion.div>
         </AnimatePresence>
+
+        {/* ══════════════════════════════════════════════════════════════════
+            4. MOBILE FALLBACK LAYOUT
+        ══════════════════════════════════════════════════════════════════ */}
+        <div className="md:hidden flex flex-col gap-3.5 my-4">
+          {(activeTab === "players" ? PLAYER_FEATURES : OWNER_FEATURES).map((feature, i) => {
+            const Icon = ICONS[feature.icon] ?? Search;
+            return (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 16 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: i * 0.07, duration: 0.4 }}
+                className="bg-white/80 backdrop-blur-md rounded-2xl p-4 border border-white/80 shadow-sm flex items-start gap-3 text-left"
+              >
+                <div className="w-8 h-8 rounded-xl bg-[#7ED321]/15 text-[#4c8413] border border-[#7ED321]/30 flex items-center justify-center shrink-0 mt-0.5">
+                  <Icon size={15} strokeWidth={2.2} />
+                </div>
+                <div>
+                  <span className="text-[9px] font-extrabold text-[#5da610] uppercase tracking-widest block mb-0.5">
+                    {feature.label}
+                  </span>
+                  <h4 className="text-xs font-extrabold text-[#111] font-clash leading-snug mb-0.5">
+                    {feature.title}
+                  </h4>
+                  <p className="text-[10px] text-[#555] leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );
-} 
+}
